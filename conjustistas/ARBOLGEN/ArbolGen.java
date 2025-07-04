@@ -1,6 +1,6 @@
-package JERARQUICAS.ARBOLGEN;
+package conjustistas.ARBOLGEN;
 
-import JERARQUICAS.NODOGEN.NodoGen;
+import conjustistas.NODOGEN.NodoGen;
 import lineales.dinamicas.Cola;
 import lineales.dinamicas.Lista;
 

@@ -1,4 +1,3 @@
-package constructistas.ABB;
 
 public class NodoABB {
     private Object elem;

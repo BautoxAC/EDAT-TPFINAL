@@ -1,4 +1,4 @@
-package JERARQUICAS.NODOGEN;
+package conjustistas.NODOGEN;
 
 public class NodoGen {
     private Object elem;
