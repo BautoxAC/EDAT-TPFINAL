@@ -1,4 +1,4 @@
-package TrabajoFinal.Estructuras;
+package Estructuras;
 
 public class NodoAVL {
     

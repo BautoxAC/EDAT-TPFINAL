@@ -1,10 +1,9 @@
-package TrabajoFinal;
-import TrabajoFinal.Estructuras.*;
-import TrabajoFinal.Estructuras.Grafos.*;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
+
+import Estructuras.*;
+import Estructuras.Grafos.*;
 
 public class Sistema {
 
@@ -98,7 +97,7 @@ public class Sistema {
 
             switch (opcion) {
                 case "1":
-                    // agregarCiudad(scanner);
+                    agregarCiudad(scanner);
                     break;
                 case "2":
                     // eliminarCiudad(scanner);
@@ -120,10 +119,13 @@ public class Sistema {
 
     private void agregarCiudad(Scanner scanner) {
         System.out.println("\n--- NUEVA CIUDAD ---");
-        
+
         Ciudad nuevaCiudad;
         String nombre;
+        String nomenclatura;
+        String superficie;
         boolean pertenece = false;
+        boolean valido = false;
 
         System.out.println("Ingrese el nombre de la ciudad");
 
@@ -139,13 +141,85 @@ public class Sistema {
         if (!pertenece) {
 
             System.out.println("Ingrese la nomenclatura");
+            System.out.println("0 - Para salir");
 
-            
+            do {
+
+                nomenclatura = scanner.nextLine();
+
+                if (esNomenclaturaValida(nomenclatura)) {
+                    valido = true;
+                }
+
+            } while (!valido && !nomenclatura.equals("0"));
+
+            if (valido) {
+
+                System.out.println("Ingrese la superficie");
+
+                superficie = scanner.nextLine();
+
+            }
 
         }
-        
 
-        //logger.registrar("Ciudad agregada: " + ciudad.getNombre());
+        // logger.registrar("Ciudad agregada: " + ciudad.getNombre());
+    }
+
+    private boolean esNomenclaturaValida(String nomenclatura) {
+
+        boolean valido = true;
+        int i = 0;
+
+        if (nomenclatura.length() == 6) {
+
+            while (valido && i < nomenclatura.length()) {
+
+                if (i <= 2) {
+                    if (!esMayuscula(nomenclatura.charAt(i))) {
+                        valido = false;
+                    }
+                } else if (i > 3) {
+                    if (!esNumero(nomenclatura.charAt(i))) {
+                        valido = false;
+                    }
+                }
+
+            }
+
+        }
+
+        return valido;
+
+    }
+
+    private boolean esMayuscula(char letra) {
+
+        return letra >= 65 && letra <= 90;
+
+    }
+
+    private boolean esNumero(char letra) {
+
+        return letra >= 48 && letra <= 57;
+
+    }
+
+    private boolean esNumero(String palabra) {
+
+        boolean valido = true;
+        int i = 0;
+
+        while (valido && i < palabra.length()) {
+
+            if (!esNumero(palabra.charAt(i))) {
+                valido = false;
+            }
+
+        }
+
+        return valido;
+
     }
 
 }

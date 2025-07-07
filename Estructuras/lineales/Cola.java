@@ -1,4 +1,4 @@
-package TrabajoFinal.Estructuras.lineales;
+package Estructuras.lineales;
 
 public class Cola {
     

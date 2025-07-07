@@ -1,6 +1,6 @@
-package TrabajoFinal.Estructuras.Grafos;
+package Estructuras.Grafos;
 
-import lineales.dinamicas.*;
+import Estructuras.lineales.Lista;
 
 public class Grafo {
 

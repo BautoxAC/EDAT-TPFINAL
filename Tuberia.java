@@ -52,5 +52,4 @@ public class Tuberia {
 
     //Formato: Nomenclatura ciudad desde-Nomenclaturaciudad hasta, por ejemplo: si las ciudades son Neufuén y Cupral-Có sería NE3001-CC3002
 
-
 }

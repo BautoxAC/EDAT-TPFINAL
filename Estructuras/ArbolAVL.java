@@ -1,6 +1,6 @@
-package TrabajoFinal.Estructuras;
-import General.NodoAVL;
-import lineales.dinamicas.*;
+package Estructuras;
+
+import Estructuras.lineales.Lista;
 
 public class ArbolAVL {
     private NodoAVL raiz;
