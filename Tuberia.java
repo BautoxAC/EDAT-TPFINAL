@@ -1,4 +1,3 @@
-package TrabajoFinal;
 /*
 De las tuberías se guarda la siguiente información:
 Nomenclatura

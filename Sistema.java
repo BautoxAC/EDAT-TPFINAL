@@ -97,7 +97,7 @@ public class Sistema {
 
             switch (opcion) {
                 case "1":
-                    agregarCiudad(scanner);
+                    ingresarCiudad(scanner);
                     break;
                 case "2":
                     // eliminarCiudad(scanner);
@@ -117,15 +117,20 @@ public class Sistema {
 
     }
 
-    private void agregarCiudad(Scanner scanner) {
+    private void ingresarCiudad(Scanner scanner) {
         System.out.println("\n--- NUEVA CIUDAD ---");
 
         Ciudad nuevaCiudad;
         String nombre;
         String nomenclatura;
         String superficie;
+        String cantMetrosCubicos;
         boolean pertenece = false;
         boolean valido = false;
+        Ciudad ciudad;
+        int[][] matriz;
+        int j;
+        String valorActual;
 
         System.out.println("Ingrese el nombre de la ciudad");
 
@@ -140,10 +145,12 @@ public class Sistema {
 
         if (!pertenece) {
 
-            System.out.println("Ingrese la nomenclatura");
-            System.out.println("0 - Para salir");
-
             do {
+
+                System.out.println("Ingrese la nomenclatura");
+                System.out.println("0 - Para salir");
+
+                // VERIFICAR QUE LA NOMENCLATURA SEA IGUAL A LOS ESPACIOS DEL NOMBRE DE LA CIUDAD O LAS DOS PRIMERAS LETRAS DE LA CIUDAD
 
                 nomenclatura = scanner.nextLine();
 
@@ -155,15 +162,82 @@ public class Sistema {
 
             if (valido) {
 
-                System.out.println("Ingrese la superficie");
+                valido = false;
 
-                superficie = scanner.nextLine();
+                System.out.println("Ingrese la superficie");
+                System.out.println("0 - Para salir");
+
+                do {
+
+                    superficie = scanner.nextLine();
+
+                    if (esNumero(superficie) && !superficie.equals("0")) {
+                        valido = true;
+                    }
+
+                } while (!valido && !superficie.equals("0"));
+
+                if (valido) {
+
+                    valido = false;
+
+                    System.out.println("Ingrese la cantidad de metros cubicos promedio");
+                    System.out.println("0 - Para salir");
+
+                    do {
+
+                        cantMetrosCubicos = scanner.nextLine();
+
+                        if (esNumero(cantMetrosCubicos) && !cantMetrosCubicos.equals("0")) {
+                            valido = true;
+                        }
+
+                    } while (!valido && !cantMetrosCubicos.equals("0"));
+
+                    if (valido) {
+
+                        matriz = new int[10][12];
+                        j = 0;
+
+                        for (int i = 0; i < matriz.length; i++) {
+
+                            while (j < matriz[0].length) {
+
+                                System.out.println("Ingrese un valor para los habitantes del año " + (2015 + i)
+                                        + " del mes " + numeroAMes(j));
+
+                                valorActual = scanner.nextLine();
+
+                                if (esNumero(valorActual)) {
+                                    matriz[i][j] = Integer.parseInt(valorActual);
+                                    j++;
+                                } else {
+
+                                    System.out.println("Porfavor ingrese un numero valido");
+
+                                }
+
+                            }
+
+                        }
+
+                        agregarCiudad(nombre, matriz, nomenclatura, Integer.parseInt(superficie),
+                                Integer.parseInt(cantMetrosCubicos));
+
+                    }
+
+                }
 
             }
 
         }
 
         // logger.registrar("Ciudad agregada: " + ciudad.getNombre());
+    }
+
+    private void agregarCiudad(String nombre, int[][] matriz, String nomenclatura, int superficie,
+            int cantMetrosCubicos) {
+
     }
 
     private boolean esNomenclaturaValida(String nomenclatura) {
@@ -175,18 +249,22 @@ public class Sistema {
 
             while (valido && i < nomenclatura.length()) {
 
-                if (i <= 2) {
+                if (i <= 1) {
                     if (!esMayuscula(nomenclatura.charAt(i))) {
                         valido = false;
                     }
-                } else if (i > 3) {
+                } else if (i > 1) {
                     if (!esNumero(nomenclatura.charAt(i))) {
                         valido = false;
                     }
                 }
 
+                i++;
+
             }
 
+        } else {
+            valido = false;
         }
 
         return valido;
@@ -219,6 +297,56 @@ public class Sistema {
         }
 
         return valido;
+
+    }
+
+    private String numeroAMes(int numero) {
+
+        String elegido;
+
+        switch (numero) {
+            case 0:
+                elegido = "Enero";
+                break;
+            case 1:
+                elegido = "Febrero";
+                break;
+            case 2:
+                elegido = "Marzo";
+                break;
+            case 3:
+                elegido = "Abril";
+                break;
+            case 4:
+                elegido = "Mayo";
+                break;
+            case 5:
+                elegido = "Junio";
+                break;
+            case 6:
+                elegido = "Julio";
+                break;
+            case 7:
+                elegido = "Agosto";
+                break;
+            case 8:
+                elegido = "Septiembre";
+                break;
+            case 9:
+                elegido = "Octubre";
+                break;
+            case 10:
+                elegido = "Noviembre";
+                break;
+            case 11:
+                elegido = "Diciembre";
+                break;
+            default:
+                elegido = "";
+                break;
+        }
+
+        return elegido;
 
     }
 
