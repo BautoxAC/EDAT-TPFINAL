@@ -1,4 +1,4 @@
-package JERARQUICAS.ARBOLBIN;
+package conjustistas.ARBOLBIN;
 
 import JERARQUICAS.NODOARBOL.NodoArbol;
 import lineales.dinamicas.Cola;

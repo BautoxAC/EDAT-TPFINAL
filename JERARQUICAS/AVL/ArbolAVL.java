@@ -1,6 +1,5 @@
-package constructistas.AVL;
+package JERARQUICAS.AVL;
 
-import constructistas.ABB.NodoABB;
 import lineales.dinamicas.Lista;
 import lineales.dinamicas.NODO.Nodo;
 
@@ -12,7 +11,7 @@ public class ArbolAVL {
     }
 
     public boolean insertar(Comparable elem) {
-
+        
         boolean[] exito = { false };
 
         if (this.raiz == null) {

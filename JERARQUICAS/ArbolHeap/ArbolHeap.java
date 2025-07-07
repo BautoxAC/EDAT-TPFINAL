@@ -1,4 +1,4 @@
-package constructistas.ArbolHeap;
+package JERARQUICAS.ArbolHeap;
 
 public class ArbolHeap {
     int TAMANIO = 20;

@@ -1,10 +1,10 @@
-package TrabajoFinal;
-import TrabajoFinal.Estructuras.*;
-import TrabajoFinal.Estructuras.Grafos.*;
+
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
+
+import JERARQUICAS.AVL.ArbolAVL;
 
 public class Sistema {
 

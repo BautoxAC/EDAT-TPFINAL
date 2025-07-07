@@ -1,4 +1,4 @@
-package constructistas.AVL;
+package JERARQUICAS.AVL;
 
 public class NodoAVL {
     private Object elem;

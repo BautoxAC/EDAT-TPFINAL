@@ -1,4 +1,4 @@
-package TrabajoFinal.Estructuras.Grafos;
+package Estructuras.Grafos;
 
 import lineales.dinamicas.*;
 

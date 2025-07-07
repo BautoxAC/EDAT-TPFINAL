@@ -1,4 +1,4 @@
-package TrabajoFinal.Estructuras.Grafos;
+package Estructuras.Grafos;
 
 public class NodoVert {
     
