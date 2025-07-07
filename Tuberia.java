@@ -1,4 +1,4 @@
-package TrabajoFinal;
+
 /*
 De las tuberías se guarda la siguiente información:
 Nomenclatura
@@ -17,8 +17,8 @@ public class Tuberia {
     private int diametroTuberia;
     private String estado;
     
-    public Tuberia(String nomen,int cMax,int cMin, int diamTub, String est){
-        nomenclatura=nomen;
+    public Tuberia(String nomenclaturaDesde, String nomenclaturaHasta,int cMax,int cMin, int diamTub, String est){
+        nomenclatura= nomenclaturaDesde+ "-" + nomenclaturaHasta;
         caudalMaximo=cMax;
         caudalMinimo=cMin;
         diametroTuberia=diamTub;
