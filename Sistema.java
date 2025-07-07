@@ -1,10 +1,9 @@
-
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-import JERARQUICAS.AVL.ArbolAVL;
+import Estructuras.*;
+import Estructuras.Grafos.*;
 
 public class Sistema {
 
