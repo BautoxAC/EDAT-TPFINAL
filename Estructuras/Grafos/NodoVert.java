@@ -1,4 +1,4 @@
-package Estructuras.grafosBauti;
+package Estructuras.Grafos;
 public class NodoVert {
     private Object elem;
     private NodoVert sigVertice;
