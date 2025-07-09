@@ -1,3 +1,4 @@
+package Estructuras.grafosBauti;
 import Estructuras.lineales.Lista;
 
 public class Grafo {
