@@ -1,7 +1,5 @@
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 import Estructuras.*;
@@ -12,7 +10,6 @@ public class Sistema {
     private Grafo mapaCiudades;
     private ArbolAVL ciudades;
     private FileWriter logger;
-    private Map<ParNomen,Tuberia> ciudadTuberia = new HashMap<>();
 
     public Sistema() {
 
@@ -128,6 +125,7 @@ public class Sistema {
         String nomenclatura;
         String superficie;
         String cantMetrosCubicos;
+        boolean pertenece = false;
         boolean valido = false;
         Ciudad ciudad;
         int[][] matriz;
@@ -138,8 +136,14 @@ public class Sistema {
 
         nombre = scanner.nextLine();
 
+        if (ciudades.pertenece(nombre)) {
 
-        if (!ciudades.pertenece(nombre)) {
+            System.out.println("Error, ya existe esa ciudad");
+            pertenece = true;
+
+        }
+
+        if (!pertenece) {
 
             do {
 
@@ -226,31 +230,16 @@ public class Sistema {
 
             }
 
-        }else{
-            System.out.println("Error, ya existe esa ciudad");
         }
 
         // logger.registrar("Ciudad agregada: " + ciudad.getNombre());
     }
 
-
-
-
-
-
-
-    
     private void agregarCiudad(String nombre, int[][] matriz, String nomenclatura, int superficie,
             int cantMetrosCubicos) {
 
     }
 
-
-
-
-
-
-    //extras
     private boolean esNomenclaturaValida(String nomenclatura) {
 
         boolean valido = true;
