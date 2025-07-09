@@ -1,6 +1,5 @@
 package Estructuras.Especificas.Diccionario;
 
-import General.Nodo;
 import Estructuras.lineales.*;
 
 // clase hecha por maxi con el codigo de bauti
