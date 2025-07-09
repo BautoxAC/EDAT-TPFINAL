@@ -3,19 +3,19 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import Estructuras.*;
-import Estructuras.ArbolAVL.ArbolAVL;
+import Estructuras.Especificas.Diccionario.*;
 import Estructuras.Grafos.*;
 
 public class Sistema {
 
     private Grafo mapaCiudades;
-    private ArbolAVL ciudades;
+    private Diccionario ciudades;
     private FileWriter logger;
 
     public Sistema() {
 
         mapaCiudades = new Grafo();
-        ciudades = new ArbolAVL();
+        ciudades = new Diccionario();
 
         try {
             logger = new FileWriter("sistema.log", true); // append mode
@@ -248,7 +248,8 @@ public class Sistema {
     public void agregarCiudad(String nombre) {
 
         Ciudad ciudad = new Ciudad(nombre);
-        ciudades.insertar((Comparable) ciudad);
+
+        //ciudades.insertar({ciudad.getNombre(),ciudad});
 
     }
 
