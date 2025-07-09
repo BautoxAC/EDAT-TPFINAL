@@ -121,7 +121,25 @@ public class Sistema {
     }
     
     private void ingresarTuberia(Scanner scanner) {
+        System.out.println("\n--- NUEVA TUBERIA ---");
+        
+        String tuberiaNomen;
 
+        String ciuNombreSalida;
+        String ciuNombreEntrada;
+
+
+
+        System.out.println("Ingrese el nombre de la ciudad de salida del agua");
+
+        ciuNombreSalida = scanner.nextLine();
+
+        System.out.println("Ingrese el nombre de la ciudad de entrada del agua");
+
+        ciuNombreEntrada = scanner.nextLine();
+        
+        tuberiaNomen =
+        
     }
 
     private void menuCiudades(Scanner scanner) {
