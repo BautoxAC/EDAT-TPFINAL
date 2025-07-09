@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import Estructuras.*;
+import Estructuras.ArbolAVL.ArbolAVL;
 import Estructuras.Grafos.*;
 
 public class Sistema {

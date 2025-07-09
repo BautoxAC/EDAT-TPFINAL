@@ -1,4 +1,4 @@
-package Estructuras;
+package Estructuras.ArbolAVL;
 
 public class NodoAVL {
     

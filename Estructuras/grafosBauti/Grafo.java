@@ -23,7 +23,7 @@ public class Grafo {
         NodoVert origenVer = ubicarVertice(origen);
         NodoVert destinoVer = ubicarVertice(destino);
         boolean encontrado = ubicarArcoDirigido(origenVer, destino);
-        if (origenVer != null && destinoVer != null && !encontrado) {
+        if (origenVer != null && destinoVer != null && !encontrado && !origen.equals(destino)) {
             NodoAdy nuevo = new NodoAdy(destinoVer, origenVer.getPrimerAdy(), etiqueta);
             origenVer.setPrimerAdy(nuevo);
         }
