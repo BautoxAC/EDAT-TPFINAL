@@ -1,4 +1,4 @@
-package Estructuras;
+package Estructuras.ArbolAVL;
 
 import Estructuras.lineales.Lista;
 
