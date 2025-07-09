@@ -15,6 +15,13 @@ public class Ciudad {
         this.superficie = superficie;
         this.cantConsumo = cantConsumo;
     }
+    public Ciudad(String nombre) {
+        this.nombre = nombre;
+        this.cantHabitantes = null;
+        this.nomenclatura = null;
+        this.superficie = 0;
+        this.cantConsumo = 0;
+    }
     // visualizadores
     public String getNombre(){
         return this.nombre;

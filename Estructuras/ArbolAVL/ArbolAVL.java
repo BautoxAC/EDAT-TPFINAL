@@ -13,6 +13,8 @@ public class ArbolAVL {
 
         boolean[] exito = { false };
 
+        System.out.println(elem);
+
         if (this.raiz == null) {
             this.raiz = new NodoAVL(elem);
             exito[0] = true;

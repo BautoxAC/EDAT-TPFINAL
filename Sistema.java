@@ -121,14 +121,12 @@ public class Sistema {
     private void ingresarCiudad(Scanner scanner) {
         System.out.println("\n--- NUEVA CIUDAD ---");
 
-        Ciudad nuevaCiudad;
         String nombre;
         String nomenclatura;
         String superficie;
         String cantMetrosCubicos;
         boolean pertenece = false;
         boolean valido = false;
-        Ciudad ciudad;
         int[][] matriz;
         int j;
         String valorActual;
@@ -238,6 +236,19 @@ public class Sistema {
 
     private void agregarCiudad(String nombre, int[][] matriz, String nomenclatura, int superficie,
             int cantMetrosCubicos) {
+
+                Ciudad ciudad = new Ciudad(nombre, matriz, nomenclatura, superficie, cantMetrosCubicos);
+                //ciudades.insertar((Comparable) ciudad);
+
+
+
+
+    }
+
+    public void agregarCiudad(String nombre) {
+
+        Ciudad ciudad = new Ciudad(nombre);
+        ciudades.insertar((Comparable) ciudad);
 
     }
 
