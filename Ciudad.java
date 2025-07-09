@@ -2,6 +2,7 @@
 public class Ciudad {
     // variables
     private String nombre;
+    // es una matriz de enteros sobre la cantidad de habitantes
     private int[][] cantHabitantes;
     private String nomenclatura;
     private int superficie;
@@ -9,7 +10,7 @@ public class Ciudad {
     // constructor
     public Ciudad(String nombre, int[][] cantHabitantes, String nomenclatura, int superficie, int cantConsumo) {
         this.nombre = nombre;
-        this.cantHabitantes = new int[10][12];
+        this.cantHabitantes = cantHabitantes;
         this.nomenclatura = nomenclatura;
         this.superficie = superficie;
         this.cantConsumo = cantConsumo;
@@ -28,6 +29,15 @@ public class Ciudad {
         return this.cantConsumo;
     }
 
+    public int getHabitantesAnio(int anio){
+        int cantidadHab = -1;
+        int i = 0;
+        while () {
+            
+        }
+        return cantidadHab;
+    }
+
     // modificadores
 
     public void setNombre(String nombre){
@@ -42,5 +52,6 @@ public class Ciudad {
     public void setCantConsumo(int cantConsumo){
          this.cantConsumo = cantConsumo ;
     }
-    
+
+
 }
