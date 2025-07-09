@@ -32,9 +32,7 @@ public class Ciudad {
     public int getHabitantesAnio(int anio){
         int cantidadHab = -1;
         int i = 0;
-        while () {
-            
-        }
+        
         return cantidadHab;
     }
 

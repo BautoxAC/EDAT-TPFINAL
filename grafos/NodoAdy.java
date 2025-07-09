@@ -1,15 +1,15 @@
 public class NodoAdy {
-    private NodoVer vertice;
+    private NodoVert vertice;
     private NodoAdy sigAdyacente;
     private Object etiqueta;
 
-    public NodoAdy(NodoVer verti, NodoAdy sig, Object eti) {
+    public NodoAdy(NodoVert verti, NodoAdy sig, Object eti) {
         this.vertice = verti;
         this.sigAdyacente = sig;
         this.etiqueta = eti;
     }
 
-    public NodoVer getVertice() {
+    public NodoVert getVertice() {
         return this.vertice;
     }
 
@@ -21,7 +21,7 @@ public class NodoAdy {
         return this.etiqueta;
     }
 
-    public void setVertice(NodoVer verti) {
+    public void setVertice(NodoVert verti) {
         this.vertice = verti;
     }
 

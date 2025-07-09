@@ -1,7 +1,7 @@
-
+import Estructuras.lineales.Lista;
 
 public class Grafo {
-    private NodoVer inicio;
+    private NodoVert inicio;
 
     public Grafo() {
         this.inicio = null;
@@ -11,7 +11,7 @@ public class Grafo {
         boolean hecho = false;
         boolean encontrado = (ubicarVertice(elem) != null);
         if (!encontrado) {
-            NodoVer nuevo = new NodoVer(elem, this.inicio, null);
+            NodoVert nuevo = new NodoVert(elem, this.inicio, null);
             this.inicio = nuevo;
         }
         return hecho;
@@ -19,8 +19,8 @@ public class Grafo {
 
     public boolean insertarArco(Object origen, Object destino, Object etiqueta) {
         boolean hecho = false;
-        NodoVer origenVer = ubicarVertice(origen);
-        NodoVer destinoVer = ubicarVertice(destino);
+        NodoVert origenVer = ubicarVertice(origen);
+        NodoVert destinoVer = ubicarVertice(destino);
         boolean encontrado = ubicarArcoDirigido(origenVer, destino);
         if (origenVer != null && destinoVer != null && !encontrado) {
             NodoAdy nuevo = new NodoAdy(destinoVer, origenVer.getPrimerAdy(), etiqueta);
@@ -31,14 +31,14 @@ public class Grafo {
 
     public boolean existeArco(Object origen, Object destino) {
         boolean encontrado = false;
-        NodoVer origenVer = ubicarVertice(origen);
+        NodoVert origenVer = ubicarVertice(origen);
         if (origenVer != null) {
             encontrado = ubicarArcoDirigido(origenVer, destino);
         }
         return encontrado;
     }
 
-    private boolean ubicarArcoDirigido(NodoVer origenVer, Object destino) {
+    private boolean ubicarArcoDirigido(NodoVert origenVer, Object destino) {
         boolean encontrado = false;
         NodoAdy aux = origenVer.getPrimerAdy();
         while (aux != null) {
@@ -51,9 +51,9 @@ public class Grafo {
         return encontrado;
     }
 
-    private NodoVer ubicarVertice(Object elem) {
-        NodoVer encontrado = null;
-        NodoVer aux = this.inicio;
+    private NodoVert ubicarVertice(Object elem) {
+        NodoVert encontrado = null;
+        NodoVert aux = this.inicio;
         while (aux != null && encontrado == null) {
             if (aux.getElem().equals(elem)) {
                 encontrado = aux;
@@ -68,12 +68,12 @@ public class Grafo {
     }
 
     public boolean eliminarVertice(Object elem) {
-        NodoVer actual = this.inicio;
+        NodoVert actual = this.inicio;
         boolean eliminado = false;
         if (actual != null && actual.getElem().equals(elem)) {
             this.inicio = actual.getSigVertice();
         } else {
-            NodoVer ant = actual;
+            NodoVert ant = actual;
             NodoAdy actualEnlace = null;
             actual = actual.getSigVertice();
             while (actual != null && !eliminado) {
@@ -96,7 +96,7 @@ public class Grafo {
         return eliminado;
     }
 
-    private boolean eliminarArcoAdyacentes(NodoVer n, Object elem) {
+    private boolean eliminarArcoAdyacentes(NodoVert n, Object elem) {
         boolean hecho = false;
         if (n != null) {
 
@@ -123,7 +123,7 @@ public class Grafo {
 
     public boolean eliminarArco(Object origen, Object destino) {
         boolean eliminado = false;
-        NodoVer origenVer = ubicarVertice(origen);
+        NodoVert origenVer = ubicarVertice(origen);
         if (origenVer != null) {
             eliminado = eliminarArcoAdyacentes(origenVer, destino);
         }
@@ -142,7 +142,7 @@ public class Grafo {
 
         String string = "";
 
-        NodoVer verticeAux = this.inicio;
+        NodoVert verticeAux = this.inicio;
         NodoAdy nodoAdyacente = null;
 
         while (verticeAux != null) {
@@ -166,6 +166,92 @@ public class Grafo {
         }
 
         return string;
+
+    }
+
+    public Lista listarEnProfunidad() {
+
+        Lista visitados = new Lista();
+
+        NodoVert aux = this.inicio;
+
+        while (aux != null) {
+
+            if (visitados.localizar(aux.getElem()) < 0) {
+
+                listarEnProfunidadAux(aux, visitados);
+
+            }
+
+            aux = aux.getSigVertice();
+
+        }
+
+        return visitados;
+
+    }
+
+    private void listarEnProfunidadAux(NodoVert nodoActual, Lista visitados) {
+
+        if (nodoActual != null) {
+
+            visitados.insertar(nodoActual.getElem(), visitados.longitud() + 1);
+
+            NodoAdy adyacente = nodoActual.getPrimerAdy();
+
+            while (adyacente != null) {
+
+                if (visitados.localizar(adyacente.getVertice().getElem()) < 0) {
+
+                    listarEnProfunidadAux(adyacente.getVertice(), visitados);
+
+                }
+
+                adyacente = adyacente.getSigAdyacente();
+
+            }
+
+        }
+
+    }
+
+    public Grafo clone() {
+
+        Grafo clon = new Grafo();
+
+        clon.inicio = clonarVert(this.inicio);
+
+        return clon;
+
+    }
+
+    public NodoVert clonarVert(NodoVert nodoActual) {
+
+        NodoVert nodoVertice = null;
+
+        if (nodoActual != null) {
+
+            nodoVertice = new NodoVert(nodoActual.getElem(), clonarVert(nodoActual.getSigVertice()));
+            nodoVertice.setPrimerAdy(clonarAdy(nodoActual.getPrimerAdy(), nodoVertice));
+
+        }
+
+        return nodoVertice;
+
+    }
+
+    public NodoAdy clonarAdy(NodoAdy nodoActual, NodoVert nodoVertice) {
+
+        NodoAdy nodo = null;
+
+        if (nodoActual != null) {
+
+            nodo = new NodoAdy(nodoVertice, clonarAdy(nodoActual.getSigAdyacente(), nodoVertice),
+                    nodoActual.getEtiqueta());
+
+        }
+
+        return nodo;
 
     }
 }
