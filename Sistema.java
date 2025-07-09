@@ -1,5 +1,7 @@
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 import Estructuras.*;
@@ -10,6 +12,7 @@ public class Sistema {
     private Grafo mapaCiudades;
     private ArbolAVL ciudades;
     private FileWriter logger;
+    private Map<String,String> ciudadTuberia = new HashMap<>();
 
     public Sistema() {
 
