@@ -19,7 +19,7 @@ public class Diccionario {
         boolean[] exito = { false };
 
         if (this.raiz == null) {
-            this.raiz = new NodoAVLDicc (par[1],par[2]);
+            this.raiz = new NodoAVLDicc (par[0],par[1]);
             exito[0] = true;
         } else {
             this.raiz = insertarRec(this.raiz, par, exito);
@@ -28,7 +28,7 @@ public class Diccionario {
     }
 
     private NodoAVLDicc insertarRec(NodoAVLDicc n, Object [] par, boolean[] exito) {
-        Comparable elem = (Comparable) par[1];
+        Comparable elem = (Comparable) par[0];
         int comparar = elem.compareTo(n.getClave());
         if (n != null) {
             if (comparar != 0) {
@@ -36,14 +36,14 @@ public class Diccionario {
                     if (n.getHijoIzquierdo() != null) {
                         n.setHijoIzquierdo(insertarRec(n.getHijoIzquierdo(), par, exito));
                     } else {
-                        n.setHijoIzquierdo(new NodoAVLDicc(par[1],par[2]));
+                        n.setHijoIzquierdo(new NodoAVLDicc(par[0],par[1]));
                         exito[0] = true;
                     }
                 } else {
                     if (n.getHijoDerecho() != null) {
                         n.setHijoDerecho(insertarRec(n.getHijoDerecho(), par, exito));
                     } else {
-                        n.setHijoDerecho(new NodoAVLDicc(par[1],par[2]));
+                        n.setHijoDerecho(new NodoAVLDicc(par[0],par[1]));
                         exito[0] = true;
                     }
                 }
@@ -80,7 +80,6 @@ public class Diccionario {
         return n;
     }
 
-    
     private NodoAVLDicc balancearIzq(NodoAVLDicc r) {
         // rotacion a der
         NodoAVLDicc h;
@@ -120,20 +119,6 @@ public class Diccionario {
             esVacio = true;
         }
         return esVacio;
-    }
-
-    public Lista listar() {
-        Lista arbolPreOrden = new Lista();
-        recorrerPreOrden(arbolPreOrden, this.raiz);
-        return arbolPreOrden;
-    }
-
-    private void recorrerPreOrden(Lista lista, NodoAVLDicc padre) {
-        if (padre != null) {
-            lista.insertar(padre.getClave(), lista.longitud() + 1);
-            recorrerPreOrden(lista, padre.getHijoIzquierdo());
-            recorrerPreOrden(lista, padre.getHijoDerecho());
-        }
     }
 
     public boolean eliminar(Comparable elem) {
@@ -376,6 +361,96 @@ public class Diccionario {
 
     }
 
+    public Object obtenerDato(Object clave) {
 
+        return obtenerDatoAux(this.raiz, (Comparable) clave);
+
+    }
+
+    private Object obtenerDatoAux(NodoAVLDicc nodoActual, Comparable clave) {
+
+        Object dato = null;
+
+        int comparacion;
+
+        if (nodoActual != null) {
+
+            comparacion = clave.compareTo(nodoActual.getClave());
+
+            if (comparacion == 0) {
+                dato = nodoActual.getDato();
+            } else {
+                if (comparacion < 0) {
+                    dato = perteneceRecursivo(nodoActual.getHijoIzquierdo(), clave);
+                } else {
+                    dato = perteneceRecursivo(nodoActual.getHijoDerecho(), clave);
+                }
+
+            }
+        }
+
+        return dato;
+
+    }
+
+    public boolean existeClave(Object clave) {
+
+        return existeClaveAux(this.raiz, (Comparable) clave);
+
+    }
+
+    private boolean existeClaveAux(NodoAVLDicc nodoActual, Comparable clave) {
+
+        boolean existe = false;
+
+        int comparacion;
+
+        if (nodoActual != null) {
+
+            comparacion = clave.compareTo(nodoActual.getClave());
+
+            if (comparacion == 0) {
+                existe = true;
+            } else {
+                if (comparacion < 0) {
+                    existe = perteneceRecursivo(nodoActual.getHijoIzquierdo(), clave);
+                } else {
+                    existe = perteneceRecursivo(nodoActual.getHijoDerecho(), clave);
+                }
+
+            }
+        }
+
+        return existe;
+
+    }
+
+    public Lista listarClaves() {
+        Lista arbolPreOrden = new Lista();
+        listarClavesAux(arbolPreOrden, this.raiz);
+        return arbolPreOrden;
+    }
+
+    private void listarClavesAux(Lista lista, NodoAVLDicc padre) {
+        if (padre != null) {
+            lista.insertar(padre.getClave(), lista.longitud() + 1);
+            listarClavesAux(lista, padre.getHijoIzquierdo());
+            listarClavesAux(lista, padre.getHijoDerecho());
+        }
+    }
+
+    public Lista listarDatos() {
+        Lista arbolPreOrden = new Lista();
+        listarDatosAux(arbolPreOrden, this.raiz);
+        return arbolPreOrden;
+    }
+
+    private void listarDatosAux(Lista lista, NodoAVLDicc padre) {
+        if (padre != null) {
+            lista.insertar(padre.getDato().toString(), lista.longitud() + 1);
+            listarDatosAux(lista, padre.getHijoIzquierdo());
+            listarDatosAux(lista, padre.getHijoDerecho());
+        }
+    }
 
 }
