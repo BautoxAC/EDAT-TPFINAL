@@ -13,6 +13,7 @@ public class Sistema {
     private Grafo mapaCiudades;
     private Diccionario ciudades;
     private FileWriter logger;
+    private Map<ParNomen,Tuberia> ciudadTuberiaMap=new HashMap<>();
 
     public Sistema() {
 
