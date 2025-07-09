@@ -38,6 +38,14 @@ public class NodoAVLDicc {
         return this.hijoDerecho;
     }
 
+    public void setClave(Object clave) {
+        this.clave = clave;
+    }
+
+    public void setDato(Object dato) {
+        this.dato = dato;
+    }
+
     public void setAltura(int altura) {
         this.altura = altura;
     }
