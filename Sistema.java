@@ -21,8 +21,11 @@ public class Sistema {
         ciudades = new Diccionario();
 
         try {
-            logger = new FileWriter("sistema.log", true); // append mode
-            // log("Sistema inicializado");
+            //escribe lineas
+            FileWriter writer = new FileWriter("sistema.log", false); // true = append y no borra lo anteriormente escrito
+            writer.write("Este texto se agrega al final.\n");
+            writer.write("Este texto se agrega al final.\n");
+            writer.close();
         } catch (IOException e) {
             System.err.println("Error al abrir el archivo de log: " + e.getMessage());
         }
@@ -210,7 +213,8 @@ public class Sistema {
                 System.out.println("Ingrese la nomenclatura");
                 System.out.println("0 - Para salir");
 
-                // VERIFICAR QUE LA NOMENCLATURA SEA IGUAL A LOS ESPACIOS DEL NOMBRE DE LA CIUDAD O LAS DOS PRIMERAS LETRAS DE LA CIUDAD
+                // VERIFICAR QUE LA NOMENCLATURA SEA IGUAL A LOS ESPACIOS DEL NOMBRE DE LA
+                // CIUDAD O LAS DOS PRIMERAS LETRAS DE LA CIUDAD
 
                 nomenclatura = scanner.nextLine();
 
@@ -298,11 +302,8 @@ public class Sistema {
     private void agregarCiudad(String nombre, int[][] matriz, String nomenclatura, int superficie,
             int cantMetrosCubicos) {
 
-                Ciudad ciudad = new Ciudad(nombre, matriz, nomenclatura, superficie, cantMetrosCubicos);
-                //ciudades.insertar((Comparable) ciudad);
-
-
-
+        Ciudad ciudad = new Ciudad(nombre, matriz, nomenclatura, superficie, cantMetrosCubicos);
+        // ciudades.insertar((Comparable) ciudad);
 
     }
 
@@ -310,7 +311,7 @@ public class Sistema {
 
         Ciudad ciudad = new Ciudad(nombre);
 
-        //ciudades.insertar({ciudad.getNombre(),ciudad});
+        // ciudades.insertar({ciudad.getNombre(),ciudad});
 
     }
 
