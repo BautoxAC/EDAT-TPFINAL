@@ -1,4 +1,4 @@
-package Estructuras.grafosBauti;
+package Estructuras.Grafos;
 
 import Estructuras.lineales.Lista;
 

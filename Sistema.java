@@ -1,5 +1,7 @@
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 import Estructuras.*;
@@ -9,6 +11,7 @@ import Estructuras.Grafos.*;
 public class Sistema {
 
     private Grafo mapaCiudades;
+    private Map<ParNomen,Tuberia> ciudadTuberiaMap = new HashMap<>();
     private ArbolAVL ciudades;
     private FileWriter logger;
 
@@ -46,7 +49,7 @@ public class Sistema {
                     menuCiudades(scanner);
                     break;
                 case "2":
-                    // menuTuberias(scanner);
+                    menuTuberias(scanner);
                     break;
                 case "3":
                     // altaTransmision(scanner);
@@ -79,6 +82,46 @@ public class Sistema {
             System.err.println("Error al cerrar el logger: " + e.getMessage());
         }
         scanner.close();
+    }
+
+    private void menuTuberias(Scanner scanner) {
+        String opcion;
+
+        do {
+
+            System.out.println("\n--- GESTIÓN DE TUBERIAS ---");
+            System.out.println("1. Agregar tuberia");
+            System.out.println("2. Eliminar tuberia");
+            System.out.println("3. Modificar tuberia");
+            System.out.println("4. Volver");
+            System.out.print("Opcion elegida: ");
+
+            opcion = scanner.nextLine();
+
+            switch (opcion) {
+                case "1":
+                    ingresarTuberia(scanner);
+                    break;
+                case "2":
+                    // eliminarCiudad(scanner);
+                    break;
+                case "3":
+                    // modificarCiudad(scanner);
+                    break;
+                case "4":
+                    System.out.println("Volviendo al menu anterior...");
+                    break;
+                default:
+                    System.out.println("ERROR");
+                    break;
+            }
+
+        } while (!opcion.equals("4"));
+
+    }
+    
+    private void ingresarTuberia(Scanner scanner) {
+
     }
 
     private void menuCiudades(Scanner scanner) {
