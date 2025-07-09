@@ -1,4 +1,5 @@
 package Estructuras.grafosBauti;
+
 import Estructuras.lineales.Lista;
 
 public class Grafo {
@@ -45,9 +46,9 @@ public class Grafo {
         while (aux != null) {
             if (aux.getVertice().getElem().equals(destino)) {
                 encontrado = true;
-            } else {
-                aux = aux.getSigAdyacente();
             }
+            aux = aux.getSigAdyacente();
+
         }
         return encontrado;
     }
