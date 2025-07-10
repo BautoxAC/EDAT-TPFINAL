@@ -49,7 +49,7 @@ public class Ciudad {
 
     public int getHabitantesAnioMes(int anio, int mes) {
         int cantidadHab = -1;
-        if (anio != -1 && mes != -1) {
+        if (anio >= 0 && anio <= 9 && mes >= 0 && mes <= 11) {
             cantidadHab = cantHabitantes[anio][mes];
         }
 
@@ -86,7 +86,7 @@ public class Ciudad {
 
     public boolean setHabitantesAnioMes(int anio, int mes, int cant) {
         boolean agregado = false;
-        if (anio != -1 && mes != -1) {
+        if (anio >= 0 && anio <= 9 && mes >= 0 && mes <= 11) {
             cantHabitantes[anio][mes] = cant;
         }
         return agregado;
