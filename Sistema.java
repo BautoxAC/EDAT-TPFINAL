@@ -137,11 +137,30 @@ public class Sistema {
 
         ciuNombreSalida = scanner.nextLine();
 
-        System.out.println("Ingrese el nombre de la ciudad de entrada del agua");
+        if (ciudades.existeClave(ciuNombreSalida)) {
+            
+            System.out.println("Ingrese el nombre de la ciudad de entrada del agua");
 
-        ciuNombreEntrada = scanner.nextLine();
-        
-        tuberiaNomen =
+            ciuNombreEntrada = scanner.nextLine();
+
+            if (ciudades.existeClave(ciuNombreEntrada)) {
+                
+                tuberiaNomen = ciuNombreSalida+ "-" +ciuNombreEntrada;
+
+                if (ciudadTuberiaMap.containsValue(tuberiaNomen)) {
+                    // ESTO LO HACE KAMEL
+                } else {
+                    
+                }
+
+
+            } else {  
+                System.out.println("No existe esta ciudad");
+            }
+
+        } else {
+            System.out.println("No existe esta ciudad");
+        }
         
     }
 
