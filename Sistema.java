@@ -419,6 +419,13 @@ public class Sistema {
 
     }
 
-    
+    private int traducirAnio(int anio) {
+        int anioRet = -1;
+        if (anio >= 2015 && anio <= 2025) {
+            anioRet = anio - 2015;
+        }
+        return anioRet;
+
+    }
 
 }
