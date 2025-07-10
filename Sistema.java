@@ -266,7 +266,7 @@ public class Sistema {
 
                 nomenclatura = scanner.nextLine();
 
-                if (esNomenclaturaValida(nomenclatura)) {
+                if (esNomenclaturaValida(nomenclatura) && verificarNombreNomenclatura(nombre,nomenclatura)) {
                     valido = true;
                 }
 
@@ -368,6 +368,8 @@ public class Sistema {
         boolean valido = true;
         int i = 0;
 
+
+
         if (nomenclatura.length() == 6) {
 
             while (valido && i < nomenclatura.length()) {
@@ -394,6 +396,28 @@ public class Sistema {
 
     }
 
+    private boolean verificarNombreNomenclatura(String nombre, String nomenclatura) {
+
+        String[] palabras = nombre.trim().split("\\s+");
+        String nomenEsperada;
+
+        if (palabras.length < 2) {
+
+            nomenEsperada = palabras[0].substring(0, 2).toUpperCase();
+
+        } else {
+            nomenEsperada = (palabras[0].charAt(0) + "" + palabras[1].charAt(0)).toUpperCase();
+
+        }
+
+        System.out.println(nomenEsperada);
+        System.out.println(nomenclatura);
+        System.out.println(nombre);
+
+        return ((nomenEsperada.charAt(0) == nomenclatura.charAt(0)) && (nomenEsperada.charAt(1) == nomenclatura.charAt(1)));
+
+    }
+
     private boolean esMayuscula(char letra) {
 
         return letra >= 65 && letra <= 90;
@@ -401,12 +425,6 @@ public class Sistema {
     }
 
     private boolean esNumero(char letra) {
-
-        return letra >= 48 && letra <= 57;
-
-    }
-
-    private boolean esNumero2(char letra) {
 
         return letra >= 48 && letra <= 57;
 
