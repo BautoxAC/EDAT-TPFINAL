@@ -77,4 +77,54 @@ public class Auxiliares {
         return letra >= 65 && letra <= 90;
 
     }
+
+    public static int mesANumero(String mes) {
+
+        int elegido;
+        mes = mes.toLowerCase();
+        switch (mes) {
+            case "enero":
+                elegido = 0;
+                break;
+            case "febrero":
+                elegido = 1;
+                break;
+            case "marzo":
+                elegido = 2;
+                break;
+            case "abril":
+                elegido = 3;
+                break;
+            case "mayo":
+                elegido = 4;
+                break;
+            case "junio":
+                elegido = 5;
+                break;
+            case "julio":
+                elegido = 6;
+                break;
+            case "agosto":
+                elegido = 7;
+                break;
+            case "septiembre":
+                elegido = 8;
+                break;
+            case "octubre":
+                elegido = 9;
+                break;
+            case "noviembre":
+                elegido = 10;
+                break;
+            case "diciembre":
+                elegido = 11;
+                break;
+            default:
+                elegido = -1;
+                break;
+        }
+
+        return elegido;
+
+    }
 }
