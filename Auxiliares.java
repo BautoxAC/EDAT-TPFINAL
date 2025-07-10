@@ -1,4 +1,8 @@
+//Esta clase existe para tener metodos generales de uso para toda la aplicacion
+
 public class Auxiliares {
+
+
     public Auxiliares(){
     }
     public boolean esNumero(String palabra) {
