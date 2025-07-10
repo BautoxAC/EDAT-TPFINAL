@@ -13,7 +13,7 @@ public class Sistema {
     private Grafo mapaCiudades;
     private Diccionario ciudades;
     private FileWriter logger;
-    private Map<ParNomen,Tuberia> hashMapCiudadTuberia=new HashMap<>();
+    private Map<ParNomen, Tuberia> hashMapCiudadTuberia = new HashMap<>();
 
     public Sistema() {
 
@@ -21,8 +21,9 @@ public class Sistema {
         ciudades = new Diccionario();
 
         try {
-            //escribe lineas
-            FileWriter writer = new FileWriter("sistema.log", false); // true = append y no borra lo anteriormente escrito
+            // escribe lineas
+            FileWriter writer = new FileWriter("sistema.log", false); // true = append y no borra lo anteriormente
+                                                                      // escrito
             writer.write("Este texto se agrega al final.\n");
             writer.write("Este texto se agrega al final.\n");
             writer.close();
@@ -122,14 +123,13 @@ public class Sistema {
         } while (!opcion.equals("4"));
 
     }
-    
+
     private void ingresarTuberia(Scanner scanner) {
         System.out.println("\n--- NUEVA TUBERIA ---");
 
         String ciuNombreSalida;
         String ciuNombreEntrada;
 
-                
         String tuberiaNomen;
         int caudalMinimo;
         int caudalMaximo;
@@ -141,17 +141,17 @@ public class Sistema {
         ciuNombreSalida = scanner.nextLine();
 
         if (!ciudades.existeClave(ciuNombreSalida)) {
-            
+
             System.out.println("Ingrese el nombre de la ciudad de entrada del agua: ");
 
             ciuNombreEntrada = scanner.nextLine();
 
             if (!ciudades.existeClave(ciuNombreEntrada)) {
-                
-                tuberiaNomen = ciuNombreSalida+ "-" +ciuNombreEntrada;
+
+                tuberiaNomen = ciuNombreSalida + "-" + ciuNombreEntrada;
 
                 if (!hashMapCiudadTuberia.containsValue(tuberiaNomen)) {
-                    
+
                     System.out.println("Ingrese el caudal minimo de la tuberia: ");
 
                     caudalMinimo = scanner.nextInt();
@@ -169,32 +169,28 @@ public class Sistema {
                     estado = scanner.nextLine();
 
                     Tuberia newTuberia = new Tuberia(tuberiaNomen, caudalMaximo, caudalMinimo, diametroTuberia, estado);
-                    ParNomen parNomeclatura= new ParNomen(ciuNombreSalida, ciuNombreEntrada);
+                    ParNomen parNomeclatura = new ParNomen(ciuNombreSalida, ciuNombreEntrada);
 
                     hashMapCiudadTuberia.put(parNomeclatura, newTuberia);
 
                     if (hashMapCiudadTuberia.containsValue(newTuberia)) {
-                        System.out.println("Se agrego con exito la tuberia: " +tuberiaNomen);
+                        System.out.println("Se agrego con exito la tuberia: " + tuberiaNomen);
                     } else {
-                        System.out.println("NO SE AGREGO LA tuberia: " +tuberiaNomen);
+                        System.out.println("NO SE AGREGO LA tuberia: " + tuberiaNomen);
                     }
-                    
-
-
 
                 } else {
                     System.out.println("Ya existe la tuberia: " + tuberiaNomen);
                 }
 
-
-            } else {  
-                System.out.println("No existe esta ciudad: " +ciuNombreEntrada);
+            } else {
+                System.out.println("No existe esta ciudad: " + ciuNombreEntrada);
             }
 
         } else {
-            System.out.println("No existe esta ciudad: " +ciuNombreSalida);
+            System.out.println("No existe esta ciudad: " + ciuNombreSalida);
         }
-        
+
     }
 
     private void menuCiudades(Scanner scanner) {
@@ -405,6 +401,12 @@ public class Sistema {
     }
 
     private boolean esNumero(char letra) {
+
+        return letra >= 48 && letra <= 57;
+
+    }
+
+    private boolean esNumero2(char letra) {
 
         return letra >= 48 && letra <= 57;
 
