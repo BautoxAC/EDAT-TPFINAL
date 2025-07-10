@@ -9,19 +9,24 @@ public class Auxiliares {
 
         System.out.println("entra");
 
-        while (valido && i < palabra.length()) {
+        if (palabra.length() > 0) {
+            while (valido && i < palabra.length()) {
 
-            if (!esNumero(palabra.charAt(i))) {
-                valido = false;
+                if (!esNumero(palabra.charAt(i))) {
+                    valido = false;
+                }
+
+                i++;
+
             }
-
-            i++;
-
+        } else {
+            valido = false;
         }
 
         return valido;
 
     }
+
     public static String numeroAMes(int numero) {
 
         String elegido;
@@ -71,11 +76,13 @@ public class Auxiliares {
         return elegido;
 
     }
+
     public static boolean esNumero(char letra) {
 
         return letra >= 48 && letra <= 57;
 
     }
+
     public static boolean esMayuscula(char letra) {
 
         return letra >= 65 && letra <= 90;

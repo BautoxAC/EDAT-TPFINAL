@@ -131,8 +131,9 @@ public class Diccionario {
 
     private NodoAVLDicc eliminarRec(NodoAVLDicc n, Comparable elem, boolean[] exito) {
         NodoAVLDicc eliminado = n;
-        int comparar = elem.compareTo(n.getClave());
+        int comparar;
         if (n != null) {
+            comparar = elem.compareTo(n.getClave());
             if (comparar == 0) {
                 if (n.getHijoDerecho() == null && n.getHijoIzquierdo() == null) {
                     eliminado = null;
@@ -331,7 +332,7 @@ public class Diccionario {
 
     }
 
-    private boolean perteneceRecursivo(NodoAVLDicc nodoActual, Comparable elem) {
+     private boolean perteneceRecursivo(NodoAVLDicc nodoActual, Comparable elem) {
 
         boolean pertenece = false;
 
@@ -361,6 +362,7 @@ public class Diccionario {
 
     }
 
+   
     public Object obtenerDato(Object clave) {
 
         return obtenerDatoAux(this.raiz, (Comparable) clave);
@@ -381,13 +383,16 @@ public class Diccionario {
                 dato = nodoActual.getDato();
             } else {
                 if (comparacion < 0) {
-                    dato = perteneceRecursivo(nodoActual.getHijoIzquierdo(), clave);
+                    dato = obtenerDatoAux(nodoActual.getHijoIzquierdo(), clave);
                 } else {
-                    dato = perteneceRecursivo(nodoActual.getHijoDerecho(), clave);
+                    dato = obtenerDatoAux(nodoActual.getHijoDerecho(), clave);
                 }
 
             }
         }
+
+        System.out.println("Dato es: ");
+        System.out.println(dato);
 
         return dato;
 
@@ -413,9 +418,9 @@ public class Diccionario {
                 existe = true;
             } else {
                 if (comparacion < 0) {
-                    existe = perteneceRecursivo(nodoActual.getHijoIzquierdo(), clave);
+                    existe = existeClaveAux(nodoActual.getHijoIzquierdo(), clave);
                 } else {
-                    existe = perteneceRecursivo(nodoActual.getHijoDerecho(), clave);
+                    existe = existeClaveAux(nodoActual.getHijoDerecho(), clave);
                 }
 
             }

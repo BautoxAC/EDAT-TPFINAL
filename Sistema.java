@@ -334,7 +334,7 @@ public class Sistema {
 
                             }
 
-                            j = 0;
+                            //j = 0;
 
                         }
 
@@ -443,6 +443,7 @@ public class Sistema {
             log = "Ciudad " + nombre + " fue seleccionada";
             System.out.println(log);
 
+            
         } else {
 
             log = "Error, la ciudad " + nombre + " no existe";
@@ -548,19 +549,13 @@ public class Sistema {
     private void agregarCiudad(String nombre, int[][] matriz, String nomenclatura, int superficie,
             int cantMetrosCubicos) {
 
-        Ciudad ciudad = new Ciudad(nombre, matriz, nomenclatura, superficie, cantMetrosCubicos);
+        //Ciudad ciudad = new Ciudad(nombre, matriz, nomenclatura, superficie, cantMetrosCubicos);
+
+        Ciudad ciudad = new Ciudad(nombre,nomenclatura, superficie, cantMetrosCubicos);
 
         Object[] par = { ciudad.getNombre(), ciudad };
 
         ciudades.insertar(par);
-
-    }
-
-    public void agregarCiudad(String nombre) {
-
-        Ciudad ciudad = new Ciudad(nombre);
-
-        // ciudades.insertar({ciudad.getNombre(),ciudad});
 
     }
 
