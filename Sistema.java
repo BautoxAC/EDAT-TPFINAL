@@ -174,9 +174,9 @@ public class Sistema {
                     hashMapCiudadTuberia.put(parNomeclatura, newTuberia);
 
                     if (hashMapCiudadTuberia.containsValue(newTuberia)) {
-                        System.out.println("Se agrego con exito la tuberia: " +newTuberia);
+                        System.out.println("Se agrego con exito la tuberia: " +tuberiaNomen);
                     } else {
-                        
+                        System.out.println("NO SE AGREGO LA tuberia: " +tuberiaNomen);
                     }
                     
 
