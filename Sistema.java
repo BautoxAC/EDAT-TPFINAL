@@ -214,10 +214,10 @@ public class Sistema {
                     ingresarCiudad(scanner);
                     break;
                 case "2":
-                    // eliminarCiudad(scanner);
+                    eliminarCiudad(scanner);
                     break;
                 case "3":
-                    // modificarCiudad(scanner);
+                    modificarCiudad(scanner);
                     break;
                 case "4":
                     System.out.println("Volviendo al menu anterior...");
@@ -262,12 +262,12 @@ public class Sistema {
                 System.out.println("Ingrese la nomenclatura");
                 System.out.println("0 - Para salir");
 
-                // VERIFICAR QUE LA NOMENCLATURA SEA IGUAL A LOS ESPACIOS DEL NOMBRE DE LA
+                // VERIFICA QUE LA NOMENCLATURA SEA IGUAL A LOS ESPACIOS DEL NOMBRE DE LA
                 // CIUDAD O LAS DOS PRIMERAS LETRAS DE LA CIUDAD
 
                 nomenclatura = scanner.nextLine();
 
-                if (esNomenclaturaValida(nomenclatura) && verificarNombreNomenclatura(nombre,nomenclatura)) {
+                if (esNomenclaturaValida(nomenclatura) && verificarNombreNomenclatura(nombre, nomenclatura)) {
                     valido = true;
                 }
 
@@ -287,6 +287,8 @@ public class Sistema {
                     if (aux.esNumero(superficie) && !superficie.equals("0")) {
                         valido = true;
                     }
+
+                    System.out.println("AA");
 
                 } while (!valido && !superficie.equals("0"));
 
@@ -332,6 +334,8 @@ public class Sistema {
 
                             }
 
+                            j = 0;
+
                         }
 
                         agregarCiudad(nombre, matriz, nomenclatura, Integer.parseInt(superficie),
@@ -348,11 +352,207 @@ public class Sistema {
         // logger.registrar("Ciudad agregada: " + ciudad.getNombre());
     }
 
+    private void eliminarCiudad(Scanner scanner) {
+        System.out.println("\n--- ELIMINAR CIUDAD ---");
+
+        boolean ciudadEliminada;
+        String nombre;
+        String log;
+
+        System.out.println("Ingrese el nombre de la ciudad");
+
+        nombre = scanner.nextLine();
+
+        ciudadEliminada = ciudades.eliminar(nombre);
+
+        if (ciudadEliminada) {
+
+            log = "Ciudad " + nombre + " fue eliminada con exito";
+            System.out.println(log);
+
+        } else {
+
+            log = "Error, la ciudad " + nombre + " no existe";
+            System.out.println(log);
+
+        }
+
+    }
+
+    private void modificarCiudad(Scanner scanner) {
+
+        String opcion;
+        Ciudad ciudadElegida = null;
+
+        do {
+
+            System.out.println("\n--- MODIFICAR CIUDADES ---");
+            System.out.println("1. Elegir ciudad");
+            System.out.println("2. Modificar cantidad habitantes");
+            System.out.println("3. Modificar superficie");
+            System.out.println("4. Modificar cantidad de consumo");
+            System.out.println("5. Salir");
+            if (ciudadElegida != null) {
+                System.out.println("Ciudad elegida: " + ciudadElegida.getNombre());
+            } else {
+                System.out.println("No hay una ciudad seleccionada");
+            }
+            System.out.print("Opcion elegida: ");
+
+            opcion = scanner.nextLine();
+
+            switch (opcion) {
+                case "1":
+                    ciudadElegida = elegirCiudad(scanner);
+                    break;
+                case "2":
+                    modificarCantHabitantes(scanner, ciudadElegida);
+                    break;
+                case "3":
+                    modificarSuperficie(scanner, ciudadElegida);
+                    break;
+                case "4":
+                    modificarCantConsumo(scanner, ciudadElegida);
+                    break;
+                case "5":
+                    System.out.println("Volviendo al menu anterior...");
+                    break;
+                default:
+                    System.out.println("ERROR");
+                    break;
+            }
+
+        } while (!opcion.equals("5"));
+
+    }
+
+    private Ciudad elegirCiudad(Scanner scanner) {
+        System.out.println("\n--- ELEGIR CIUDAD ---");
+
+        Ciudad ciudadElegida = null;
+        String log;
+        String nombre;
+
+        System.out.println("Ingrese el nombre de la ciudad a elegir");
+
+        nombre = scanner.nextLine();
+        ciudadElegida = (Ciudad) ciudades.obtenerDato(nombre);
+
+        if (ciudadElegida != null) {
+
+            log = "Ciudad " + nombre + " fue seleccionada";
+            System.out.println(log);
+
+        } else {
+
+            log = "Error, la ciudad " + nombre + " no existe";
+            System.out.println(log);
+
+        }
+
+        return ciudadElegida;
+
+    }
+
+    private void modificarCantHabitantes(Scanner scanner, Ciudad ciudad) {
+
+        String log;
+        String cant;
+
+        if (ciudad != null) {
+
+            System.out.println("Ingrese la nueva cantidad de habitantes");
+
+            cant = scanner.nextLine();
+
+            if (aux.esNumero(cant)) {
+
+                log = "Cantidad actualizada con exito";
+                System.out.println(log);
+
+            } else {
+
+                log = "Error, no se pudo completar la operacion, cantidad no valida";
+                System.out.println(log);
+
+            }
+
+        } else {
+            System.out.println("ERROR: No hay una ciudad seleccionada");
+        }
+
+    }
+
+    private void modificarSuperficie(Scanner scanner, Ciudad ciudad) {
+
+        String log;
+        String cant;
+
+        if (ciudad != null) {
+
+            System.out.println("Ingrese la nueva superficie");
+
+            cant = scanner.nextLine();
+
+            if (aux.esNumero(cant)) {
+
+                log = "Superficie actualizada con exito";
+                System.out.println(log);
+
+                ciudad.setSuperficie(Integer.parseInt(cant));
+
+            } else {
+
+                log = "Error, no se pudo completar la operacion, numero no valido";
+                System.out.println(log);
+
+            }
+
+        } else {
+            System.out.println("ERROR: No hay una ciudad seleccionada");
+        }
+
+    }
+
+    private void modificarCantConsumo(Scanner scanner, Ciudad ciudad) {
+
+        String log;
+        String cant;
+
+        if (ciudad != null) {
+
+            System.out.println("Ingrese la nueva cantidad de consumo");
+
+            cant = scanner.nextLine();
+
+            if (aux.esNumero(cant)) {
+
+                log = "Consumo actualizado con exito";
+                System.out.println(log);
+
+                ciudad.setCantConsumo(Integer.parseInt(cant));
+
+            } else {
+
+                log = "Error, no se pudo completar la operacion, numero no valido";
+                System.out.println(log);
+
+            }
+
+        } else {
+            System.out.println("ERROR: No hay una ciudad seleccionada");
+        }
+
+    }
+
     private void agregarCiudad(String nombre, int[][] matriz, String nomenclatura, int superficie,
             int cantMetrosCubicos) {
 
         Ciudad ciudad = new Ciudad(nombre, matriz, nomenclatura, superficie, cantMetrosCubicos);
-        // ciudades.insertar((Comparable) ciudad);
+
+        Object[] par = { ciudad.getNombre(), ciudad };
+
+        ciudades.insertar(par);
 
     }
 
@@ -370,7 +570,6 @@ public class Sistema {
         int i = 0;
         String numeroAux = "";
         int num;
-
 
         if (nomenclatura.length() == 6) {
 
@@ -421,7 +620,8 @@ public class Sistema {
 
         }
 
-        return ((nomenEsperada.charAt(0) == nomenclatura.charAt(0)) && (nomenEsperada.charAt(1) == nomenclatura.charAt(1)));
+        return ((nomenEsperada.charAt(0) == nomenclatura.charAt(0))
+                && (nomenEsperada.charAt(1) == nomenclatura.charAt(1)));
 
     }
 
