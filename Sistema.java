@@ -14,6 +14,7 @@ public class Sistema {
     private Diccionario ciudades;
     private FileWriter logger;
     private Map<ParNomen, Tuberia> hashMapCiudadTuberia = new HashMap<>();
+    private Auxiliares aux;
 
     public Sistema() {
 
@@ -283,7 +284,7 @@ public class Sistema {
 
                     superficie = scanner.nextLine();
 
-                    if (esNumero(superficie) && !superficie.equals("0")) {
+                    if (aux.esNumero(superficie) && !superficie.equals("0")) {
                         valido = true;
                     }
 
@@ -300,7 +301,7 @@ public class Sistema {
 
                         cantMetrosCubicos = scanner.nextLine();
 
-                        if (esNumero(cantMetrosCubicos) && !cantMetrosCubicos.equals("0")) {
+                        if (aux.esNumero(cantMetrosCubicos) && !cantMetrosCubicos.equals("0")) {
                             valido = true;
                         }
 
@@ -316,11 +317,11 @@ public class Sistema {
                             while (j < matriz[0].length) {
 
                                 System.out.println("Ingrese un valor para los habitantes del año " + (2015 + i)
-                                        + " del mes " + numeroAMes(j));
+                                        + " del mes " + aux.numeroAMes(j));
 
                                 valorActual = scanner.nextLine();
 
-                                if (esNumero(valorActual)) {
+                                if (aux.esNumero(valorActual)) {
                                     matriz[i][j] = Integer.parseInt(valorActual);
                                     j++;
                                 } else {
@@ -375,11 +376,11 @@ public class Sistema {
             while (valido && i < nomenclatura.length()) {
 
                 if (i <= 1) {
-                    if (!esMayuscula(nomenclatura.charAt(i))) {
+                    if (!aux.esMayuscula(nomenclatura.charAt(i))) {
                         valido = false;
                     }
                 } else if (i > 1) {
-                    if (!esNumero(nomenclatura.charAt(i))) {
+                    if (!aux.esNumero(nomenclatura.charAt(i))) {
                         valido = false;
                     }
                 }
@@ -418,83 +419,6 @@ public class Sistema {
 
     }
 
-    private boolean esMayuscula(char letra) {
-
-        return letra >= 65 && letra <= 90;
-
-    }
-
-    private boolean esNumero(char letra) {
-
-        return letra >= 48 && letra <= 57;
-
-    }
-
-    private boolean esNumero(String palabra) {
-
-        boolean valido = true;
-        int i = 0;
-
-        while (valido && i < palabra.length()) {
-
-            if (!esNumero(palabra.charAt(i))) {
-                valido = false;
-            }
-
-        }
-
-        return valido;
-
-    }
-
-    private String numeroAMes(int numero) {
-
-        String elegido;
-
-        switch (numero) {
-            case 0:
-                elegido = "Enero";
-                break;
-            case 1:
-                elegido = "Febrero";
-                break;
-            case 2:
-                elegido = "Marzo";
-                break;
-            case 3:
-                elegido = "Abril";
-                break;
-            case 4:
-                elegido = "Mayo";
-                break;
-            case 5:
-                elegido = "Junio";
-                break;
-            case 6:
-                elegido = "Julio";
-                break;
-            case 7:
-                elegido = "Agosto";
-                break;
-            case 8:
-                elegido = "Septiembre";
-                break;
-            case 9:
-                elegido = "Octubre";
-                break;
-            case 10:
-                elegido = "Noviembre";
-                break;
-            case 11:
-                elegido = "Diciembre";
-                break;
-            default:
-                elegido = "";
-                break;
-        }
-
-        return elegido;
-
-    }
+    
 
 }
