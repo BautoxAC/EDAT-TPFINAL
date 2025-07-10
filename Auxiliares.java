@@ -2,10 +2,7 @@
 
 public class Auxiliares {
 
-
-    public Auxiliares(){
-    }
-    public boolean esNumero(String palabra) {
+    public static boolean esNumero(String palabra) {
 
         boolean valido = true;
         int i = 0;
@@ -21,7 +18,7 @@ public class Auxiliares {
         return valido;
 
     }
-    public String numeroAMes(int numero) {
+    public static String numeroAMes(int numero) {
 
         String elegido;
 
@@ -70,12 +67,12 @@ public class Auxiliares {
         return elegido;
 
     }
-    public boolean esNumero(char letra) {
+    public static boolean esNumero(char letra) {
 
         return letra >= 48 && letra <= 57;
 
     }
-    public boolean esMayuscula(char letra) {
+    public static boolean esMayuscula(char letra) {
 
         return letra >= 65 && letra <= 90;
 

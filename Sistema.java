@@ -368,7 +368,8 @@ public class Sistema {
 
         boolean valido = true;
         int i = 0;
-
+        String numeroAux = "";
+        int num;
 
 
         if (nomenclatura.length() == 6) {
@@ -382,6 +383,8 @@ public class Sistema {
                 } else if (i > 1) {
                     if (!aux.esNumero(nomenclatura.charAt(i))) {
                         valido = false;
+                    } else {
+                        numeroAux = numeroAux + nomenclatura.charAt(i);
                     }
                 }
 
@@ -391,6 +394,13 @@ public class Sistema {
 
         } else {
             valido = false;
+        }
+
+        if (valido) {
+            num = Integer.parseInt(numeroAux);
+            if (num < 3000 || num > 4000) {
+                valido = false;
+            }
         }
 
         return valido;
@@ -410,10 +420,6 @@ public class Sistema {
             nomenEsperada = (palabras[0].charAt(0) + "" + palabras[1].charAt(0)).toUpperCase();
 
         }
-
-        System.out.println(nomenEsperada);
-        System.out.println(nomenclatura);
-        System.out.println(nombre);
 
         return ((nomenEsperada.charAt(0) == nomenclatura.charAt(0)) && (nomenEsperada.charAt(1) == nomenclatura.charAt(1)));
 
