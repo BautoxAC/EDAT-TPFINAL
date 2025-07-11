@@ -128,6 +128,7 @@ public class Sistema {
     private void ingresarTuberia(Scanner scanner) {
         System.out.println("\n--- NUEVA TUBERIA ---");
 
+        Tuberia newTuberia = new Tuberia();
         String ciuNombreSalida;
         String ciuNombreEntrada;
 
@@ -137,60 +138,73 @@ public class Sistema {
         int diametroTuberia;
         String estado;
 
-        System.out.println("Ingrese el nombre de la ciudad de salida del agua: ");
+        do {
+            System.out.println("Ingrese el nombre de la ciudad de salida del agua: ");
 
-        ciuNombreSalida = scanner.nextLine();
+            ciuNombreSalida = scanner.nextLine();
 
-        if (!ciudades.existeClave(ciuNombreSalida)) {
+            if (!ciudades.existeClave(ciuNombreSalida)) {
+                
+                do {
+                    System.out.println("Ingrese el nombre de la ciudad de entrada del agua: ");
 
-            System.out.println("Ingrese el nombre de la ciudad de entrada del agua: ");
+                    ciuNombreEntrada = scanner.nextLine();
+                        
+                    if (!ciudades.existeClave(ciuNombreEntrada)) {
+                        do {
+                            
 
-            ciuNombreEntrada = scanner.nextLine();
+                            tuberiaNomen = ciuNombreSalida + "-" + ciuNombreEntrada;
 
-            if (!ciudades.existeClave(ciuNombreEntrada)) {
+                            System.out.println("Ingrese el caudal minimo de la tuberia: ");
 
-                tuberiaNomen = ciuNombreSalida + "-" + ciuNombreEntrada;
+                            caudalMinimo = scanner.nextInt();
 
-                if (!hashMapCiudadTuberia.containsValue(tuberiaNomen)) {
+                            System.out.println("Ingrese el caudal maximo de la tuberia: ");
 
-                    System.out.println("Ingrese el caudal minimo de la tuberia: ");
+                            caudalMaximo = scanner.nextInt();
 
-                    caudalMinimo = scanner.nextInt();
+                            System.out.println("Ingrese el diametro de la tuberia de la tuberia: ");
 
-                    System.out.println("Ingrese el caudal maximo de la tuberia: ");
+                            diametroTuberia = scanner.nextInt();
 
-                    caudalMaximo = scanner.nextInt();
+                            System.out.println("Ingrese el Estado en el que se encuntra la tuberia: ");
 
-                    System.out.println("Ingrese el diametro de la tuberia de la tuberia: ");
+                            estado = scanner.nextLine();
 
-                    diametroTuberia = scanner.nextInt();
 
-                    System.out.println("Ingrese el Estado en el que se encuntra la tuberia: ");
+                            //corregir creacion de tuberia
 
-                    estado = scanner.nextLine();
+                            newTuberia = new Tuberia(tuberiaNomen, caudalMaximo, caudalMinimo, diametroTuberia, estado);
 
-                    Tuberia newTuberia = new Tuberia(tuberiaNomen, caudalMaximo, caudalMinimo, diametroTuberia, estado);
-                    ParNomen parNomeclatura = new ParNomen(ciuNombreSalida, ciuNombreEntrada);
+                            if (!hashMapCiudadTuberia.containsValue(newTuberia)) {
 
-                    hashMapCiudadTuberia.put(parNomeclatura, newTuberia);
+                                ParNomen parNomeclatura = new ParNomen(ciuNombreSalida, ciuNombreEntrada);
 
-                    if (hashMapCiudadTuberia.containsValue(newTuberia)) {
-                        System.out.println("Se agrego con exito la tuberia: " + tuberiaNomen);
+                                hashMapCiudadTuberia.put(parNomeclatura, newTuberia);
+
+                                if (hashMapCiudadTuberia.containsValue(newTuberia)) {
+                                    System.out.println("Se agrego con exito la tuberia: " + tuberiaNomen);
+                                } else {
+                                    System.out.println("NO SE AGREGO LA tuberia: " + tuberiaNomen);
+                                }
+
+                            } else {
+                                System.out.println("Ya existe la tuberia: " + tuberiaNomen);
+                            }
+
+                        } while (!hashMapCiudadTuberia.containsValue(newTuberia));
                     } else {
-                        System.out.println("NO SE AGREGO LA tuberia: " + tuberiaNomen);
+                        System.out.println("No existe esta ciudad: " + ciuNombreEntrada);
                     }
-
-                } else {
-                    System.out.println("Ya existe la tuberia: " + tuberiaNomen);
-                }
+                
+                } while (!ciudades.existeClave(ciuNombreEntrada));
 
             } else {
-                System.out.println("No existe esta ciudad: " + ciuNombreEntrada);
+                System.out.println("No existe esta ciudad: " + ciuNombreSalida);
             }
-
-        } else {
-            System.out.println("No existe esta ciudad: " + ciuNombreSalida);
-        }
+        } while (!ciudades.existeClave(ciuNombreSalida));
+        
 
     }
 

@@ -16,6 +16,9 @@ public class Tuberia {
     private int diametroTuberia;
     private String estado;
     
+    public Tuberia(){
+    }
+    
     public Tuberia(String nomen,int cMax,int cMin, int diamTub, String est){
         nomenclatura=nomen;
         caudalMaximo=cMax;
