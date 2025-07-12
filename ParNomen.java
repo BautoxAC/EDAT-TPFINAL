@@ -2,6 +2,9 @@ public class ParNomen {
     private String nomenSalida;
     private String nomenEntrada;
 
+    ParNomen() {
+    }
+
     ParNomen(String salida, String entrada) {
         nomenSalida = salida;
         nomenEntrada = entrada;

@@ -129,6 +129,7 @@ public class Sistema {
         System.out.println("\n--- NUEVA TUBERIA ---");
 
         Tuberia newTuberia = new Tuberia();
+        ParNomen parNomeclatura = new ParNomen();
         String ciuNombreSalida;
         String ciuNombreEntrada;
 
@@ -179,7 +180,7 @@ public class Sistema {
 
                             if (!hashMapCiudadTuberia.containsValue(newTuberia)) {
 
-                                ParNomen parNomeclatura = new ParNomen(ciuNombreSalida, ciuNombreEntrada);
+                                parNomeclatura = new ParNomen(ciuNombreSalida, ciuNombreEntrada);
 
                                 hashMapCiudadTuberia.put(parNomeclatura, newTuberia);
 
