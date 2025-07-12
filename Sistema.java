@@ -1,8 +1,14 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import Estructuras.*;
 import Estructuras.Especificas.Diccionario.*;
@@ -1098,4 +1104,173 @@ public class Sistema {
         return estado;
     }
 
+
+    // METODOS DE CARGA
+
+    public static String obtenerRutaArchivos() {
+        Path rutaCarpeta = Paths.get("");
+        return  rutaCarpeta + "";
+    }
+
+    public static void leerArchivos(String camino) {
+
+        String nombreArchivoEntrada = obtenerRutaArchivos() + camino + ".txt";
+        String linea = null;
+
+        try {
+
+            FileReader lectorArchivo = new FileReader(nombreArchivoEntrada);
+            BufferedReader bufferLectura = new BufferedReader(lectorArchivo);
+
+            int filas = 0;
+
+            while ((linea = bufferLectura.readLine()) != null) {
+
+                String[] split = linea.split(";");
+                // no sabemos
+                /* switch (camino) {
+                    case "aviones":
+                        listaAviones[filas] = new Avion(split[0], split[1], stringAEntero(split[2]),
+                                stringAEntero(split[3]), stringAEntero(split[4]));
+                        break;
+                    case "rutas":
+                        listaRutas[filas] = new Ruta(split[0], split[1], split[2], stringAEntero(split[3]),
+                                (split[4].equals("Si")));
+                        break;
+                    case "vuelos":
+
+                        int fila = traductorDias(split[3].toLowerCase());
+                        int columna = traductorHoras(split[4]);
+
+                        if (split.length == 6) {
+                            horarios[fila][columna] = new Vuelo(split[0], idAAvion(split[1]),
+                                    idARuta(split[2]), split[3], split[4], (split[5].equals("true")));
+                        } else {
+                            horarios[fila][columna] = new Vuelo(split[0], idAAvion(split[1]),
+                                    idARuta(split[2]), split[3], split[4]);
+                        }
+
+                        break;
+                    default:
+                        break;
+                } */
+
+                filas++;
+
+            }
+            bufferLectura.close();
+        } catch (FileNotFoundException ex) {
+            System.err.println(ex.getMessage() + "No existe el archivo.");
+        } catch (IOException ex) {
+            System.err.println("Error leyendo o escribiendo en algun archivo.");
+        }
+
+    }
+
+   /*  public static void guardarArchivos(String camino) {
+
+        String nombreArchivoEntrada = obtenerRutaArchivos() + camino + ".txt";
+        String nombreArchivoSalida = nombreArchivoEntrada;
+
+        String linea = null;
+
+        try {
+
+            FileReader lectorArchivo = new FileReader(nombreArchivoEntrada);
+            FileWriter escritorArchivo = new FileWriter(nombreArchivoSalida);
+
+            BufferedReader bufferLectura = new BufferedReader(lectorArchivo);
+            BufferedWriter bufferEscritura = new BufferedWriter(escritorArchivo);
+
+            int fila = 0;
+            int columna = 0;
+            String guardar = "";
+            boolean bucle = true;
+
+            while (bucle) {
+
+                linea = bufferLectura.readLine();
+
+                switch (camino) {
+                    case "aviones":
+                        if (fila < listaAviones.length && listaAviones[fila] != null) {
+                            Avion avion = listaAviones[fila];
+                            guardar += (avion.getId() + ";" + avion.getModelo() + ";" +
+                                    avion.getCantVuelos() + ";" + avion.getCantAsientos()
+                                    + ";"
+                                    + avion.getKmRecorridos() + "\n");
+                        } else {
+                            bucle = false;
+                        }
+                        break;
+                    case "vuelos":
+                        if (fila < horarios.length) {
+                            Vuelo vuelo = horarios[fila][columna];
+                            if (vuelo != null) {
+                                guardar += (vuelo.getId() + ";" + vuelo.getAvion().getId() + ";" +
+                                        vuelo.getRuta().getId() + ";" + vuelo.getDia()
+                                        + ";"
+                                        + vuelo.getHora() + ";" + vuelo.getRealizado() + "\n");
+                            }
+                        } else {
+                            bucle = false;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
+                if (camino.equals("vuelos")) {
+                    if (columna >= 14) {
+                        fila++;
+                        columna = 0;
+                    } else {
+                        columna++;
+                    }
+                } else {
+                    fila++;
+                }
+
+            }
+            bufferEscritura.write(guardar);
+            bufferLectura.close();
+            bufferEscritura.close();
+        } catch (FileNotFoundException ex) {
+            System.err.println(ex.getMessage() + "No existe el archivo.");
+        } catch (IOException ex) {
+            System.err.println("Error leyendo o escribiendo en algun archivo.");
+        }
+
+    }
+
+    public static void crearArchivo(String camino) {
+
+        String nombreArchivoEntrada = obtenerRutaArchivos() + camino + ".txt";
+        String nombreArchivoSalida = nombreArchivoEntrada;
+
+        try {
+
+            FileWriter escritorArchivo = new FileWriter(nombreArchivoSalida);
+            BufferedWriter bufferEscritura = new BufferedWriter(escritorArchivo);
+
+            int i = 0;
+            String guardar = "";
+
+            for (i = 0; i < vuelosOrdenados.length; i++) {
+                Vuelo vuelo = vuelosOrdenados[i];
+                guardar += (vuelo.getId() + ";" + vuelo.getAvion().getId() + ";" +
+                        vuelo.getRuta().getId() + ";" + vuelo.getDia()
+                        + ";"
+                        + vuelo.getHora() + ";" + vuelo.getAvion().getKmRecorridos() + "\n");
+            }
+
+            bufferEscritura.write(guardar);
+            bufferEscritura.close();
+        } catch (FileNotFoundException ex) {
+            System.err.println(ex.getMessage() + "No existe el archivo.");
+        } catch (IOException ex) {
+            System.err.println("Error leyendo o escribiendo en algun archivo.");
+        }
+
+    } */
 }
