@@ -108,7 +108,7 @@ public class Sistema {
                     ingresarTuberia(scanner);
                     break;
                 case "2":
-                    // eliminarCiudad(scanner);
+                    eliminarTuberia(scanner);
                     break;
                 case "3":
                     // modificarCiudad(scanner);
@@ -123,6 +123,54 @@ public class Sistema {
 
         } while (!opcion.equals("4"));
 
+    }
+
+    private void eliminarTuberia(Scanner scanner) {
+        
+        String ciuNombreSalida;
+        String ciuNombreEntrada;
+        ParNomen parNomen;
+
+        /*
+            System.out.println("Ingrese la nomeclatura de la truberia a eliminar");
+
+            String nomenBuscada;
+            nomenBuscada = scanner.nextLine();
+            
+
+            hashMapCiudadTuberia.entrySet().removeIf(entry -> 
+                entry.getValue().getNomenclatura().equals(nomenBuscada)
+            );
+        */
+
+        do {
+            System.out.println("Ingrese el nombre de la ciudad de salida del agua: ");
+
+            ciuNombreSalida = scanner.nextLine();
+
+            if (!ciudades.existeClave(ciuNombreSalida)) {
+
+                do {
+                    System.out.println("Ingrese el nombre de la ciudad de entrada del agua: ");
+
+                    ciuNombreEntrada = scanner.nextLine();
+
+                    if (!ciudades.existeClave(ciuNombreEntrada)) {
+
+                        parNomen= new ParNomen(ciuNombreSalida, ciuNombreEntrada);
+
+                        hashMapCiudadTuberia.remove(parNomen);
+
+                    } else {
+                        System.out.println("No existe esta ciudad: " + ciuNombreEntrada);
+                    }
+
+                } while (!ciudades.existeClave(ciuNombreEntrada));
+
+            } else {
+                System.out.println("No existe esta ciudad: " + ciuNombreSalida);
+            }
+        } while (!ciudades.existeClave(ciuNombreSalida));
     }
 
     private void ingresarTuberia(Scanner scanner) {
