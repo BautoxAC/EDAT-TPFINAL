@@ -14,7 +14,6 @@ public class Sistema {
     private Diccionario ciudades;
     private FileWriter logger;
     private Map<ParNomen, Tuberia> hashMapCiudadTuberia = new HashMap<>();
-    private Auxiliares aux;
 
     public Sistema() {
 
@@ -284,7 +283,7 @@ public class Sistema {
 
                     superficie = scanner.nextLine();
 
-                    if (aux.esNumero(superficie) && !superficie.equals("0")) {
+                    if (Auxiliares.esNumero(superficie) && !superficie.equals("0")) {
                         valido = true;
                     }
 
@@ -303,7 +302,7 @@ public class Sistema {
 
                         cantMetrosCubicos = scanner.nextLine();
 
-                        if (aux.esNumero(cantMetrosCubicos) && !cantMetrosCubicos.equals("0")) {
+                        if (Auxiliares.esNumero(cantMetrosCubicos) && !cantMetrosCubicos.equals("0")) {
                             valido = true;
                         }
 
@@ -319,11 +318,11 @@ public class Sistema {
                             while (j < matriz[0].length) {
 
                                 System.out.println("Ingrese un valor para los habitantes del año " + (2015 + i)
-                                        + " del mes " + aux.numeroAMes(j));
+                                        + " del mes " + Auxiliares.numeroAMes(j));
 
                                 valorActual = scanner.nextLine();
 
-                                if (aux.esNumero(valorActual)) {
+                                if (Auxiliares.esNumero(valorActual)) {
                                     matriz[i][j] = Integer.parseInt(valorActual);
                                     j++;
                                 } else {
@@ -458,35 +457,84 @@ public class Sistema {
 
     }
 
-    private void modificarCantHabitantesMes(Scanner scanner, Ciudad ciudad) {
+    private void modificarCantHabitantesAnio(Scanner scanner, Ciudad ciudad) {
 
         String log;
         String cant;
-        String mes;
         int anio;
+        int i;
 
         if (ciudad != null) {
 
-            System.out.println("Ingrese el año del mes que quiera cambiar");
+            System.out.println("Ingrese el año que quiera cambiar");
 
             anio = scanner.nextInt();
             scanner.nextLine();
 
             if (traducirAnio(anio) != -1) {
+                i = 0;
+                while (i < 12) {
+
+                    System.out.println("Ingrese la nueva cantidad de habitantes del mes");
+
+                    cant = scanner.nextLine();
+
+                    if (Auxiliares.esNumero(cant)) {
+
+                        log = "Cantidad actualizada con exito";
+                        System.out.println(log);
+                        i++;
+                    } else {
+
+                        log = "Error, no se pudo completar la operacion, cantidad no valida debe ser positiva";
+                        System.out.println(log);
+
+                    }
+                }
+            }
+
+        } else {
+            System.out.println("ERROR: No hay una ciudad seleccionada");
+        }
+
+    }
+
+    private void modificarCantHabitantesMes(Scanner scanner, Ciudad ciudad) {
+
+        String log;
+        String cant;
+        String mes;
+        int mesInt;
+        String anio;
+        int anioInt;
+
+        if (ciudad != null) {
+
+            System.out.println("Ingrese el año del mes que quiera cambiar");
+
+            anio = scanner.nextLine();
+
+            if (Auxiliares.esNumero(anio)) {
+
+                anioInt = traducirAnio(Integer.parseInt(anio));
 
                 System.out.println("Ingrese el mes que quiere cambiar");
 
                 mes = scanner.nextLine();
 
-                if (aux.mesANumero(mes) != -1) {
+                mesInt = Auxiliares.mesANumero(mes);
+
+                if (mesInt != -1) {
                     System.out.println("Ingrese la nueva cantidad de habitantes");
 
                     cant = scanner.nextLine();
-
-                    if (aux.esNumero(cant)) {
+                    if (Auxiliares.esNumero(cant)) {
 
                         log = "Cantidad actualizada con exito";
+                        
                         System.out.println(log);
+
+                        ciudad.setHabitantesAnioMes(anioInt, mesInt, Integer.parseInt(cant));
 
                     } else {
 
@@ -495,7 +543,7 @@ public class Sistema {
 
                     }
                 } else {
-                    log = "Error, no se pudo completar la operacion, ";
+                    log = "Error, no se pudo completar la operacion, el mes debe ser alguno de los siguientes: enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre y diciembre";
                     System.out.println(log);
                 }
 
@@ -521,7 +569,7 @@ public class Sistema {
 
             cant = scanner.nextLine();
 
-            if (aux.esNumero(cant)) {
+            if (Auxiliares.esNumero(cant)) {
 
                 log = "Superficie actualizada con exito";
                 System.out.println(log);
@@ -552,7 +600,7 @@ public class Sistema {
 
             cant = scanner.nextLine();
 
-            if (aux.esNumero(cant)) {
+            if (Auxiliares.esNumero(cant)) {
 
                 log = "Consumo actualizado con exito";
                 System.out.println(log);
@@ -598,11 +646,11 @@ public class Sistema {
             while (valido && i < nomenclatura.length()) {
 
                 if (i <= 1) {
-                    if (!aux.esMayuscula(nomenclatura.charAt(i))) {
+                    if (!Auxiliares.esMayuscula(nomenclatura.charAt(i))) {
                         valido = false;
                     }
                 } else if (i > 1) {
-                    if (!aux.esNumero(nomenclatura.charAt(i))) {
+                    if (!Auxiliares.esNumero(nomenclatura.charAt(i))) {
                         valido = false;
                     } else {
                         numeroAux = numeroAux + nomenclatura.charAt(i);
