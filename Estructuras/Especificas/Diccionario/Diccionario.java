@@ -29,8 +29,9 @@ public class Diccionario {
 
     private NodoAVLDicc insertarRec(NodoAVLDicc n, Object [] par, boolean[] exito) {
         Comparable elem = (Comparable) par[0];
-        int comparar = elem.compareTo(n.getClave());
+        int comparar;
         if (n != null) {
+            comparar = elem.compareTo(n.getClave());
             if (comparar != 0) {
                 if (comparar < 0) {
                     if (n.getHijoIzquierdo() != null) {
