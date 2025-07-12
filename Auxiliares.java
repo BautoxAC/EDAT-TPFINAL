@@ -7,17 +7,15 @@ public class Auxiliares {
         boolean valido = true;
         int i = 0;
 
-        System.out.println("entra");
-
         if (palabra.length() > 0) {
             while (valido && i < palabra.length()) {
 
-                if (!esNumero(palabra.charAt(i))) {
+                if (palabra.charAt(i) == '0' && palabra.length() > 1) {
+                    valido = false;
+                } else if (!esNumero(palabra.charAt(i))) {
                     valido = false;
                 }
-
                 i++;
-
             }
         } else {
             valido = false;
