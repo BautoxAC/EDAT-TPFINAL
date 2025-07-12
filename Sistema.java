@@ -461,21 +461,22 @@ public class Sistema {
 
         String log;
         String cant;
-        int anio;
+        String anio;
+        int anioInt;
         int i;
 
         if (ciudad != null) {
 
             System.out.println("Ingrese el año que quiera cambiar");
 
-            anio = scanner.nextInt();
-            scanner.nextLine();
+            anio = scanner.nextLine();
 
-            if (traducirAnio(anio) != -1) {
+            if (Auxiliares.esNumero(anio)) {
+                anioInt = traducirAnio(Integer.parseInt(anio));
                 i = 0;
                 while (i < 12) {
 
-                    System.out.println("Ingrese la nueva cantidad de habitantes del mes");
+                    System.out.println("Ingrese la nueva cantidad de habitantes del mes " + Auxiliares.numeroAMes(i));
 
                     cant = scanner.nextLine();
 
@@ -483,6 +484,9 @@ public class Sistema {
 
                         log = "Cantidad actualizada con exito";
                         System.out.println(log);
+                        
+                        ciudad.setHabitantesAnioMes(anioInt, i, Integer.parseInt(cant));
+
                         i++;
                     } else {
 
@@ -531,7 +535,7 @@ public class Sistema {
                     if (Auxiliares.esNumero(cant)) {
 
                         log = "Cantidad actualizada con exito";
-                        
+
                         System.out.println(log);
 
                         ciudad.setHabitantesAnioMes(anioInt, mesInt, Integer.parseInt(cant));
