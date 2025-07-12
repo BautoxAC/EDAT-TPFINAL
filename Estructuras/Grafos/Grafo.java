@@ -227,7 +227,7 @@ public class Grafo {
 
     }
 
-    public NodoVert clonarVert(NodoVert nodoActual) {
+    private NodoVert clonarVert(NodoVert nodoActual) {
 
         NodoVert nodoVertice = null;
 
@@ -242,7 +242,7 @@ public class Grafo {
 
     }
 
-    public NodoAdy clonarAdy(NodoAdy nodoActual, NodoVert nodoVertice) {
+    private NodoAdy clonarAdy(NodoAdy nodoActual, NodoVert nodoVertice) {
 
         NodoAdy nodo = null;
 
@@ -256,4 +256,19 @@ public class Grafo {
         return nodo;
 
     }
+
+    public Lista obtenerAdyacentes(Object vertice) {
+        Lista adyacentes = new Lista();
+        NodoVert nodo = ubicarVertice(vertice);
+        if (nodo != null) {
+            NodoAdy ady = nodo.getPrimerAdy();
+            int pos = 1;
+            while (ady != null) {
+                adyacentes.insertar(ady.getVertice().getElem(), pos++);
+                ady = ady.getSigAdyacente();
+            }
+        }
+        return adyacentes;
+    }
+
 }

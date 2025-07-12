@@ -7,6 +7,7 @@ import java.util.Scanner;
 import Estructuras.*;
 import Estructuras.Especificas.Diccionario.*;
 import Estructuras.Grafos.*;
+import Estructuras.lineales.*;
 
 public class Sistema {
 
@@ -202,7 +203,8 @@ public class Sistema {
                             } while (estado.equals("INCORRECTO"));
 
                             // corregir creacion de tuberia
-                            newTuberia = agregarTuberia(tuberiaNomen, Integer.parseInt(caudalMaximo), Integer.parseInt(caudalMinimo),
+                            newTuberia = agregarTuberia(tuberiaNomen, Integer.parseInt(caudalMaximo),
+                                    Integer.parseInt(caudalMinimo),
                                     Integer.parseInt(diametroTuberia), estado, ciuNombreSalida, ciuNombreEntrada);
 
                         } while (!hashMapCiudadTuberia.containsValue(newTuberia));
@@ -414,6 +416,9 @@ public class Sistema {
         if (ciudadEliminada) {
 
             log = "Ciudad " + nombre + " fue eliminada con exito";
+
+            mapaCiudades.eliminarVertice(nombre);
+
             System.out.println(log);
 
         } else {
@@ -679,9 +684,11 @@ public class Sistema {
 
         Ciudad ciudad = new Ciudad(nombre, nomenclatura, superficie, cantMetrosCubicos);
 
-        Object[] par = { ciudad.getNombre(), ciudad };
+        Object[] par = { nombre, ciudad };
 
         ciudades.insertar(par);
+
+        mapaCiudades.insertarVertice(nombre);
 
     }
 
@@ -753,6 +760,81 @@ public class Sistema {
         }
         return anioRet;
 
+    }
+
+    public Lista caminoMaxCaudalMin(String origen, String destino) {
+        
+        Lista mejorCamino = null;
+        Cola colaCaminos;
+        Lista caminoInicial;
+        int mejorCaudal;
+        int caudalActual;
+        boolean encontrado;
+        boolean existenCiudades = ciudades.existeClave(origen) && ciudades.existeClave(destino);
+        Lista caminoActual;
+        String ultimaCiudad;
+ 
+        if (existenCiudades) {
+
+            colaCaminos = new Cola();
+            caminoInicial = new Lista();
+            caminoInicial.insertar(origen, 1);
+            colaCaminos.poner(caminoInicial);
+
+            mejorCaudal = 0;
+            encontrado = false;
+
+            while (!colaCaminos.esVacia() && !encontrado) {
+                caminoActual = (Lista) colaCaminos.obtenerFrente();
+                colaCaminos.sacar();
+                ultimaCiudad = (String) caminoActual.recuperar(caminoActual.longitud());
+
+                if (ultimaCiudad.equals(destino)) {
+                    caudalActual = calcularCaudalPleno(caminoActual);
+                    if (caudalActual > mejorCaudal) {
+                        mejorCamino = caminoActual.clone();
+                        mejorCaudal = caudalActual;
+                    }
+                } else {
+                    Lista adyacentes = mapaCiudades.obtenerAdyacentes(ultimaCiudad);
+                    int i = 1;
+                    while (i <= adyacentes.longitud()) {
+                        String vecino = (String) adyacentes.recuperar(i);
+                        if (caminoActual.localizar(vecino) < 0) {
+                            Lista nuevoCamino = caminoActual.clone();
+                            nuevoCamino.insertar(vecino, nuevoCamino.longitud() + 1);
+                            colaCaminos.poner(nuevoCamino);
+                        }
+                        i++;
+                    }
+                }
+            }
+
+            if (mejorCamino != null) {
+                System.out.println("se encontro mejor camino");
+            }
+        }
+        return mejorCamino; // Único return
+    }
+
+    private int calcularCaudalPleno(Lista camino) {
+        int caudalMinimo = 0;
+        String ciudad1;
+        String ciudad2;
+        ParNomen par;
+        Tuberia tuberia;
+
+        for (int i = 1; i < camino.longitud(); i++) {
+            ciudad1 = (String) camino.recuperar(i);
+            ciudad2 = (String) camino.recuperar(i + 1);
+            par = new ParNomen(ciudad1, ciudad2);
+            tuberia = hashMapCiudadTuberia.get(par);
+            if (tuberia != null) {
+                caudalMinimo = Math.min(caudalMinimo, tuberia.getCaudalMaximo());
+            }
+        }
+
+        return caudalMinimo;
     }
 
 }
