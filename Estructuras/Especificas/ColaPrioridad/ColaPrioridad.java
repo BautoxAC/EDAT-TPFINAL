@@ -71,6 +71,7 @@ public class ColaPrioridad {
 
             cola = this.inicio.getItems();
             cola.sacar();
+            eliminado = true;
 
             if (cola.esVacia()) {
                 this.inicio = this.inicio.getEnlace();
@@ -89,7 +90,7 @@ public class ColaPrioridad {
         if (this.inicio != null) {
 
             cola = this.inicio.getItems();
-            cola.obtenerFrente();
+            frente = cola.obtenerFrente();
 
         }
 
