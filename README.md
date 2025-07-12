@@ -22,7 +22,7 @@ Dada una ciudad, mostrar
     - Si hay una tubería en reparación y otra inactiva, el camino se considera inactivo.
 - Obtener el camino que llegue de A a B pasando por la mínima cantidad de ciudades. Una vez obtenido el camino decir cuál es el estado.
 6. Dado un año, generar y mostrar un listado de las ciudades ordenadas por consumo de agua anual de mayor a menor. 
-    - El consumo de agua anual se calcula como la sumatoria de los consumos mensuales de dicho año. 
-    - Utilice una estructura de datos auxiliar que considere apropiada para crear el listado que asegure la eficiencia al momento de la consulta. No debe guardar la estructura ni el listado después de mostrarlo. 
+- El consumo de agua anual se calcula como la sumatoria de los consumos mensuales de dicho año. 
+- Utilice una estructura de datos auxiliar que considere apropiada para crear el listado que asegure la eficiencia al momento de la consulta. No debe guardar la estructura ni el listado después de mostrarlo. 
 7. Mostrar sistema: es una operación de debugging que permite ver todas las estructuras utilizadas con su contenido (grafo, AVL y Mapeo) para verificar, en cualquier momento de la ejecución del sistema, que se encuentren cargadas correctamente. En este punto se deberá utilizar el método toString() para mostrar claramente cómo están almacenados los datos en la estructura, no es solo un listado. 
 Por ejemplo, para el AVL debe indicarse cuál es la raíz y que para cada nodo se vea quién es su hijo izquierdo y hijo derecho, y la altura de cada nodo. En el Grafo, que se vean los vértices en el orden que estén almacenados y los arcos que lo tienen por origen.
