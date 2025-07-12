@@ -7,17 +7,15 @@ public class Auxiliares {
         boolean valido = true;
         int i = 0;
 
-        System.out.println("entra");
-
         if (palabra.length() > 0) {
             while (valido && i < palabra.length()) {
 
-                if (!esNumero(palabra.charAt(i))) {
+                if (palabra.charAt(i) == '0' && palabra.length() > 1) {
+                    valido = false;
+                } else if (!esNumero(palabra.charAt(i))) {
                     valido = false;
                 }
-
                 i++;
-
             }
         } else {
             valido = false;
@@ -91,6 +89,7 @@ public class Auxiliares {
 
     public static int mesANumero(String mes) {
 
+
         int elegido;
         mes = mes.toLowerCase();
         switch (mes) {
@@ -138,4 +137,34 @@ public class Auxiliares {
         return elegido;
 
     }
+
+    public static String devolverNumeroValido(String palabra) {
+
+        String numero = "";
+        int i;
+        boolean numEncontrado;
+
+        if (palabra.charAt(0) == '0' && palabra.length() > 1) {
+            i = 1;
+            numEncontrado = false;
+            while (i < palabra.length()) {
+                if (palabra.charAt(i) != '0' && !numEncontrado) {
+                    numEncontrado = true;
+                }
+                if (numEncontrado) {
+                    numero += palabra.charAt(i);
+                }
+                i++;
+            }
+            if (numero.length() == 0) {
+                numero = "0";
+            }
+        } else {
+            numero = palabra;
+        }
+
+        return numero;
+
+    }
+
 }
