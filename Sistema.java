@@ -334,7 +334,7 @@ public class Sistema {
 
                             }
 
-                            //j = 0;
+                            // j = 0;
 
                         }
 
@@ -388,10 +388,11 @@ public class Sistema {
 
             System.out.println("\n--- MODIFICAR CIUDADES ---");
             System.out.println("1. Elegir ciudad");
-            System.out.println("2. Modificar cantidad habitantes");
-            System.out.println("3. Modificar superficie");
-            System.out.println("4. Modificar cantidad de consumo");
-            System.out.println("5. Salir");
+            System.out.println("2. Modificar cantidad habitantes en un mes");
+            System.out.println("3. Modificar cantidad habitantes en un año");
+            System.out.println("4. Modificar superficie");
+            System.out.println("5. Modificar cantidad de consumo");
+            System.out.println("6. Salir");
             if (ciudadElegida != null) {
                 System.out.println("Ciudad elegida: " + ciudadElegida.getNombre());
             } else {
@@ -406,15 +407,18 @@ public class Sistema {
                     ciudadElegida = elegirCiudad(scanner);
                     break;
                 case "2":
-                    modificarCantHabitantes(scanner, ciudadElegida);
+                    modificarCantHabitantesMes(scanner, ciudadElegida);
                     break;
                 case "3":
-                    modificarSuperficie(scanner, ciudadElegida);
+                    modificarCantHabitantesAnio(scanner, ciudadElegida);
                     break;
                 case "4":
-                    modificarCantConsumo(scanner, ciudadElegida);
+                    modificarSuperficie(scanner, ciudadElegida);
                     break;
                 case "5":
+                    modificarCantConsumo(scanner, ciudadElegida);
+                    break;
+                case "6":
                     System.out.println("Volviendo al menu anterior...");
                     break;
                 default:
@@ -422,7 +426,7 @@ public class Sistema {
                     break;
             }
 
-        } while (!opcion.equals("5"));
+        } while (!opcion.equals("6"));
 
     }
 
@@ -443,7 +447,6 @@ public class Sistema {
             log = "Ciudad " + nombre + " fue seleccionada";
             System.out.println(log);
 
-            
         } else {
 
             log = "Error, la ciudad " + nombre + " no existe";
@@ -455,27 +458,50 @@ public class Sistema {
 
     }
 
-    private void modificarCantHabitantes(Scanner scanner, Ciudad ciudad) {
+    private void modificarCantHabitantesMes(Scanner scanner, Ciudad ciudad) {
 
         String log;
         String cant;
+        String mes;
+        int anio;
 
         if (ciudad != null) {
 
-            System.out.println("Ingrese la nueva cantidad de habitantes");
+            System.out.println("Ingrese el año del mes que quiera cambiar");
 
-            cant = scanner.nextLine();
+            anio = scanner.nextInt();
+            scanner.nextLine();
 
-            if (aux.esNumero(cant)) {
+            if (traducirAnio(anio) != -1) {
 
-                log = "Cantidad actualizada con exito";
-                System.out.println(log);
+                System.out.println("Ingrese el mes que quiere cambiar");
+
+                mes = scanner.nextLine();
+
+                if (aux.mesANumero(mes) != -1) {
+                    System.out.println("Ingrese la nueva cantidad de habitantes");
+
+                    cant = scanner.nextLine();
+
+                    if (aux.esNumero(cant)) {
+
+                        log = "Cantidad actualizada con exito";
+                        System.out.println(log);
+
+                    } else {
+
+                        log = "Error, no se pudo completar la operacion, cantidad no valida";
+                        System.out.println(log);
+
+                    }
+                } else {
+                    log = "Error, no se pudo completar la operacion, ";
+                    System.out.println(log);
+                }
 
             } else {
-
-                log = "Error, no se pudo completar la operacion, cantidad no valida";
+                log = "Error, no se pudo completar la operacion, año no valido, debe ser entre 2015-2024";
                 System.out.println(log);
-
             }
 
         } else {
@@ -549,9 +575,10 @@ public class Sistema {
     private void agregarCiudad(String nombre, int[][] matriz, String nomenclatura, int superficie,
             int cantMetrosCubicos) {
 
-        //Ciudad ciudad = new Ciudad(nombre, matriz, nomenclatura, superficie, cantMetrosCubicos);
+        // Ciudad ciudad = new Ciudad(nombre, matriz, nomenclatura, superficie,
+        // cantMetrosCubicos);
 
-        Ciudad ciudad = new Ciudad(nombre,nomenclatura, superficie, cantMetrosCubicos);
+        Ciudad ciudad = new Ciudad(nombre, nomenclatura, superficie, cantMetrosCubicos);
 
         Object[] par = { ciudad.getNombre(), ciudad };
 
