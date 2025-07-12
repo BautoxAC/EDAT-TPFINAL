@@ -9,7 +9,8 @@ Estado: ACTIVO, EN REPARACIÓN, EN DISEÑO, INACTIVO.
 */
 
 public class Tuberia {
-
+    
+    //Formato: Nomenclatura ciudad desde-Nomenclaturaciudad hasta, por ejemplo: si las ciudades son Neufuén y Cupral-Có sería NE3001-CC3002
     private String nomenclatura;
     private int caudalMinimo;
     private int caudalMaximo;
@@ -48,10 +49,15 @@ public class Tuberia {
     public void setCaudalMinimo(int caudalMinimo) {
         this.caudalMinimo = caudalMinimo;
     }
+    public void setCaudalMaximo(int caudalMaximo) {
+        this.caudalMaximo = caudalMaximo;
+    }
+    public void setDiametroTuberia(int diametroTuberia) {
+        this.diametroTuberia = diametroTuberia;
+    }
     public void setEstado(String estado) {
         this.estado = estado;
     }
 
-    //Formato: Nomenclatura ciudad desde-Nomenclaturaciudad hasta, por ejemplo: si las ciudades son Neufuén y Cupral-Có sería NE3001-CC3002
 
 }

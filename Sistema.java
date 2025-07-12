@@ -111,7 +111,7 @@ public class Sistema {
                     eliminarTuberia(scanner);
                     break;
                 case "3":
-                    // modificarCiudad(scanner);
+                    modificarTuberia(scanner);
                     break;
                 case "4":
                     System.out.println("Volviendo al menu anterior...");
@@ -126,22 +126,22 @@ public class Sistema {
     }
 
     private void eliminarTuberia(Scanner scanner) {
-        
+
         String ciuNombreSalida;
         String ciuNombreEntrada;
         ParNomen parNomen;
 
         /*
-            System.out.println("Ingrese la nomeclatura de la truberia a eliminar");
-
-            String nomenBuscada;
-            nomenBuscada = scanner.nextLine();
-            
-
-            hashMapCiudadTuberia.entrySet().removeIf(entry -> 
-                entry.getValue().getNomenclatura().equals(nomenBuscada)
-            );
-        */
+         * System.out.println("Ingrese la nomeclatura de la truberia a eliminar");
+         * 
+         * String nomenBuscada;
+         * nomenBuscada = scanner.nextLine();
+         * 
+         * 
+         * hashMapCiudadTuberia.entrySet().removeIf(entry ->
+         * entry.getValue().getNomenclatura().equals(nomenBuscada)
+         * );
+         */
 
         do {
             System.out.println("Ingrese el nombre de la ciudad de salida del agua: ");
@@ -157,7 +157,7 @@ public class Sistema {
 
                     if (!ciudades.existeClave(ciuNombreEntrada)) {
 
-                        parNomen= new ParNomen(ciuNombreSalida, ciuNombreEntrada);
+                        parNomen = new ParNomen(ciuNombreSalida, ciuNombreEntrada);
 
                         hashMapCiudadTuberia.remove(parNomen);
 
@@ -225,28 +225,11 @@ public class Sistema {
                             } while (!Auxiliares.esNumero(diametroTuberia));
                             do {
                                 System.out.println(
-                                        "Ingrese el Estado en el que se encuntra la tuberia: \n 0: ACTIVO \n 1: EN REPARACION \n 2: EN DISEÑO \n INACTIVO");
+                                        "Ingrese el Estado en el que se encuntra la tuberia: \n 0: ACTIVO \n 1: EN REPARACION \n 2: EN DISEÑO \n 3: INACTIVO");
 
                                 estado = scanner.nextLine();
 
-                                switch (estado) {
-                                    case "0":
-                                        estado = "ACTIVO";
-                                        break;
-                                    case "1":
-                                        estado = "EN REPARACION";
-                                        break;
-                                    case "2":
-                                        estado = "EN DISEÑO";
-
-                                        break;
-                                    case "3":
-                                        estado = "INACTIVO";
-                                        break;
-                                    default:
-                                        estado = "INCORRECTO";
-                                        break;
-                                }
+                                estado = numeroAEstado(estado);
 
                             } while (estado.equals("INCORRECTO"));
 
@@ -288,6 +271,213 @@ public class Sistema {
             System.out.println("Ya existe la tuberia: " + tuberiaNomen);
         }
         return newTuberia;
+    }
+
+    private void modificarTuberia(Scanner scanner) {
+
+        String opcion;
+        Ciudad ciudadElegida = null;
+        Tuberia tuberiaElegida = new Tuberia();
+
+        do {
+
+            System.out.println("\n--- MODIFICAR TUBERIAS ---");
+            System.out.println("1. Elegir tuberia");
+            System.out.println("2. Modificar caudal minimo");
+            System.out.println("3. Modificar caudal maximo");
+            System.out.println("4. Modificar diametro de la tuberia");
+            System.out.println("5. Modificar el estado");
+            System.out.println("6. Salir");
+            if (ciudadElegida != null) {
+                System.out.println("Tuberia elegida: " + ciudadElegida.getNombre());
+            } else {
+                System.out.println("No hay una tuberia seleccionada");
+            }
+            System.out.print("Opcion elegida: ");
+
+            opcion = scanner.nextLine();
+
+            switch (opcion) {
+                case "1":
+                    tuberiaElegida = elegirTuberia(scanner);
+                    break;
+                case "2":
+                    modificarCaudalMinimo(scanner, tuberiaElegida);
+                    break;
+                case "3":
+                    modificarCaudalMaximo(scanner, tuberiaElegida);
+                    break;
+                case "4":
+                    modificarDiametroTuberia(scanner, tuberiaElegida);
+                    break;
+                case "5":
+                    modificarEstado(scanner, tuberiaElegida);
+                    break;
+                case "6":
+                    System.out.println("Volviendo al menu anterior...");
+                    break;
+                default:
+                    System.out.println("ERROR");
+                    break;
+            }
+
+        } while (!opcion.equals("6"));
+
+    }
+
+    private void modificarCaudalMinimo(Scanner scanner, Tuberia tuberiaElegida) {
+
+        String log;
+        String cant;
+
+        if (tuberiaElegida != null) {
+
+            System.out.println("Ingrese el nuevo caudal minimo");
+
+            cant = scanner.nextLine();
+
+            if (Auxiliares.esNumero(cant)) {
+
+                log = "Caudal minimo actualizado con exito";
+                System.out.println(log);
+
+                tuberiaElegida.setCaudalMinimo(Integer.parseInt(cant));
+
+            } else {
+
+                log = "Error, no se pudo completar la operacion, numero no valido";
+                System.out.println(log);
+
+            }
+
+        } else {
+            System.out.println("ERROR: No hay una tuberia seleccionada");
+        }
+
+    }
+
+    private void modificarCaudalMaximo(Scanner scanner, Tuberia tuberiaElegida) {
+
+        String log;
+        String cant;
+
+        if (tuberiaElegida != null) {
+
+            System.out.println("Ingrese el nuevo caudal maximo");
+
+            cant = scanner.nextLine();
+
+            if (Auxiliares.esNumero(cant)) {
+
+                log = "Caudal maximo actualizada con exito";
+                System.out.println(log);
+
+                tuberiaElegida.setCaudalMaximo(Integer.parseInt(cant));
+
+            } else {
+
+                log = "Error, no se pudo completar la operacion, numero no valido";
+                System.out.println(log);
+
+            }
+
+        } else {
+            System.out.println("ERROR: No hay una tuberia seleccionada");
+        }
+
+    }
+
+    private void modificarDiametroTuberia(Scanner scanner, Tuberia tuberiaElegida) {
+
+        String log;
+        String cant;
+
+        if (tuberiaElegida != null) {
+
+            System.out.println("Ingrese el nuevo diametro de la tuberia");
+
+            cant = scanner.nextLine();
+
+            if (Auxiliares.esNumero(cant)) {
+
+                log = "Diametro de la tuberia actualizada con exito";
+                System.out.println(log);
+
+                tuberiaElegida.setDiametroTuberia(Integer.parseInt(cant));
+
+            } else {
+
+                log = "Error, no se pudo completar la operacion, numero no valido";
+                System.out.println(log);
+
+            }
+
+        } else {
+            System.out.println("ERROR: No hay una tuberia seleccionada");
+        }
+
+    }
+
+    private void modificarEstado(Scanner scanner, Tuberia tuberiaElegida) {
+
+        String log;
+        String estado;
+
+        if (tuberiaElegida != null) {
+
+            System.out.println(
+                    "Ingrese el Estado en el que se encuntra la tuberia: \n 0: ACTIVO \n 1: EN REPARACION \n 2: EN DISEÑO \n 3: INACTIVO");
+            estado = scanner.nextLine();
+
+            estado = numeroAEstado(estado);
+
+            if (!estado.equals("INCORRECTO")) {
+
+                log = "Estado de la tuberia actualizada con exito";
+                System.out.println(log);
+
+                tuberiaElegida.setEstado(estado);
+
+            } else {
+
+                log = "Error, no se pudo completar la operacion, estado no valido";
+                System.out.println(log);
+
+            }
+
+        } else {
+            System.out.println("ERROR: No hay una tuberia seleccionada");
+        }
+
+    }
+
+    private Tuberia elegirTuberia(Scanner scanner) {
+        System.out.println("\n--- ELEGIR TUBERIA ---");
+        String ciuNombreSalida;
+        String ciuNombreEntrada;
+        Tuberia tuberiaElegida = null;
+        System.out.println("Ingrese el nombre de la ciudad de salida del agua: ");
+
+        ciuNombreSalida = scanner.nextLine();
+
+        if (!ciudades.existeClave(ciuNombreSalida)) {
+            System.out.println("Ingrese el nombre de la ciudad de entrada del agua: ");
+
+            ciuNombreEntrada = scanner.nextLine();
+
+            if (!ciudades.existeClave(ciuNombreEntrada)) {
+
+                tuberiaElegida = hashMapCiudadTuberia.get(new ParNomen(ciuNombreSalida, ciuNombreEntrada));
+
+            } else {
+                System.out.println("No existe esta ciudad: " + ciuNombreEntrada);
+            }
+
+        } else {
+            System.out.println("No existe esta ciudad: " + ciuNombreSalida);
+        }
+
+        return tuberiaElegida;
     }
 
     private void menuCiudades(Scanner scanner) {
@@ -811,7 +1001,7 @@ public class Sistema {
     }
 
     public Lista caminoMaxCaudalMin(String origen, String destino) {
-        
+
         Lista mejorCamino = null;
         Cola colaCaminos;
         Lista caminoInicial;
@@ -821,7 +1011,7 @@ public class Sistema {
         boolean existenCiudades = ciudades.existeClave(origen) && ciudades.existeClave(destino);
         Lista caminoActual;
         String ultimaCiudad;
- 
+
         if (existenCiudades) {
 
             colaCaminos = new Cola();
@@ -883,6 +1073,29 @@ public class Sistema {
         }
 
         return caudalMinimo;
+    }
+
+    private String numeroAEstado(String num) {
+        String estado = "";
+        switch (estado) {
+            case "0":
+                estado = "ACTIVO";
+                break;
+            case "1":
+                estado = "EN REPARACION";
+                break;
+            case "2":
+                estado = "EN DISEÑO";
+
+                break;
+            case "3":
+                estado = "INACTIVO";
+                break;
+            default:
+                estado = "INCORRECTO";
+                break;
+        }
+        return estado;
     }
 
 }
