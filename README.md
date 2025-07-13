@@ -2,7 +2,7 @@ Hola, este es un proyecto de EDAT. Gracias por leer.
 
 Desarrollar la clase Transporte de Agua con un menú de opciones para realizar las siguientes tareas:
 1. Altas, bajas y modificaciones de ciudades  ✓
-2. Altas, bajas y modificaciones de tuberías (1º versión: solo una tubería por par de ciudades en el mismo sentido)
+2. Altas, bajas y modificaciones de tuberías (1º versión: solo una tubería por par de ciudades en el mismo sentido) ✓
 3. Alta de información de la cantidad de habitantes para año dado y ciudad dada ✓
 4. Consultas sobre ciudades:
 Dada una ciudad, mostrar  
