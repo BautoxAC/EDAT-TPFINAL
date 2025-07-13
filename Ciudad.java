@@ -56,6 +56,14 @@ public class Ciudad {
         return cantidadHab;
     }
 
+    public int getConsumoAnual(int anio) {
+        int consumoAnual = 0;
+        for (int i = 0; i < cantHabitantes[anio].length; i++) {
+            consumoAnual += cantHabitantes[anio][i] * this.cantConsumo;
+        }
+        return consumoAnual;
+    }
+
     // modificadores
 
     public void setNombre(String nombre) {

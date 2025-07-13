@@ -1,25 +1,27 @@
 package Estructuras.Especificas.Diccionario;
 
+import java.util.ArrayList;
+import java.util.List;
 import Estructuras.lineales.*;
 
 // clase hecha por maxi con el codigo de bauti
 
 public class Diccionario {
-    
+
     private NodoAVLDicc raiz;
 
-    public Diccionario () {
+    public Diccionario() {
 
         this.raiz = null;
 
     }
 
-    public boolean insertar(Object [] par) {
+    public boolean insertar(Object[] par) {
 
         boolean[] exito = { false };
 
         if (this.raiz == null) {
-            this.raiz = new NodoAVLDicc (par[0],par[1]);
+            this.raiz = new NodoAVLDicc(par[0], par[1]);
             exito[0] = true;
         } else {
             this.raiz = insertarRec(this.raiz, par, exito);
@@ -27,7 +29,7 @@ public class Diccionario {
         return exito[0];
     }
 
-    private NodoAVLDicc insertarRec(NodoAVLDicc n, Object [] par, boolean[] exito) {
+    private NodoAVLDicc insertarRec(NodoAVLDicc n, Object[] par, boolean[] exito) {
         Comparable elem = (Comparable) par[0];
         int comparar;
         if (n != null) {
@@ -37,14 +39,14 @@ public class Diccionario {
                     if (n.getHijoIzquierdo() != null) {
                         n.setHijoIzquierdo(insertarRec(n.getHijoIzquierdo(), par, exito));
                     } else {
-                        n.setHijoIzquierdo(new NodoAVLDicc(par[0],par[1]));
+                        n.setHijoIzquierdo(new NodoAVLDicc(par[0], par[1]));
                         exito[0] = true;
                     }
                 } else {
                     if (n.getHijoDerecho() != null) {
                         n.setHijoDerecho(insertarRec(n.getHijoDerecho(), par, exito));
                     } else {
-                        n.setHijoDerecho(new NodoAVLDicc(par[0],par[1]));
+                        n.setHijoDerecho(new NodoAVLDicc(par[0], par[1]));
                         exito[0] = true;
                     }
                 }
@@ -54,7 +56,8 @@ public class Diccionario {
             n.recalcularAltura();
             int balance;
             balance = calcularBalance(n);
-            System.out.println(n.getClave() + " balance: " + balance + " elemIn: " + elem + " altura: " + n.getAltura());
+            System.out
+                    .println(n.getClave() + " balance: " + balance + " elemIn: " + elem + " altura: " + n.getAltura());
             if (balance > 1) {
                 // desabalaceado por izq entonces balanceo por izq
                 // rotacion a der
@@ -147,7 +150,7 @@ public class Diccionario {
 
                 }
                 if (n.getHijoIzquierdo() != null && n.getHijoDerecho() != null) {
-                    Object [] parMayor = buscarMayor(n.getHijoIzquierdo());
+                    Object[] parMayor = buscarMayor(n.getHijoIzquierdo());
                     n.setHijoIzquierdo(eliminarRec(n.getHijoIzquierdo(), (Comparable) parMayor[1], exito));
                     n.setClave(parMayor[0]);
                     n.setDato(parMayor[1]);
@@ -189,8 +192,8 @@ public class Diccionario {
         return eliminado;
     }
 
-    public Object [] buscarMayor(NodoAVLDicc n) {
-        Object [] parMayor = null;
+    public Object[] buscarMayor(NodoAVLDicc n) {
+        Object[] parMayor = null;
         if (n != null) {
             parMayor = new Object[2];
             parMayor[0] = n.getClave();
@@ -203,9 +206,9 @@ public class Diccionario {
         return parMayor;
     }
 
-    private Object [] minimoRecursivo(NodoAVLDicc nodoActual) {
+    private Object[] minimoRecursivo(NodoAVLDicc nodoActual) {
 
-        Object [] parMinimo = null;
+        Object[] parMinimo = null;
 
         if (nodoActual != null) {
 
@@ -273,9 +276,9 @@ public class Diccionario {
         return texto;
     }
 
-    private Object [] maximoRecursivo(NodoAVLDicc nodoActual) {
+    private Object[] maximoRecursivo(NodoAVLDicc nodoActual) {
 
-        Object [] parMaximo = null;
+        Object[] parMaximo = null;
 
         if (nodoActual != null) {
 
@@ -293,9 +296,7 @@ public class Diccionario {
 
     }
 
-    
-    
-        /*
+    /*
      * listarRango (elemMinimo, elemMaximo) : Lista (de elemento)
      * // recorre parte del árbol (sólo lo necesario) y devuelve una lista ordenada
      * con los elementos que
@@ -333,7 +334,7 @@ public class Diccionario {
 
     }
 
-     private boolean perteneceRecursivo(NodoAVLDicc nodoActual, Comparable elem) {
+    private boolean perteneceRecursivo(NodoAVLDicc nodoActual, Comparable elem) {
 
         boolean pertenece = false;
 
@@ -363,7 +364,6 @@ public class Diccionario {
 
     }
 
-   
     public Object obtenerDato(Object clave) {
 
         return obtenerDatoAux(this.raiz, (Comparable) clave);
@@ -453,7 +453,7 @@ public class Diccionario {
 
     private void listarDatosAux(Lista lista, NodoAVLDicc padre) {
         if (padre != null) {
-            lista.insertar(padre.getDato().toString(), lista.longitud() + 1);
+            lista.insertar(padre.getDato(), lista.longitud() + 1);
             listarDatosAux(lista, padre.getHijoIzquierdo());
             listarDatosAux(lista, padre.getHijoDerecho());
         }

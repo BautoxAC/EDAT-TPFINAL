@@ -1363,6 +1363,92 @@ public class Sistema {
             }
         }
     }
+    
+    private void ciudadesOrdenadasConsumo(int anio) {
+        int anioTraducido = this.traducirAnio(anio);
+        String log = "";
+        String texto = "[";
+        if (anio != -1) {
+            Lista listaConsumos = ciudades.listarDatos();
+            int largo = listaConsumos.longitud();
+            CiudadConsumo[] arregloCiudades = new CiudadConsumo[largo];
+            for (int i = 0; i < largo; i++) {
+                Ciudad CiudadX = (Ciudad) listaConsumos.recuperar(i);
+                arregloCiudades[i] = new CiudadConsumo(CiudadX.getNombre(), CiudadX.getConsumoAnual(anio));
+            }
+            metodoHeapsortAscendente(arregloCiudades);
+            for (int i = arregloCiudades.length-1; i >= 0; i--) {
+                CiudadConsumo ciudad = arregloCiudades[i];
+                texto += "( " + ciudad.getNombreCiudad() + ", " + ciudad.getConsumoAnual() + ")";
+                if (i != arregloCiudades.length)
+                    texto += ",";
+            }
+            texto += "]";
+            log = texto;
+        } else {
+            log = "ERROR:  AÑO INGRESADO INCORRECTAMENTE DEBE SER ENTRE 2015 Y 2024";
+        }
+        escribirLog(log);
+    }
+
+    private void heap(CiudadConsumo arr[], int n, int i) {
+
+        // el elemento mayor es la raiz
+
+        int mayor = i;
+
+        // la parte izquierda (l) es 2*i + 1
+
+        int l = 2 * i + 1;
+
+        // la parte derecha (r) es 2*i + 2
+
+        int r = 2 * i + 2;
+
+        // si el hijo izquierdo es mayor a la raiz
+
+        if (l < n && arr[l].getConsumoAnual() > arr[mayor].getConsumoAnual()) {
+            mayor = l;
+        }
+
+        // si el hijo derecho es mas grande que el mayor hasta ahora
+
+        if (r < n && arr[r].getConsumoAnual() > arr[mayor].getConsumoAnual()) {
+            mayor = r;
+        }
+
+        // si el mayor no es raiz
+        if (mayor != i) {
+            CiudadConsumo aux = arr[i];
+            arr[i] = arr[mayor];
+            arr[mayor] = aux;
+
+            // hace el metodo recursivo al arbol que queda
+            heap(arr, n, mayor);
+        }
+    }
+
+    private void metodoHeapsortAscendente(CiudadConsumo[] array) {
+
+        int n = array.length;
+
+        // reoordena el arreglo
+        for (int i = n / 2 - 1; i >= 0; i--) {
+            heap(array, n, i);
+        }
+
+        // extrae los elementos uno por uno
+        for (int i = n - 1; i > 0; i--) {
+
+            // mueve la raiz al final
+            CiudadConsumo temp = array[0];
+            array[0] = array[i];
+            array[i] = temp;
+
+            // hace el metodo en el heap reducido
+            heap(array, i, 0);
+        }
+    }
     /*
      * public static void guardarArchivos(String camino) {
      * 
