@@ -90,7 +90,6 @@ public class Sistema {
                 logger.close();
             }
         } catch (IOException e) {
-            System.err.println("Error al cerrar el logger: " + e.getMessage());
             escribirLog("Error al cerrar el logger: " + e.getMessage());
         }
         scanner.close();
@@ -373,26 +372,21 @@ public class Sistema {
             cant = scanner.nextLine();
 
             if (Auxiliares.esNumero(cant)) {
-
                 log = "Caudal maximo actualizada con exito";
-                System.out.println(log);
-                escribirLog(log);
-
                 tuberiaElegida.setCaudalMaximo(Integer.parseInt(cant));
 
             } else {
 
                 log = "Error, no se pudo completar la operacion, numero no valido";
-                System.out.println(log);
                 escribirLog(log);
 
             }
 
         } else {
-            System.out.println("ERROR: No hay una tuberia seleccionada");
-            escribirLog("ERROR: No hay una tuberia seleccionada");
+            log = "ERROR: No hay una tuberia seleccionada";
         }
 
+        escribirLog(log);
     }
 
     private void modificarDiametroTuberia(Scanner scanner, Tuberia tuberiaElegida) {
@@ -409,24 +403,21 @@ public class Sistema {
             if (Auxiliares.esNumero(cant)) {
 
                 log = "Diametro de la tuberia actualizada con exito";
-                System.out.println(log);
-                escribirLog(log);
 
                 tuberiaElegida.setDiametroTuberia(Integer.parseInt(cant));
 
             } else {
 
                 log = "Error, no se pudo completar la operacion, numero no valido";
-                System.out.println(log);
                 escribirLog(log);
 
             }
 
         } else {
-            System.out.println("ERROR: No hay una tuberia seleccionada");
-            escribirLog("ERROR: No hay una tuberia seleccionada");
+            log = "ERROR: No hay una tuberia seleccionada";
 
         }
+        escribirLog(log);
 
     }
 
@@ -446,25 +437,21 @@ public class Sistema {
             if (!estado.equals("INCORRECTO")) {
 
                 log = "Estado de la tuberia actualizada con exito";
-                System.out.println(log);
-                escribirLog(log);
 
                 tuberiaElegida.setEstado(estado);
 
             } else {
 
                 log = "Error, no se pudo completar la operacion, estado no valido";
-                System.out.println(log);
-                escribirLog(log);
 
             }
 
         } else {
 
-            System.out.println("ERROR: No hay una tuberia seleccionada");
-            escribirLog("ERROR: No hay una tuberia seleccionada");
+            log = "ERROR: No hay una tuberia seleccionada";
 
         }
+        escribirLog(log);
 
     }
 
@@ -472,9 +459,9 @@ public class Sistema {
         System.out.println("\n--- ELEGIR TUBERIA ---");
         String ciuNombreSalida;
         String ciuNombreEntrada;
+        String log = "";
         Tuberia tuberiaElegida = null;
         System.out.println("Ingrese el nombre de la ciudad de salida del agua: ");
-
         ciuNombreSalida = scanner.nextLine();
 
         if (!ciudades.existeClave(ciuNombreSalida)) {
@@ -485,18 +472,18 @@ public class Sistema {
             if (!ciudades.existeClave(ciuNombreEntrada)) {
 
                 tuberiaElegida = hashMapCiudadTuberia.get(new ParNomen(ciuNombreSalida, ciuNombreEntrada));
+                log = "tuberia seleccionada";
 
             } else {
-                System.out.println("No existe esta ciudad: " + ciuNombreEntrada);
-                escribirLog("No existe esta ciudad: " + ciuNombreEntrada);
+                log = "No existe esta ciudad: " + ciuNombreEntrada;
 
             }
 
         } else {
-            System.out.println("No existe esta ciudad: " + ciuNombreSalida);
-            escribirLog("No existe esta ciudad: " + ciuNombreSalida);
+            log = "No existe esta ciudad: " + ciuNombreSalida;
 
         }
+        escribirLog(log);
 
         return tuberiaElegida;
     }
@@ -549,6 +536,7 @@ public class Sistema {
         boolean valido = false;
         int[][] matriz;
         int j;
+        String log;
         String valorActual;
 
         System.out.println("Ingrese el nombre de la ciudad");
@@ -557,8 +545,8 @@ public class Sistema {
 
         if (ciudades.pertenece(nombre)) {
 
-            System.out.println("Error, ya existe esa ciudad");
-            escribirLog("Error, ya existe esa ciudad");
+            log = "Error, ya existe esa ciudad";
+            escribirLog(log);
 
             pertenece = true;
 
@@ -784,14 +772,14 @@ public class Sistema {
 
                         log = "Cantidad actualizada con exito";
                         ciudad.setHabitantesAnioMes(anioInt, i, Integer.parseInt(cant));
-                        escribirLog(log);
                         i++;
+
                     } else {
 
                         log = "Error, no se pudo completar la operacion, cantidad no valida debe ser positiva";
-                        escribirLog(log);
 
                     }
+                    escribirLog(log);
                 }
             }
 
@@ -908,7 +896,7 @@ public class Sistema {
             }
 
         } else {
-            log="ERROR: No hay una ciudad seleccionada";
+            log = "ERROR: No hay una ciudad seleccionada";
         }
         escribirLog(log);
 
