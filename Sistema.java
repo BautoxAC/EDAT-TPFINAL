@@ -530,6 +530,9 @@ public class Sistema {
 
     }
 
+    // todobien kamel revisa tus metodos estan bien pero acordate que usamos String y ademas
+    // bauti tiene un traductor de nombre a numero, asi q usas ese te parece muybien solo vi ese arreglalo gracias
+
     private void mostrarCiudad(Scanner scanner) {
 
         String opcion;
