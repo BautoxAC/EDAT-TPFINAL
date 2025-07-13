@@ -498,7 +498,8 @@ public class Sistema {
             System.out.println("1. Agregar ciudad");
             System.out.println("2. Eliminar ciudad");
             System.out.println("3. Modificar ciudad");
-            System.out.println("4. Volver");
+            System.out.println("4. Mostrar ciudad");
+            System.out.println("6. Volver");
             System.out.print("Opcion elegida: ");
 
             opcion = scanner.nextLine();
@@ -514,6 +515,9 @@ public class Sistema {
                     modificarCiudad(scanner);
                     break;
                 case "4":
+                    mostrarCiudad(scanner);
+                    break;
+                case "6":
                     System.out.println("Volviendo al menu anterior...");
                     break;
                 default:
@@ -523,6 +527,104 @@ public class Sistema {
 
         } while (!opcion.equals("4"));
 
+    }
+    
+    private void mostrarCiudad(Scanner scanner) {
+
+        String opcion;
+        Ciudad ciudadElegida=null;
+        ciudadElegida =elegirCiudad(scanner);
+
+        if (ciudadElegida != null) {
+            do {
+                
+
+                System.out.println("\n--- Mostrar La ciudad :"+ciudadElegida.getNombre()+"---");
+                System.out.println("1. Mostrar habitantes");
+                System.out.println("1. Mostrar volumen del agua");
+                System.out.println("6. Volver");
+                System.out.print("Opcion elegida: ");
+
+                opcion = scanner.nextLine();
+
+                switch (opcion) {
+                    case "1":
+                        cantHabitates(scanner, ciudadElegida);
+                        break;
+                    case "2":
+                        volumenAgua(scanner, ciudadElegida);
+                        break;
+                    case "6":
+                        System.out.println("Volviendo al menu anterior...");
+                        break;
+                    default:
+                        System.out.println("ERROR");
+                        break;
+                }
+
+            } while (!opcion.equals("4"));
+        } else {
+            System.out.println("No hay una ciudad seleccionada");
+        }
+
+    }
+    
+    private void volumenAgua(Scanner scanner, Ciudad ciudadElegida) {
+        int mes;
+        int anio;
+        int volumenAgua;
+        
+        //Modularisable
+        System.out.println("Ingrese el numero del mes");
+        do {
+            mes=scanner.nextInt();
+            if (mes<0 && mes>13) {
+             System.out.println("MAL TODO MAL");   
+            }
+
+        } while (mes<0 && mes>13);
+        
+        System.out.println("Ingrese el año desde 2015 al 2025 inclusive");
+        do {
+            anio=scanner.nextInt();
+            if (anio<2015 && anio>2025) {
+             System.out.println("MAL TODO MAL");   
+            }
+
+        } while (anio<=2015 && anio>=2025);
+        anio -= 2015;
+        //Modularisable
+        
+        volumenAgua=ciudadElegida.getHabitantesAnioMes(anio, mes)*ciudadElegida.getCantConsumo();
+
+        System.out.println("La cantidad de habitantes de "+Auxiliares.numeroAMes(mes)+" del "+(anio+ 2015)+" ES: " +volumenAgua);
+    }
+
+    private void cantHabitates(Scanner scanner,Ciudad ciudadElegida) {
+        int mes;
+        int anio;
+        
+        //Modularisable
+        System.out.println("Ingrese el numero del mes");
+        do {
+            mes=scanner.nextInt();
+            if (mes<0 && mes>13) {
+             System.out.println("MAL TODO MAL");   
+            }
+
+        } while (mes<0 && mes>13);
+        
+        System.out.println("Ingrese el año desde 2015 al 2025 inclusive");
+        do {
+            anio=scanner.nextInt();
+            if (anio<2015 && anio>2025) {
+             System.out.println("MAL TODO MAL");   
+            }
+
+        } while (anio<2015 && anio>2025);
+        anio -= 2015;
+        //Modularisable
+        System.out.println("La cantidad de habitantes de "+Auxiliares.numeroAMes(mes)+" del "+(anio+ 2015)+" ES: " +ciudadElegida.getHabitantesAnioMes(anio, mes));
     }
 
     private void ingresarCiudad(Scanner scanner) {
@@ -981,7 +1083,7 @@ public class Sistema {
 
     private int traducirAnio(int anio) {
         int anioRet = -1;
-        if (anio >= 2015 && anio <= 2025) {
+        if (anio >= 2015 && anio <= 2024) {
             anioRet = anio - 2015;
         }
         return anioRet;
