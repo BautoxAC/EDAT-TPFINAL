@@ -22,23 +22,23 @@ public class ColaPrioridad {
         if (this.inicio == null) {
             cola = new Cola();
             cola.poner(elem);
-            inicio = new NodoCP(prioridad, cola, null);
+            this.inicio = new NodoCP(prioridad, cola, null);
             insertado = true;
         } else {
-            if (inicio.getPrioridad() == prioridad) {
-                cola = inicio.getItems();
+            if (this.inicio.getPrioridad() == prioridad) {
+                cola = this.inicio.getItems();
                 cola.poner(elem);
                 insertado = true;
             } else {
-                if (prioridad < inicio.getPrioridad()) {
+                if (prioridad < this.inicio.getPrioridad()) {
                     cola = new Cola();
-                    aux = new NodoCP(prioridad, cola, inicio);
-                    inicio = aux;
+                    aux = new NodoCP(prioridad, cola, this.inicio);
+                    this.inicio = aux;
                     cola.poner(elem);
                     insertado = true;
                 } else {
-                    anterior = inicio;
-                    aux = inicio.getEnlace();
+                    anterior = this.inicio;
+                    aux = this.inicio.getEnlace();
                     while (aux != null && !insertado) {
                         if (aux.getPrioridad() == prioridad) {
                             cola = aux.getItems();
