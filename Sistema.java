@@ -499,6 +499,7 @@ public class Sistema {
             System.out.println("2. Eliminar ciudad");
             System.out.println("3. Modificar ciudad");
             System.out.println("4. Mostrar ciudad");
+            System.out.println("5. rangoNombreVolumen");
             System.out.println("6. Volver");
             System.out.print("Opcion elegida: ");
 
@@ -529,6 +530,7 @@ public class Sistema {
 
     }
     
+
     private void mostrarCiudad(Scanner scanner) {
 
         String opcion;
@@ -541,7 +543,8 @@ public class Sistema {
 
                 System.out.println("\n--- Mostrar La ciudad :"+ciudadElegida.getNombre()+"---");
                 System.out.println("1. Mostrar habitantes");
-                System.out.println("1. Mostrar volumen del agua");
+                System.out.println("2. Mostrar volumen del agua");
+                System.out.println("3. rangoNombreVolumen");
                 System.out.println("6. Volver");
                 System.out.print("Opcion elegida: ");
 
@@ -554,6 +557,9 @@ public class Sistema {
                     case "2":
                         volumenAgua(scanner, ciudadElegida);
                         break;
+                    case "3":
+                        rangoNombreVolumen(scanner);
+                    break;
                     case "6":
                         System.out.println("Volviendo al menu anterior...");
                         break;
@@ -569,6 +575,75 @@ public class Sistema {
 
     }
     
+    private Cola rangoNombreVolumen(Scanner scanner) {
+        String minNomb,maxNomb;
+        int  minVol, maxVol;
+        Lista ciudLista;
+        Cola newCiudadCola =new Cola();
+        Ciudad ciudadActual;
+
+        int mes;
+        int anio;
+        int volumenAgua;
+        
+        //Modularisable
+        System.out.println("Ingrese el numero del mes");
+        do {
+            mes=scanner.nextInt();
+            if (mes<0 && mes>13) {
+             System.out.println("MAL TODO MAL");   
+            }
+
+        } while (mes<0 && mes>13);
+        
+        System.out.println("Ingrese el año desde 2015 al 2025 inclusive");
+        do {
+            anio=scanner.nextInt();
+            if (anio<2015 && anio>2025) {
+             System.out.println("MAL TODO MAL");   
+            }
+
+        } while (anio<=2015 && anio>=2025);
+        anio -= 2015;
+        //Modularisable
+
+
+
+        System.out.println("Ingrese minNomb");
+        minNomb=scanner.nextLine();
+        
+        System.out.println("Ingrese maxNomb");
+        maxNomb=scanner.nextLine();
+
+        System.out.println("Ingrese minVol");
+        minVol=scanner.nextInt();
+        
+        System.out.println("Ingrese minVol");
+        maxVol=scanner.nextInt();
+
+        ciudLista =ciudades.listarRango(minNomb, maxNomb);
+        
+        if (!ciudLista.esVacia()) {
+
+            do {
+                ciudadActual= (Ciudad) ciudLista.recuperar(1);
+
+                volumenAgua=ciudadActual.getHabitantesAnioMes(anio, mes)*ciudadActual.getCantConsumo();
+                if (volumenAgua<minVol && volumenAgua>maxVol) {
+                    newCiudadCola.poner(ciudadActual);
+                }
+                
+                ciudLista.eliminar(1);
+            } while (!ciudLista.esVacia());
+
+        } else {
+            System.out.println("no se encotro ninguna ciudad entre "+minNomb+" y "+maxNomb);
+        }
+
+        return newCiudadCola;
+
+    }
+
     private void volumenAgua(Scanner scanner, Ciudad ciudadElegida) {
         int mes;
         int anio;
@@ -594,7 +669,7 @@ public class Sistema {
         } while (anio<=2015 && anio>=2025);
         anio -= 2015;
         //Modularisable
-        
+
         volumenAgua=ciudadElegida.getHabitantesAnioMes(anio, mes)*ciudadElegida.getCantConsumo();
 
         System.out.println("La cantidad de habitantes de "+Auxiliares.numeroAMes(mes)+" del "+(anio+ 2015)+" ES: " +volumenAgua);
