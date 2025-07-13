@@ -29,13 +29,12 @@ public class Sistema {
 
         try {
             // escribe lineas
-            FileWriter writer = new FileWriter("sistema.log", false); // true = append y no borra lo anteriormente
+            FileWriter logger = new FileWriter("sistema.log", false); // true = append y no borra lo anteriormente
                                                                       // escrito
-            writer.write("Este texto se agrega al final.\n");
-            writer.write("Este texto se agrega al final.\n");
-            writer.close();
+            logger.close();
         } catch (IOException e) {
             System.err.println("Error al abrir el archivo de log: " + e.getMessage());
+            escribirLog("Error al abrir el archivo de log: " + e.getMessage());
         }
 
     }
@@ -78,7 +77,8 @@ public class Sistema {
                     // mostrarSistema();
                     break;
                 case "8":
-                    System.out.println("Saliendo del sistema...");
+                    System.out.println("Saliendo del sistema...\n");
+                    escribirLog("Saliendo del sistema... \n");
                     break;
                 default:
                     System.out.println("Opción inválida. Intente nuevamente.");
@@ -91,6 +91,7 @@ public class Sistema {
             }
         } catch (IOException e) {
             System.err.println("Error al cerrar el logger: " + e.getMessage());
+            escribirLog("Error al cerrar el logger: " + e.getMessage());
         }
         scanner.close();
     }
@@ -168,13 +169,13 @@ public class Sistema {
                         hashMapCiudadTuberia.remove(parNomen);
 
                     } else {
-                        System.out.println("No existe esta ciudad: " + ciuNombreEntrada);
+                        escribirLog("No existe esta ciudad: " + ciuNombreEntrada);
                     }
 
                 } while (!ciudades.existeClave(ciuNombreEntrada));
 
             } else {
-                System.out.println("No existe esta ciudad: " + ciuNombreSalida);
+                escribirLog("No existe esta ciudad: " + ciuNombreSalida);
             }
         } while (!ciudades.existeClave(ciuNombreSalida));
     }
@@ -191,7 +192,7 @@ public class Sistema {
         String diametroTuberia;
         String estado;
         Tuberia newTuberia = new Tuberia();
-
+        String log = "";
         do {
             System.out.println("Ingrese el nombre de la ciudad de salida del agua: ");
 
@@ -246,14 +247,17 @@ public class Sistema {
 
                         } while (!hashMapCiudadTuberia.containsValue(newTuberia));
                     } else {
-                        System.out.println("No existe esta ciudad: " + ciuNombreEntrada);
+                        log = "No existe esta ciudad: " + ciuNombreEntrada;
                     }
 
                 } while (!ciudades.existeClave(ciuNombreEntrada));
 
             } else {
-                System.out.println("No existe esta ciudad: " + ciuNombreSalida);
+                log = "No existe esta ciudad: " + ciuNombreSalida;
+
             }
+            escribirLog(log);
+
         } while (!ciudades.existeClave(ciuNombreSalida));
 
     }
@@ -264,18 +268,20 @@ public class Sistema {
         ParNomen parNomeclatura = new ParNomen();
         newTuberia = new Tuberia(tuberiaNomen, caudalMaximo, caudalMinimo,
                 diametroTuberia, estado);
-
+        String log = "";
         if (!hashMapCiudadTuberia.containsValue(newTuberia)) {
 
             parNomeclatura = new ParNomen(ciuNombreSalida, ciuNombreEntrada);
 
             hashMapCiudadTuberia.put(parNomeclatura, newTuberia);
-
-            System.out.println("Se agrego con exito la tuberia: " + tuberiaNomen);
+            log = "Se agrego con exito la tuberia: " + tuberiaNomen;
 
         } else {
-            System.out.println("Ya existe la tuberia: " + tuberiaNomen);
+            log = "Ya existe la tuberia: " + tuberiaNomen;
+
         }
+        escribirLog(log);
+
         return newTuberia;
     }
 
@@ -343,22 +349,15 @@ public class Sistema {
             cant = scanner.nextLine();
 
             if (Auxiliares.esNumero(cant)) {
-
                 log = "Caudal minimo actualizado con exito";
-                System.out.println(log);
-
                 tuberiaElegida.setCaudalMinimo(Integer.parseInt(cant));
-
             } else {
-
                 log = "Error, no se pudo completar la operacion, numero no valido";
-                System.out.println(log);
-
             }
-
         } else {
-            System.out.println("ERROR: No hay una tuberia seleccionada");
+            log = "ERROR: No hay una tuberia seleccionada";
         }
+        escribirLog(log);
 
     }
 
@@ -377,6 +376,7 @@ public class Sistema {
 
                 log = "Caudal maximo actualizada con exito";
                 System.out.println(log);
+                escribirLog(log);
 
                 tuberiaElegida.setCaudalMaximo(Integer.parseInt(cant));
 
@@ -384,11 +384,13 @@ public class Sistema {
 
                 log = "Error, no se pudo completar la operacion, numero no valido";
                 System.out.println(log);
+                escribirLog(log);
 
             }
 
         } else {
             System.out.println("ERROR: No hay una tuberia seleccionada");
+            escribirLog("ERROR: No hay una tuberia seleccionada");
         }
 
     }
@@ -408,6 +410,7 @@ public class Sistema {
 
                 log = "Diametro de la tuberia actualizada con exito";
                 System.out.println(log);
+                escribirLog(log);
 
                 tuberiaElegida.setDiametroTuberia(Integer.parseInt(cant));
 
@@ -415,11 +418,14 @@ public class Sistema {
 
                 log = "Error, no se pudo completar la operacion, numero no valido";
                 System.out.println(log);
+                escribirLog(log);
 
             }
 
         } else {
             System.out.println("ERROR: No hay una tuberia seleccionada");
+            escribirLog("ERROR: No hay una tuberia seleccionada");
+
         }
 
     }
@@ -441,6 +447,7 @@ public class Sistema {
 
                 log = "Estado de la tuberia actualizada con exito";
                 System.out.println(log);
+                escribirLog(log);
 
                 tuberiaElegida.setEstado(estado);
 
@@ -448,11 +455,15 @@ public class Sistema {
 
                 log = "Error, no se pudo completar la operacion, estado no valido";
                 System.out.println(log);
+                escribirLog(log);
 
             }
 
         } else {
+
             System.out.println("ERROR: No hay una tuberia seleccionada");
+            escribirLog("ERROR: No hay una tuberia seleccionada");
+
         }
 
     }
@@ -477,10 +488,14 @@ public class Sistema {
 
             } else {
                 System.out.println("No existe esta ciudad: " + ciuNombreEntrada);
+                escribirLog("No existe esta ciudad: " + ciuNombreEntrada);
+
             }
 
         } else {
             System.out.println("No existe esta ciudad: " + ciuNombreSalida);
+            escribirLog("No existe esta ciudad: " + ciuNombreSalida);
+
         }
 
         return tuberiaElegida;
@@ -543,6 +558,8 @@ public class Sistema {
         if (ciudades.pertenece(nombre)) {
 
             System.out.println("Error, ya existe esa ciudad");
+            escribirLog("Error, ya existe esa ciudad");
+
             pertenece = true;
 
         }
@@ -658,19 +675,12 @@ public class Sistema {
         ciudadEliminada = ciudades.eliminar(nombre);
 
         if (ciudadEliminada) {
-
             log = "Ciudad " + nombre + " fue eliminada con exito";
-
             mapaCiudades.eliminarVertice(nombre);
-
-            System.out.println(log);
-
         } else {
-
             log = "Error, la ciudad " + nombre + " no existe";
-            System.out.println(log);
-
         }
+        escribirLog(log);
 
     }
 
@@ -738,17 +748,11 @@ public class Sistema {
         ciudadElegida = (Ciudad) ciudades.obtenerDato(nombre);
 
         if (ciudadElegida != null) {
-
             log = "Ciudad " + nombre + " fue seleccionada";
-            System.out.println(log);
-
         } else {
-
             log = "Error, la ciudad " + nombre + " no existe";
-            System.out.println(log);
-
         }
-
+        escribirLog(log);
         return ciudadElegida;
 
     }
@@ -779,24 +783,22 @@ public class Sistema {
                     if (Auxiliares.esNumero(cant)) {
 
                         log = "Cantidad actualizada con exito";
-                        System.out.println(log);
-
                         ciudad.setHabitantesAnioMes(anioInt, i, Integer.parseInt(cant));
-
+                        escribirLog(log);
                         i++;
                     } else {
 
                         log = "Error, no se pudo completar la operacion, cantidad no valida debe ser positiva";
-                        System.out.println(log);
+                        escribirLog(log);
 
                     }
                 }
             }
 
         } else {
-            System.out.println("ERROR: No hay una ciudad seleccionada");
+            log = "ERROR: No hay una ciudad seleccionada";
+            escribirLog(log);
         }
-
     }
 
     private void modificarCantHabitantesMes(Scanner scanner, Ciudad ciudad) {
@@ -832,29 +834,24 @@ public class Sistema {
 
                         log = "Cantidad actualizada con exito";
 
-                        System.out.println(log);
-
                         ciudad.setHabitantesAnioMes(anioInt, mesInt, Integer.parseInt(cant));
 
                     } else {
 
                         log = "Error, no se pudo completar la operacion, cantidad no valida";
-                        System.out.println(log);
-
                     }
                 } else {
                     log = "Error, no se pudo completar la operacion, el mes debe ser alguno de los siguientes: enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre y diciembre";
-                    System.out.println(log);
                 }
 
             } else {
                 log = "Error, no se pudo completar la operacion, año no valido, debe ser entre 2015-2024";
-                System.out.println(log);
             }
 
         } else {
-            System.out.println("ERROR: No hay una ciudad seleccionada");
+            log = "ERROR: No hay una ciudad seleccionada";
         }
+        System.out.println(log);
 
     }
 
@@ -872,21 +869,19 @@ public class Sistema {
             if (Auxiliares.esNumero(cant)) {
 
                 log = "Superficie actualizada con exito";
-                System.out.println(log);
 
                 ciudad.setSuperficie(Integer.parseInt(cant));
 
             } else {
 
                 log = "Error, no se pudo completar la operacion, numero no valido";
-                System.out.println(log);
 
             }
 
         } else {
-            System.out.println("ERROR: No hay una ciudad seleccionada");
+            log = "ERROR: No hay una ciudad seleccionada";
         }
-
+        escribirLog(log);
     }
 
     private void modificarCantConsumo(Scanner scanner, Ciudad ciudad) {
@@ -903,20 +898,19 @@ public class Sistema {
             if (Auxiliares.esNumero(cant)) {
 
                 log = "Consumo actualizado con exito";
-                System.out.println(log);
 
                 ciudad.setCantConsumo(Integer.parseInt(cant));
 
             } else {
 
                 log = "Error, no se pudo completar la operacion, numero no valido";
-                System.out.println(log);
 
             }
 
         } else {
-            System.out.println("ERROR: No hay una ciudad seleccionada");
+            log="ERROR: No hay una ciudad seleccionada";
         }
+        escribirLog(log);
 
     }
 
@@ -933,7 +927,7 @@ public class Sistema {
         ciudades.insertar(par);
 
         mapaCiudades.insertarVertice(nombre);
-
+        escribirLog("Ciudad agregada " + nombre);
     }
 
     private boolean esNomenclaturaValida(String nomenclatura) {
@@ -1104,12 +1098,11 @@ public class Sistema {
         return estado;
     }
 
-
     // METODOS DE CARGA
 
     public static String obtenerRutaArchivos() {
         Path rutaCarpeta = Paths.get("");
-        return  rutaCarpeta + "";
+        return rutaCarpeta + "";
     }
 
     public static void leerArchivos(String camino) {
@@ -1128,32 +1121,35 @@ public class Sistema {
 
                 String[] split = linea.split(";");
                 // no sabemos
-                /* switch (camino) {
-                    case "aviones":
-                        listaAviones[filas] = new Avion(split[0], split[1], stringAEntero(split[2]),
-                                stringAEntero(split[3]), stringAEntero(split[4]));
-                        break;
-                    case "rutas":
-                        listaRutas[filas] = new Ruta(split[0], split[1], split[2], stringAEntero(split[3]),
-                                (split[4].equals("Si")));
-                        break;
-                    case "vuelos":
-
-                        int fila = traductorDias(split[3].toLowerCase());
-                        int columna = traductorHoras(split[4]);
-
-                        if (split.length == 6) {
-                            horarios[fila][columna] = new Vuelo(split[0], idAAvion(split[1]),
-                                    idARuta(split[2]), split[3], split[4], (split[5].equals("true")));
-                        } else {
-                            horarios[fila][columna] = new Vuelo(split[0], idAAvion(split[1]),
-                                    idARuta(split[2]), split[3], split[4]);
-                        }
-
-                        break;
-                    default:
-                        break;
-                } */
+                /*
+                 * switch (camino) {
+                 * case "aviones":
+                 * listaAviones[filas] = new Avion(split[0], split[1], stringAEntero(split[2]),
+                 * stringAEntero(split[3]), stringAEntero(split[4]));
+                 * break;
+                 * case "rutas":
+                 * listaRutas[filas] = new Ruta(split[0], split[1], split[2],
+                 * stringAEntero(split[3]),
+                 * (split[4].equals("Si")));
+                 * break;
+                 * case "vuelos":
+                 * 
+                 * int fila = traductorDias(split[3].toLowerCase());
+                 * int columna = traductorHoras(split[4]);
+                 * 
+                 * if (split.length == 6) {
+                 * horarios[fila][columna] = new Vuelo(split[0], idAAvion(split[1]),
+                 * idARuta(split[2]), split[3], split[4], (split[5].equals("true")));
+                 * } else {
+                 * horarios[fila][columna] = new Vuelo(split[0], idAAvion(split[1]),
+                 * idARuta(split[2]), split[3], split[4]);
+                 * }
+                 * 
+                 * break;
+                 * default:
+                 * break;
+                 * }
+                 */
 
                 filas++;
 
@@ -1167,110 +1163,124 @@ public class Sistema {
 
     }
 
-   /*  public static void guardarArchivos(String camino) {
-
-        String nombreArchivoEntrada = obtenerRutaArchivos() + camino + ".txt";
-        String nombreArchivoSalida = nombreArchivoEntrada;
-
-        String linea = null;
-
-        try {
-
-            FileReader lectorArchivo = new FileReader(nombreArchivoEntrada);
-            FileWriter escritorArchivo = new FileWriter(nombreArchivoSalida);
-
-            BufferedReader bufferLectura = new BufferedReader(lectorArchivo);
-            BufferedWriter bufferEscritura = new BufferedWriter(escritorArchivo);
-
-            int fila = 0;
-            int columna = 0;
-            String guardar = "";
-            boolean bucle = true;
-
-            while (bucle) {
-
-                linea = bufferLectura.readLine();
-
-                switch (camino) {
-                    case "aviones":
-                        if (fila < listaAviones.length && listaAviones[fila] != null) {
-                            Avion avion = listaAviones[fila];
-                            guardar += (avion.getId() + ";" + avion.getModelo() + ";" +
-                                    avion.getCantVuelos() + ";" + avion.getCantAsientos()
-                                    + ";"
-                                    + avion.getKmRecorridos() + "\n");
-                        } else {
-                            bucle = false;
-                        }
-                        break;
-                    case "vuelos":
-                        if (fila < horarios.length) {
-                            Vuelo vuelo = horarios[fila][columna];
-                            if (vuelo != null) {
-                                guardar += (vuelo.getId() + ";" + vuelo.getAvion().getId() + ";" +
-                                        vuelo.getRuta().getId() + ";" + vuelo.getDia()
-                                        + ";"
-                                        + vuelo.getHora() + ";" + vuelo.getRealizado() + "\n");
-                            }
-                        } else {
-                            bucle = false;
-                        }
-                        break;
-                    default:
-                        break;
-                }
-
-                if (camino.equals("vuelos")) {
-                    if (columna >= 14) {
-                        fila++;
-                        columna = 0;
-                    } else {
-                        columna++;
-                    }
-                } else {
-                    fila++;
-                }
-
+    private void escribirLog(String texto) {
+        if (!texto.equals("")) {
+            try {
+                logger.write(texto + " \n");
+                System.out.println(texto);
+            } catch (FileNotFoundException ex) {
+                System.err.println(ex.getMessage() + "No existe el archivo." + " \n");
+            } catch (IOException ex) {
+                System.err.println("Error leyendo o escribiendo en algun archivo." + " \n");
             }
-            bufferEscritura.write(guardar);
-            bufferLectura.close();
-            bufferEscritura.close();
-        } catch (FileNotFoundException ex) {
-            System.err.println(ex.getMessage() + "No existe el archivo.");
-        } catch (IOException ex) {
-            System.err.println("Error leyendo o escribiendo en algun archivo.");
         }
-
     }
-
-    public static void crearArchivo(String camino) {
-
-        String nombreArchivoEntrada = obtenerRutaArchivos() + camino + ".txt";
-        String nombreArchivoSalida = nombreArchivoEntrada;
-
-        try {
-
-            FileWriter escritorArchivo = new FileWriter(nombreArchivoSalida);
-            BufferedWriter bufferEscritura = new BufferedWriter(escritorArchivo);
-
-            int i = 0;
-            String guardar = "";
-
-            for (i = 0; i < vuelosOrdenados.length; i++) {
-                Vuelo vuelo = vuelosOrdenados[i];
-                guardar += (vuelo.getId() + ";" + vuelo.getAvion().getId() + ";" +
-                        vuelo.getRuta().getId() + ";" + vuelo.getDia()
-                        + ";"
-                        + vuelo.getHora() + ";" + vuelo.getAvion().getKmRecorridos() + "\n");
-            }
-
-            bufferEscritura.write(guardar);
-            bufferEscritura.close();
-        } catch (FileNotFoundException ex) {
-            System.err.println(ex.getMessage() + "No existe el archivo.");
-        } catch (IOException ex) {
-            System.err.println("Error leyendo o escribiendo en algun archivo.");
-        }
-
-    } */
+    /*
+     * public static void guardarArchivos(String camino) {
+     * 
+     * String nombreArchivoEntrada = obtenerRutaArchivos() + camino + ".txt";
+     * String nombreArchivoSalida = nombreArchivoEntrada;
+     * 
+     * String linea = null;
+     * 
+     * try {
+     * 
+     * FileReader lectorArchivo = new FileReader(nombreArchivoEntrada);
+     * FileWriter escritorArchivo = new FileWriter(nombreArchivoSalida);
+     * 
+     * BufferedReader bufferLectura = new BufferedReader(lectorArchivo);
+     * BufferedWriter bufferEscritura = new BufferedWriter(escritorArchivo);
+     * 
+     * int fila = 0;
+     * int columna = 0;
+     * String guardar = "";
+     * boolean bucle = true;
+     * 
+     * while (bucle) {
+     * 
+     * linea = bufferLectura.readLine();
+     * 
+     * switch (camino) {
+     * case "aviones":
+     * if (fila < listaAviones.length && listaAviones[fila] != null) {
+     * Avion avion = listaAviones[fila];
+     * guardar += (avion.getId() + ";" + avion.getModelo() + ";" +
+     * avion.getCantVuelos() + ";" + avion.getCantAsientos()
+     * + ";"
+     * + avion.getKmRecorridos() + "\n");
+     * } else {
+     * bucle = false;
+     * }
+     * break;
+     * case "vuelos":
+     * if (fila < horarios.length) {
+     * Vuelo vuelo = horarios[fila][columna];
+     * if (vuelo != null) {
+     * guardar += (vuelo.getId() + ";" + vuelo.getAvion().getId() + ";" +
+     * vuelo.getRuta().getId() + ";" + vuelo.getDia()
+     * + ";"
+     * + vuelo.getHora() + ";" + vuelo.getRealizado() + "\n");
+     * }
+     * } else {
+     * bucle = false;
+     * }
+     * break;
+     * default:
+     * break;
+     * }
+     * 
+     * if (camino.equals("vuelos")) {
+     * if (columna >= 14) {
+     * fila++;
+     * columna = 0;
+     * } else {
+     * columna++;
+     * }
+     * } else {
+     * fila++;
+     * }
+     * 
+     * }
+     * bufferEscritura.write(guardar);
+     * bufferLectura.close();
+     * bufferEscritura.close();
+     * } catch (FileNotFoundException ex) {
+     * System.err.println(ex.getMessage() + "No existe el archivo.");
+     * } catch (IOException ex) {
+     * System.err.println("Error leyendo o escribiendo en algun archivo.");
+     * }
+     * 
+     * }
+     * 
+     * public static void crearArchivo(String camino) {
+     * 
+     * String nombreArchivoEntrada = obtenerRutaArchivos() + camino + ".txt";
+     * String nombreArchivoSalida = nombreArchivoEntrada;
+     * 
+     * try {
+     * 
+     * FileWriter escritorArchivo = new FileWriter(nombreArchivoSalida);
+     * BufferedWriter bufferEscritura = new BufferedWriter(escritorArchivo);
+     * 
+     * int i = 0;
+     * String guardar = "";
+     * 
+     * for (i = 0; i < vuelosOrdenados.length; i++) {
+     * Vuelo vuelo = vuelosOrdenados[i];
+     * guardar += (vuelo.getId() + ";" + vuelo.getAvion().getId() + ";" +
+     * vuelo.getRuta().getId() + ";" + vuelo.getDia()
+     * + ";"
+     * + vuelo.getHora() + ";" + vuelo.getAvion().getKmRecorridos() + "\n");
+     * }
+     * 
+     * bufferEscritura.write(guardar);
+     * bufferEscritura.close();
+     * } catch (FileNotFoundException ex) {
+     * System.err.println(ex.getMessage() + "No existe el archivo.");
+     * } catch (IOException ex) {
+     * System.err.println("Error leyendo o escribiendo en algun archivo.");
+     * }
+     * 
+     * }
+     */
 }
