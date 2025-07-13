@@ -1,6 +1,10 @@
 package Estructuras.Grafos;
 
-import Estructuras.lineales.Lista;
+import Estructuras.lineales.*;
+
+import java.util.PriorityQueue;
+
+import Estructuras.Especificas.ColaPrioridad.*;
 
 public class Grafo {
     private NodoVert inicio;
@@ -215,6 +219,148 @@ public class Grafo {
 
         }
 
+    }
+
+    public Lista listarEnAnchura() {
+
+        Lista visitados = new Lista();
+        NodoVert aux = this.inicio;
+
+        while (aux != null) {
+            if (visitados.localizar(aux.getElem()) < 0) {
+                listarEnAnchuraAux(aux, visitados);
+            }
+            aux = aux.getSigVertice();
+        }
+
+        return visitados;
+
+    }
+
+    private void listarEnAnchuraAux(NodoVert verticeInicial, Lista lista) {
+
+        Cola cola = new Cola();
+
+        lista.insertar(verticeInicial.getElem(), lista.longitud() + 1);
+        cola.poner(verticeInicial);
+
+        NodoVert frente;
+        Lista adyacentes;
+        NodoVert ady;
+        while (!cola.esVacia()) {
+            frente = (NodoVert) cola.obtenerFrente();
+            cola.sacar();
+
+            adyacentes = obtenerAdyacentes(frente);
+
+            while (!adyacentes.esVacia()) {
+                ady = (NodoVert) adyacentes.recuperar(adyacentes.longitud());
+                if (lista.localizar(ady.getElem()) == -1) {
+                    lista.insertar(ady.getElem(), lista.longitud() + 1);
+                    cola.poner(ady);
+                }
+            }
+
+        }
+
+    }
+
+    public Lista caminoMinimoMaxEtiqueta() {
+
+        Lista visitados = new Lista();
+        NodoVert aux = this.inicio;
+
+        while (aux != null) {
+            if (visitados.localizar(aux.getElem()) < 0) {
+                caminoMinimoMaxEtiquetaAux(aux, visitados);
+            }
+            aux = aux.getSigVertice();
+        }
+
+        return visitados;
+
+    }
+
+    private void caminoMinimoMaxEtiquetaAux(NodoVert verticeInicial, Lista lista) {
+
+        ColaPrioridad colaPrioridad = new ColaPrioridad();
+
+        lista.insertar(verticeInicial.getElem(), lista.longitud() + 1);
+        colaPrioridad.insertar(verticeInicial, 1);
+
+        NodoVert frente;
+        Lista adyacentes;
+        NodoAdy ady;
+        while (!colaPrioridad.esVacia()) {
+            frente = (NodoVert) colaPrioridad.recuperarFrente();
+            colaPrioridad.eliminarFrente();
+
+            adyacentes = obtenerAdyacentes(frente);
+
+            while (!adyacentes.esVacia()) {
+                ady = (NodoAdy) adyacentes.recuperar(adyacentes.longitud());
+                if (lista.localizar(ady.getVertice().getElem()) == -1) {
+                    lista.insertar(ady.getVertice().getElem(), lista.longitud() + 1);
+                    colaPrioridad.insertar(ady, (int) ady.getEtiqueta());
+                }
+            }
+
+        }
+
+    }
+
+    public Lista caminoMinimoMaxEtiqueta(Object origen, Object destino) {
+        ColaPrioridad cola = new ColaPrioridad();
+        Lista lista = new Lista();
+        Lista mejorCamino = null;
+
+        NodoVert verticeOrigen = ubicarVertice(origen);
+
+        lista.insertar(verticeOrigen.getElem(), 1);
+        cola.insertar(new Object[] {verticeOrigen, Integer.MAX_VALUE, lista}, Integer.MAX_VALUE);
+
+        int minTotal = Integer.MAX_VALUE;
+        int minActual;
+
+        NodoAdy ady;
+
+        Object[] frente;
+
+        NodoVert nodoActual;
+        Lista caminoActual;
+        Lista nuevoCamino;
+
+        int nuevoMin;
+
+        while (!cola.esVacia()) {
+            frente = (Object []) cola.recuperarFrente();
+            cola.eliminarFrente();
+
+            nodoActual = (NodoVert) frente[0];
+            minActual = (int) frente[1];
+            caminoActual = (Lista) frente[2];
+
+            if (nodoActual.getElem().equals(destino)) {
+                if (minActual < minTotal) {
+                    minTotal = minActual;
+                    mejorCamino = caminoActual;
+                }
+            } else {
+                ady = nodoActual.getPrimerAdy();
+                while (ady != null) {
+                    nuevoMin = Math.min(minActual, (int) ady.getEtiqueta());
+                    nuevoCamino = caminoActual.clone();
+                    nuevoCamino.insertar(ady.getVertice().getElem(), nuevoCamino.longitud()+1);
+
+                    cola.insertar(new Object[] {ady.getVertice(), nuevoMin, nuevoCamino}, nuevoMin);
+
+                    ady = ady.getSigAdyacente();
+                }
+
+            }
+
+        }
+        return mejorCamino;
     }
 
     public Grafo clone() {
