@@ -265,50 +265,6 @@ public class Grafo {
 
     }
 
-    public Lista caminoMinimoMaxEtiqueta() {
-
-        Lista visitados = new Lista();
-        NodoVert aux = this.inicio;
-
-        while (aux != null) {
-            if (visitados.localizar(aux.getElem()) < 0) {
-                caminoMinimoMaxEtiquetaAux(aux, visitados);
-            }
-            aux = aux.getSigVertice();
-        }
-
-        return visitados;
-
-    }
-
-    private void caminoMinimoMaxEtiquetaAux(NodoVert verticeInicial, Lista lista) {
-
-        ColaPrioridad colaPrioridad = new ColaPrioridad();
-
-        lista.insertar(verticeInicial.getElem(), lista.longitud() + 1);
-        colaPrioridad.insertar(verticeInicial, 1);
-
-        NodoVert frente;
-        Lista adyacentes;
-        NodoAdy ady;
-        while (!colaPrioridad.esVacia()) {
-            frente = (NodoVert) colaPrioridad.recuperarFrente();
-            colaPrioridad.eliminarFrente();
-
-            adyacentes = obtenerAdyacentes(frente);
-
-            while (!adyacentes.esVacia()) {
-                ady = (NodoAdy) adyacentes.recuperar(adyacentes.longitud());
-                if (lista.localizar(ady.getVertice().getElem()) == -1) {
-                    lista.insertar(ady.getVertice().getElem(), lista.longitud() + 1);
-                    colaPrioridad.insertar(ady, (int) ady.getEtiqueta());
-                }
-            }
-
-        }
-
-    }
-
     public Lista caminoMinimoMaxEtiqueta(Object origen, Object destino) {
         ColaPrioridad cola = new ColaPrioridad();
         Lista lista = new Lista();

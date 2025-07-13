@@ -68,7 +68,7 @@ public class Sistema {
                     // menuConsultasCiudades(scanner);
                     break;
                 case "5":
-                    // menuConsultasTransporte(scanner);
+                    menuConsultasTransporte(scanner);
                     break;
                 case "6":
                     // listadoConsumoAnual(scanner);
@@ -529,19 +529,17 @@ public class Sistema {
         } while (!opcion.equals("4"));
 
     }
-    
 
     private void mostrarCiudad(Scanner scanner) {
 
         String opcion;
-        Ciudad ciudadElegida=null;
-        ciudadElegida =elegirCiudad(scanner);
+        Ciudad ciudadElegida = null;
+        ciudadElegida = elegirCiudad(scanner);
 
         if (ciudadElegida != null) {
             do {
-                
 
-                System.out.println("\n--- Mostrar La ciudad :"+ciudadElegida.getNombre()+"---");
+                System.out.println("\n--- Mostrar La ciudad :" + ciudadElegida.getNombre() + "---");
                 System.out.println("1. Mostrar habitantes");
                 System.out.println("2. Mostrar volumen del agua");
                 System.out.println("3. rangoNombreVolumen");
@@ -559,7 +557,7 @@ public class Sistema {
                         break;
                     case "3":
                         rangoNombreVolumen(scanner);
-                    break;
+                        break;
                     case "6":
                         System.out.println("Volviendo al menu anterior...");
                         break;
@@ -574,70 +572,68 @@ public class Sistema {
         }
 
     }
-    
+
     private Cola rangoNombreVolumen(Scanner scanner) {
-        String minNomb,maxNomb;
-        int  minVol, maxVol;
+        String minNomb, maxNomb;
+        int minVol, maxVol;
         Lista ciudLista;
-        Cola newCiudadCola =new Cola();
+        Cola newCiudadCola = new Cola();
         Ciudad ciudadActual;
 
         int mes;
         int anio;
         int volumenAgua;
-        
-        //Modularisable
+
+        // Modularisable
         System.out.println("Ingrese el numero del mes");
         do {
-            mes=scanner.nextInt();
-            if (mes<0 && mes>13) {
-             System.out.println("MAL TODO MAL");   
+            mes = scanner.nextInt();
+            if (mes < 0 && mes > 13) {
+                System.out.println("MAL TODO MAL");
             }
 
-        } while (mes<0 && mes>13);
-        
+        } while (mes < 0 && mes > 13);
+
         System.out.println("Ingrese el año desde 2015 al 2025 inclusive");
         do {
-            anio=scanner.nextInt();
-            if (anio<2015 && anio>2025) {
-             System.out.println("MAL TODO MAL");   
+            anio = scanner.nextInt();
+            if (anio < 2015 && anio > 2025) {
+                System.out.println("MAL TODO MAL");
             }
 
-        } while (anio<=2015 && anio>=2025);
+        } while (anio <= 2015 && anio >= 2025);
         anio -= 2015;
-        //Modularisable
-
-
+        // Modularisable
 
         System.out.println("Ingrese minNomb");
-        minNomb=scanner.nextLine();
-        
+        minNomb = scanner.nextLine();
+
         System.out.println("Ingrese maxNomb");
-        maxNomb=scanner.nextLine();
+        maxNomb = scanner.nextLine();
 
         System.out.println("Ingrese minVol");
-        minVol=scanner.nextInt();
-        
-        System.out.println("Ingrese minVol");
-        maxVol=scanner.nextInt();
+        minVol = scanner.nextInt();
 
-        ciudLista =ciudades.listarRango(minNomb, maxNomb);
-        
+        System.out.println("Ingrese minVol");
+        maxVol = scanner.nextInt();
+
+        ciudLista = ciudades.listarRango(minNomb, maxNomb);
+
         if (!ciudLista.esVacia()) {
 
             do {
-                ciudadActual= (Ciudad) ciudLista.recuperar(1);
+                ciudadActual = (Ciudad) ciudLista.recuperar(1);
 
-                volumenAgua=ciudadActual.getHabitantesAnioMes(anio, mes)*ciudadActual.getCantConsumo();
-                if (volumenAgua<minVol && volumenAgua>maxVol) {
+                volumenAgua = ciudadActual.getHabitantesAnioMes(anio, mes) * ciudadActual.getCantConsumo();
+                if (volumenAgua < minVol && volumenAgua > maxVol) {
                     newCiudadCola.poner(ciudadActual);
                 }
-                
+
                 ciudLista.eliminar(1);
             } while (!ciudLista.esVacia());
 
         } else {
-            System.out.println("no se encotro ninguna ciudad entre "+minNomb+" y "+maxNomb);
+            System.out.println("no se encotro ninguna ciudad entre " + minNomb + " y " + maxNomb);
         }
 
         return newCiudadCola;
@@ -648,58 +644,60 @@ public class Sistema {
         int mes;
         int anio;
         int volumenAgua;
-        
-        //Modularisable
+
+        // Modularisable
         System.out.println("Ingrese el numero del mes");
         do {
-            mes=scanner.nextInt();
-            if (mes<0 && mes>13) {
-             System.out.println("MAL TODO MAL");   
+            mes = scanner.nextInt();
+            if (mes < 0 && mes > 13) {
+                System.out.println("MAL TODO MAL");
             }
 
-        } while (mes<0 && mes>13);
-        
+        } while (mes < 0 && mes > 13);
+
         System.out.println("Ingrese el año desde 2015 al 2025 inclusive");
         do {
-            anio=scanner.nextInt();
-            if (anio<2015 && anio>2025) {
-             System.out.println("MAL TODO MAL");   
+            anio = scanner.nextInt();
+            if (anio < 2015 && anio > 2025) {
+                System.out.println("MAL TODO MAL");
             }
 
-        } while (anio<=2015 && anio>=2025);
+        } while (anio <= 2015 && anio >= 2025);
         anio -= 2015;
-        //Modularisable
+        // Modularisable
 
-        volumenAgua=ciudadElegida.getHabitantesAnioMes(anio, mes)*ciudadElegida.getCantConsumo();
+        volumenAgua = ciudadElegida.getHabitantesAnioMes(anio, mes) * ciudadElegida.getCantConsumo();
 
-        System.out.println("La cantidad de habitantes de "+Auxiliares.numeroAMes(mes)+" del "+(anio+ 2015)+" ES: " +volumenAgua);
+        System.out.println("La cantidad de habitantes de " + Auxiliares.numeroAMes(mes) + " del " + (anio + 2015)
+                + " ES: " + volumenAgua);
     }
 
-    private void cantHabitates(Scanner scanner,Ciudad ciudadElegida) {
+    private void cantHabitates(Scanner scanner, Ciudad ciudadElegida) {
         int mes;
         int anio;
-        
-        //Modularisable
+
+        // Modularisable
         System.out.println("Ingrese el numero del mes");
         do {
-            mes=scanner.nextInt();
-            if (mes<0 && mes>13) {
-             System.out.println("MAL TODO MAL");   
+            mes = scanner.nextInt();
+            if (mes < 0 && mes > 13) {
+                System.out.println("MAL TODO MAL");
             }
 
-        } while (mes<0 && mes>13);
-        
+        } while (mes < 0 && mes > 13);
+
         System.out.println("Ingrese el año desde 2015 al 2025 inclusive");
         do {
-            anio=scanner.nextInt();
-            if (anio<2015 && anio>2025) {
-             System.out.println("MAL TODO MAL");   
+            anio = scanner.nextInt();
+            if (anio < 2015 && anio > 2025) {
+                System.out.println("MAL TODO MAL");
             }
 
-        } while (anio<2015 && anio>2025);
+        } while (anio < 2015 && anio > 2025);
         anio -= 2015;
-        //Modularisable
-        System.out.println("La cantidad de habitantes de "+Auxiliares.numeroAMes(mes)+" del "+(anio+ 2015)+" ES: " +ciudadElegida.getHabitantesAnioMes(anio, mes));
+        // Modularisable
+        System.out.println("La cantidad de habitantes de " + Auxiliares.numeroAMes(mes) + " del " + (anio + 2015)
+                + " ES: " + ciudadElegida.getHabitantesAnioMes(anio, mes));
     }
 
     private void ingresarCiudad(Scanner scanner) {
@@ -1095,6 +1093,101 @@ public class Sistema {
         escribirLog("Ciudad agregada " + nombre);
     }
 
+    private void menuConsultasTransporte(Scanner scanner) {
+
+        String opcion;
+        Ciudad ciudadA = null;
+        Ciudad ciudadB = null;
+
+        do {
+
+            System.out.println("\n--- GESTIÓN DE CONSULTA DE TRANSPORTE ---");
+            System.out.println("1. Elegir Ciudad A");
+            System.out.println("2. Elegir Ciudad B");
+            System.out.println("3. Obtener camino y su estado (A-B)");
+            System.out.println("4. Obtener menor camino (A-B)");
+            System.out.println("5. Volver");
+            if (ciudadA == null) {
+                System.out.println("Ciudad A no seleccionada");
+            }
+            if (ciudadB == null) {
+                System.out.println("Ciudad B no seleccionada");
+            }
+            System.out.print("Opcion elegida: ");
+
+            opcion = scanner.nextLine();
+
+            switch (opcion) {
+                case "1":
+                    ciudadA = elegirCiudad(scanner);
+                    break;
+                case "2":
+                    ciudadB = elegirCiudad(scanner);
+                    break;
+                case "3":
+                    obtenerCaminoYEstado(ciudadA, ciudadB);
+                    break;
+                case "4":
+                    // obtenerCaminoYEstado(scanner);
+                    break;
+                case "5":
+                    System.out.println("Volviendo al menu anterior...");
+                    break;
+                default:
+                    System.out.println("ERROR");
+                    break;
+            }
+
+        } while (!opcion.equals("5"));
+
+    }
+
+    private void obtenerCaminoYEstado(Ciudad ciudadA, Ciudad ciudadB) {
+
+        Lista camino = mapaCiudades.caminoMinimoMaxEtiqueta(ciudadA.getNombre(), ciudadB.getNombre());
+
+        String estadoCamino = obtenerEstadoCamino(camino);
+
+        System.out.println("El camino es el siguiente:");
+        System.out.println(camino.toString());
+        System.out.println("Y esta: "+estadoCamino);
+
+    }
+
+    private String obtenerEstadoCamino(Lista camino) {
+
+        String estadoFinal = "ACTIVO";
+        Object ciudadOrigen;
+        Object ciudadDestino;
+        String estado;
+        boolean estaEnDis = false;
+        boolean estaEnRep = false;
+        boolean estaInactiv = false;
+        int longitud = camino.longitud();
+        int i = 1;
+
+        while (i < longitud && !estaEnDis) {
+            ciudadOrigen = camino.recuperar(i);
+            ciudadDestino = camino.recuperar(i + 1);
+
+            Tuberia tuberia = hashMapCiudadTuberia.get(new ParNomen((String) ciudadOrigen, (String) ciudadDestino));
+        
+            if (tuberia != null) {
+                estado = tuberia.getEstado();
+                estaEnDis = estado.equals("EN DISEÑO");
+                estaEnRep = estaEnRep || estado.equals("EN REPARACIÓN");
+                estaInactiv = estaInactiv || estado.equals("INACTIVO");
+            }
+
+            
+            estadoFinal = estaEnDis ? "EN DISEÑO" : 
+                     estaEnRep ? "EN REPARACIÓN" : 
+                     estaInactiv ? "INACTIVO" : "ACTIVO";
+
+        }
+        return estadoFinal;
+    }
+
     private boolean esNomenclaturaValida(String nomenclatura) {
 
         boolean valido = true;
@@ -1165,80 +1258,7 @@ public class Sistema {
 
     }
 
-    public Lista caminoMaxCaudalMin(String origen, String destino) {
 
-        Lista mejorCamino = null;
-        Cola colaCaminos;
-        Lista caminoInicial;
-        int mejorCaudal;
-        int caudalActual;
-        boolean encontrado;
-        boolean existenCiudades = ciudades.existeClave(origen) && ciudades.existeClave(destino);
-        Lista caminoActual;
-        String ultimaCiudad;
-
-        if (existenCiudades) {
-
-            colaCaminos = new Cola();
-            caminoInicial = new Lista();
-            caminoInicial.insertar(origen, 1);
-            colaCaminos.poner(caminoInicial);
-
-            mejorCaudal = 0;
-            encontrado = false;
-
-            while (!colaCaminos.esVacia() && !encontrado) {
-                caminoActual = (Lista) colaCaminos.obtenerFrente();
-                colaCaminos.sacar();
-                ultimaCiudad = (String) caminoActual.recuperar(caminoActual.longitud());
-
-                if (ultimaCiudad.equals(destino)) {
-                    caudalActual = calcularCaudalPleno(caminoActual);
-                    if (caudalActual > mejorCaudal) {
-                        mejorCamino = caminoActual.clone();
-                        mejorCaudal = caudalActual;
-                    }
-                } else {
-                    Lista adyacentes = mapaCiudades.obtenerAdyacentes(ultimaCiudad);
-                    int i = 1;
-                    while (i <= adyacentes.longitud()) {
-                        String vecino = (String) adyacentes.recuperar(i);
-                        if (caminoActual.localizar(vecino) < 0) {
-                            Lista nuevoCamino = caminoActual.clone();
-                            nuevoCamino.insertar(vecino, nuevoCamino.longitud() + 1);
-                            colaCaminos.poner(nuevoCamino);
-                        }
-                        i++;
-                    }
-                }
-            }
-
-            if (mejorCamino != null) {
-                System.out.println("se encontro mejor camino");
-            }
-        }
-        return mejorCamino; // Único return
-    }
-
-    private int calcularCaudalPleno(Lista camino) {
-        int caudalMinimo = 0;
-        String ciudad1;
-        String ciudad2;
-        ParNomen par;
-        Tuberia tuberia;
-
-        for (int i = 1; i < camino.longitud(); i++) {
-            ciudad1 = (String) camino.recuperar(i);
-            ciudad2 = (String) camino.recuperar(i + 1);
-            par = new ParNomen(ciudad1, ciudad2);
-            tuberia = hashMapCiudadTuberia.get(par);
-            if (tuberia != null) {
-                caudalMinimo = Math.min(caudalMinimo, tuberia.getCaudalMaximo());
-            }
-        }
-
-        return caudalMinimo;
-    }
 
     private String numeroAEstado(String num) {
         String estado = "";
