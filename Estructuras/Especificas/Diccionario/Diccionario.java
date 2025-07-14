@@ -317,7 +317,7 @@ public class Diccionario {
             int comparacionMin = compararElem.compareTo(min);
             int comparacionMax = compararElem.compareTo(max);
             if (comparacionMin >= 0 && comparacionMax <= 0) {
-                l.insertar(compararElem, l.longitud() + 1);
+                l.insertar(n.getDato(), l.longitud() + 1);
             }
             if (comparacionMin > 0) {
                 listarRangoRec(l, n.getHijoIzquierdo(), min, max);
@@ -391,9 +391,6 @@ public class Diccionario {
 
             }
         }
-
-        System.out.println("Dato es: ");
-        System.out.println(dato);
 
         return dato;
 

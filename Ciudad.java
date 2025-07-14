@@ -49,6 +49,7 @@ public class Ciudad {
 
     public int getHabitantesAnioMes(int anio, int mes) {
         int cantidadHab = -1;
+        
         if (anio >= 0 && anio <= 9 && mes >= 0 && mes <= 11) {
             cantidadHab = cantHabitantes[anio][mes];
         }

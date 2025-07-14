@@ -88,8 +88,6 @@ public class Auxiliares {
     }
 
     public static int mesANumero(String mes) {
-
-
         int elegido;
         mes = mes.toLowerCase();
         switch (mes) {
