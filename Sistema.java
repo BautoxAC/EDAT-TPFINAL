@@ -531,8 +531,10 @@ public class Sistema {
 
     }
 
-    // todobien kamel revisa tus metodos estan bien pero acordate que usamos String y ademas
-    // bauti tiene un traductor de nombre a numero, asi q usas ese te parece muybien solo vi ese arreglalo gracias
+    // todobien kamel revisa tus metodos estan bien pero acordate que usamos String
+    // y ademas
+    // bauti tiene un traductor de nombre a numero, asi q usas ese te parece muybien
+    // solo vi ese arreglalo gracias
 
     private void mostrarCiudad(Scanner scanner) {
 
@@ -1154,7 +1156,7 @@ public class Sistema {
 
         System.out.println("El camino es el siguiente:");
         System.out.println(camino.toString());
-        System.out.println("Y esta: "+estadoCamino);
+        System.out.println("Y esta: " + estadoCamino);
 
     }
 
@@ -1175,7 +1177,7 @@ public class Sistema {
             ciudadDestino = camino.recuperar(i + 1);
 
             Tuberia tuberia = hashMapCiudadTuberia.get(new ParNomen((String) ciudadOrigen, (String) ciudadDestino));
-        
+
             if (tuberia != null) {
                 estado = tuberia.getEstado();
                 estaEnDis = estado.equals("EN DISEÑO");
@@ -1183,10 +1185,7 @@ public class Sistema {
                 estaInactiv = estaInactiv || estado.equals("INACTIVO");
             }
 
-            
-            estadoFinal = estaEnDis ? "EN DISEÑO" : 
-                     estaEnRep ? "EN REPARACIÓN" : 
-                     estaInactiv ? "INACTIVO" : "ACTIVO";
+            estadoFinal = estaEnDis ? "EN DISEÑO" : estaEnRep ? "EN REPARACIÓN" : estaInactiv ? "INACTIVO" : "ACTIVO";
 
         }
         return estadoFinal;
@@ -1261,8 +1260,6 @@ public class Sistema {
         return anioRet;
 
     }
-
-
 
     private String numeroAEstado(String num) {
         String estado = "";
@@ -1364,20 +1361,24 @@ public class Sistema {
             }
         }
     }
-    
+
     private void ciudadesOrdenadasConsumo(int anio) {
         int anioTraducido = this.traducirAnio(anio);
         String log = "";
         if (anio != -1) {
             Lista listaConsumos = ciudades.listarDatos();
             int largo = listaConsumos.longitud();
-            ArbolHeap arbolOrdenado = new ArbolHeap(largo);
+            ArbolHeap arbol = new ArbolHeap(largo);
             for (int i = 0; i < largo; i++) {
                 Ciudad CiudadX = (Ciudad) listaConsumos.recuperar(i);
-                arbolOrdenado.insertar( CiudadX.getConsumoAnual(anioTraducido),CiudadX.getNombre());
+                int consumo = CiudadX.getConsumoAnual(anioTraducido);
+                arbol.insertar(consumo, new CiudadConsumo(CiudadX.getNombre(), consumo));
             }
-            arbolOrdenado.ordenarArreglo();
-            log = arbolOrdenado.toString();
+            Object[] arbolOrdenado = arbol.ordenarArreglo();
+            for (int i = 0; i < arbolOrdenado.length; i++) {
+                CiudadConsumo ciudad = (CiudadConsumo) arbolOrdenado[i];
+                System.out.println("ciudad: " + ciudad.getNombreCiudad() + " con consumo: " + ciudad.getConsumoAnual());
+            }
         } else {
             log = "ERROR:  AÑO INGRESADO INCORRECTAMENTE DEBE SER ENTRE 2015 Y 2024";
         }

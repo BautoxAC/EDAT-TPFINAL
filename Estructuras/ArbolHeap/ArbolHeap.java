@@ -107,14 +107,14 @@ public class ArbolHeap {
         return es;
     }
 
-    public void ordenarArreglo() {
+    public Object[] ordenarArreglo() {
         boolean hecho = false;
         int ult = ultimo - 1;
-        NodoHeap[] arr = new NodoHeap[this.TAMANIO];
-        for (int j = 0; j < ult; j++) {
+        Object[] arr = new Object[ultimo];
+        for (int j = 0; j <= ult; j++) {
             hecho = false;
             if (!this.esVacio()) {
-                NodoHeap elemUltimo = this.heap[0];
+                arr[ultimo - 1] = this.heap[0].getDato();
                 this.heap[0] = this.heap[ultimo - 1];
                 this.ultimo--;
                 int i = 1;
@@ -149,10 +149,9 @@ public class ArbolHeap {
                         hecho = true;
                     }
                 }
-                this.heap[ultimo] = elemUltimo;
             }
-            
         }
-        this.ultimo = ult+1;
+        this.ultimo = ult + 1;
+        return arr;
     }
 }
