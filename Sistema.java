@@ -1368,13 +1368,13 @@ public class Sistema {
         if (anio != -1) {
             Lista listaConsumos = ciudades.listarDatos();
             int largo = listaConsumos.longitud();
-            ArbolHeap arbol = new ArbolHeap(largo);
+            ArbolHeap heap = new ArbolHeap(largo);
             for (int i = 0; i < largo; i++) {
                 Ciudad CiudadX = (Ciudad) listaConsumos.recuperar(i);
                 int consumo = CiudadX.getConsumoAnual(anioTraducido);
-                arbol.insertar(consumo, new CiudadConsumo(CiudadX.getNombre(), consumo));
+                heap.insertar(consumo, new CiudadConsumo(CiudadX.getNombre(), consumo));
             }
-            Object[] arbolOrdenado = arbol.ordenarArreglo();
+            Object[] arbolOrdenado = heap.ordenarArreglo();
             for (int i = 0; i < arbolOrdenado.length; i++) {
                 CiudadConsumo ciudad = (CiudadConsumo) arbolOrdenado[i];
                 System.out.println("ciudad: " + ciudad.getNombreCiudad() + " con consumo: " + ciudad.getConsumoAnual());
