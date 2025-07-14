@@ -114,8 +114,8 @@ public class ArbolHeap {
         for (int j = 0; j < ult; j++) {
             hecho = false;
             if (!this.esVacio()) {
+                NodoHeap elemUltimo = this.heap[0];
                 this.heap[0] = this.heap[ultimo - 1];
-                this.heap[ultimo - 1] = null;
                 this.ultimo--;
                 int i = 1;
                 NodoHeap cimaMomentanea = this.heap[0];
@@ -123,38 +123,36 @@ public class ArbolHeap {
                     hecho = true;
                 }
                 while (!hecho) {
+                    int posMenor = 0;
                     NodoHeap hijoMenor = cimaMomentanea;
-                    NodoHeap hijoIZQ = this.heap[(2 * i) - 1];
-                    NodoHeap hijoDER = this.heap[(2 * i)];
-                    if (hijoIZQ != null && hijoDER != null) {
-                        hijoMenor = (hijoIZQ.getClave().compareTo(hijoDER.getClave()) < 0) ? (hijoIZQ)
-                                : (hijoDER);
+                    int posHijoIZQ = (2 * i) - 1;
+                    int posHijoDER = (2 * i);
+                    if (posHijoIZQ < this.ultimo
+                            && this.heap[posHijoIZQ].getClave().compareTo(this.heap[posHijoDER].getClave()) < 0) {
+                        posMenor = posHijoIZQ;
                     }
-                    if (hijoDER == null) {
-                        hijoMenor = hijoIZQ;
+                    if (posHijoDER < this.ultimo
+                            && this.heap[posHijoIZQ].getClave().compareTo(this.heap[posHijoDER].getClave()) > 0) {
+                        posMenor = posHijoDER;
                     }
-                    if (hijoIZQ == null) {
-                        hijoMenor = hijoDER;
-                    }
-                    if (hijoDER == null && hijoIZQ == null) {
-                        hecho = true;
-                        hijoMenor = cimaMomentanea;
-                    }
-                    int posMenor = (hijoIZQ == hijoMenor) ? (2 * i) - 1 : (2 * i);
-                    int comparacionHijoMenor = cimaMomentanea.getClave().compareTo(hijoMenor.getClave());
-                    if (comparacionHijoMenor > 0 && !hecho) {
-                        this.heap[i - 1] = hijoMenor;
-                        this.heap[posMenor] = cimaMomentanea;
-                        i = posMenor + 1;
+                    if (posMenor != 0) {
+                        hijoMenor = this.heap[posMenor];
+                        int comparacionHijoMenor = cimaMomentanea.getClave().compareTo(hijoMenor.getClave());
+                        if (comparacionHijoMenor > 0) {
+                            this.heap[i - 1] = hijoMenor;
+                            this.heap[posMenor] = cimaMomentanea;
+                            i = posMenor + 1;
+                        } else {
+                            hecho = true;
+                        }
                     } else {
                         hecho = true;
                     }
                 }
+                this.heap[ultimo] = elemUltimo;
             }
             
-            arr[j] = this.heap[0];
         }
-        this.heap = arr.clone();
-        this.ultimo = ult;
+        this.ultimo = ult+1;
     }
 }
