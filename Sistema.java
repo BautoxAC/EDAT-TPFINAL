@@ -587,27 +587,12 @@ public class Sistema {
         Cola newCiudadCola = new Cola();
         Ciudad ciudadActual;
 
-        String mes;
-        int mesInt;
-        String anio;
-        int anioInt;
+        int[] mesAnioInt= new int[2];
+
         int volumenAgua;
         String log = "";
         // Modularizable
-        System.out.println("Ingrese el mes");
-        do {
-            mes = scanner.nextLine();
-            mesInt = Auxiliares.mesANumero(mes);
-            if (mesInt == -1) {
-                System.out.println("debe ingresar un mes valio");
-            }
-        } while (mesInt == -1);
-
-        System.out.println("Ingrese el año desde 2015 al 2024 inclusive");
-        do {
-            anio = scanner.nextLine();
-            anioInt = traducirAnio(Integer.parseInt(anio));
-        } while (anioInt == -1);
+        mesYAnio(scanner, mesAnioInt);
         // Modularisable
 
         System.out.println("Ingrese minNomb");
@@ -629,7 +614,7 @@ public class Sistema {
             do {
                 ciudadActual = (Ciudad) ciudLista.recuperar(1);
 
-                volumenAgua = ciudadActual.getHabitantesAnioMes(anioInt, mesInt) * ciudadActual.getCantConsumo();
+                volumenAgua = ciudadActual.getHabitantesAnioMes(mesAnioInt[1], mesAnioInt[0]) * ciudadActual.getCantConsumo();
                 if (volumenAgua < minVol && volumenAgua > maxVol) {
                     log += ciudadActual.getNombre();
                 }
@@ -647,33 +632,18 @@ public class Sistema {
     }
 
     private void volumenAgua(Scanner scanner, Ciudad ciudadElegida) {
-        String mes;
-        String anio;
-        int mesInt;
-        int anioInt;
+        
         int volumenAgua;
-        // Modularisable
+        int[] mesAnioInt= new int[2];
+        
         if (ciudadElegida != null) {
-            System.out.println("Ingrese el mes");
-            do {
-                mes = scanner.nextLine();
-                mesInt = Auxiliares.mesANumero(mes);
-                if (mesInt != -1) {
-                    System.out.println("debe ingresar un mes valio");
-                }
-            } while (mesInt == -1);
+            
+            mesYAnio(scanner, mesAnioInt);
 
-            System.out.println("Ingrese el año desde 2015 al 2024 inclusive");
-            do {
-                anio = scanner.nextLine();
-                anioInt = traducirAnio(Integer.parseInt(anio));
-            } while (anioInt == -1);
-            // Modularisable
-
-            volumenAgua = ciudadElegida.getHabitantesAnioMes(anioInt, mesInt) * ciudadElegida.getCantConsumo();
-            int habitantes = ciudadElegida.getHabitantesAnioMes(anioInt, mesInt);
-            escribirLog("La cantidad de volumen de agua distribuida de " + Auxiliares.numeroAMes(mesInt) + " del "
-                    + (anioInt + 2015)
+            volumenAgua = ciudadElegida.getHabitantesAnioMes(mesAnioInt[1], mesAnioInt[0]) * ciudadElegida.getCantConsumo();
+            int habitantes = ciudadElegida.getHabitantesAnioMes(mesAnioInt[1], mesAnioInt[0]);
+            escribirLog("La cantidad de volumen de agua distribuida de " + Auxiliares.numeroAMes(mesAnioInt[0]) + " del "
+                    + (mesAnioInt[1] + 2015)
                     + " ES: " + volumenAgua + " para los habitantes: " + habitantes);
         } else {
             System.out.println("No hay una ciudad seleccionada");
@@ -682,35 +652,57 @@ public class Sistema {
     }
 
     private void cantHabitates(Scanner scanner, Ciudad ciudadElegida) {
-        String mes;
-        String anio;
-        int mesInt;
-        int anioInt;
-        // Modularisable
-        if (ciudadElegida != null) {
-            System.out.println("Ingrese el mes");
-            do {
-                mes = scanner.nextLine();
-                mesInt = Auxiliares.mesANumero(mes);
-                if (mesInt != -1) {
-                    System.out.println("debe ingresar un mes valio");
-                }
-            } while (mesInt == -1);
+        
+        int[] mesAnioInt= new int[2];
 
-            System.out.println("Ingrese el año desde 2015 al 2024 inclusive");
-            do {
-                anio = scanner.nextLine();
-                anioInt = traducirAnio(Integer.parseInt(anio));
-            } while (anioInt == -1);
-            // Modularisable
-            escribirLog("La cantidad de habitantes de " + mes + " del " + anio
-                    + " ES: " + ciudadElegida.getHabitantesAnioMes(anioInt, mesInt));
+        if (ciudadElegida != null) {
+            mesYAnio(scanner, mesAnioInt);
+        
+            escribirLog("La cantidad de habitantes de " + Auxiliares.numeroAMes(mesAnioInt[0]) + " del " + traducirAnio(mesAnioInt[1])
+                    + " ES: " + ciudadElegida.getHabitantesAnioMes(mesAnioInt[0],mesAnioInt[1] ));
         } else {
             System.out.println("No hay una ciudad seleccionada");
         }
 
     }
 
+    private void mesYAnio(Scanner scanner, int[] mesAnioInt){
+        String mes;
+        int mesInt;
+        String anio;
+        int anioInt;
+        // Modularizable
+        System.out.println("Ingrese el mes");
+        do {
+            mes = scanner.nextLine();
+            mesInt = Auxiliares.mesANumero(mes);
+            if (mesInt == -1) {
+                System.out.println("debe ingresar un mes valio");
+            }
+        } while (mesInt == -1);
+        
+        mesAnioInt[0]=mesInt;
+
+        System.out.println("Ingrese el año desde 2015 al 2024 inclusive");
+        do {
+            anio = scanner.nextLine();
+            anioInt = traducirAnio(Integer.parseInt(anio));
+        } while (anioInt == -1);
+
+        mesAnioInt[1]=anioInt;
+        
+    }
+
+
+
+
+
+
+
+
+
+
+    
     private void ingresarCiudad(Scanner scanner) {
         System.out.println("\n--- NUEVA CIUDAD ---");
 
