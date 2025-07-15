@@ -5,6 +5,7 @@ import Estructuras.lineales.*;
 import java.util.PriorityQueue;
 
 import Estructuras.Especificas.ColaPrioridad.*;
+import Estructuras.Especificas.Diccionario.*;
 
 public class Grafo {
     private NodoVert inicio;
@@ -245,20 +246,19 @@ public class Grafo {
         cola.poner(verticeInicial);
 
         NodoVert frente;
-        Lista adyacentes;
-        NodoVert ady;
+        NodoAdy ady;
         while (!cola.esVacia()) {
             frente = (NodoVert) cola.obtenerFrente();
             cola.sacar();
 
-            adyacentes = obtenerAdyacentes(frente);
+            ady = frente.getPrimerAdy();
 
-            while (!adyacentes.esVacia()) {
-                ady = (NodoVert) adyacentes.recuperar(adyacentes.longitud());
-                if (lista.localizar(ady.getElem()) == -1) {
-                    lista.insertar(ady.getElem(), lista.longitud() + 1);
-                    cola.poner(ady);
+            while (ady != null) {
+                if (lista.localizar(ady.getVertice().getElem()) < 0) {
+                    lista.insertar(ady.getVertice().getElem(), lista.longitud() + 1);
+                    cola.poner(ady.getVertice());
                 }
+                ady = ady.getSigAdyacente();
             }
 
         }
@@ -317,6 +317,67 @@ public class Grafo {
 
         }
         return mejorCamino;
+    }
+
+    public Lista obtenerCaminoMasCorto(Object origen, Object destino) {
+
+        Lista camino = new Lista();
+        Cola cola;
+        Diccionario padres;
+
+        NodoVert nodoOrigen = ubicarVertice(origen);
+
+        NodoVert verticeActual;
+        NodoAdy ady;
+        boolean encontrado;
+        NodoVert verticeAdy;
+
+        if (nodoOrigen != null) {
+            
+            cola = new Cola();
+            padres = new Diccionario();
+
+            encontrado = false;
+
+            padres.insertar(new Object[]{origen,null});
+            cola.poner(nodoOrigen);
+
+            while (!cola.esVacia() && !encontrado) {
+                
+                verticeActual = (NodoVert) cola.obtenerFrente();
+                cola.sacar();
+
+                if (verticeActual.getElem().equals(destino)) {
+                    encontrado = true;
+                    crearCamino(camino, padres, destino);
+                } else {
+                    ady = verticeActual.getPrimerAdy();
+                    while (ady != null) {
+                        verticeAdy = ady.getVertice();
+                        if (!padres.existeClave(verticeAdy.getElem())) {
+                            padres.insertar(new Object[]{verticeAdy.getElem(),verticeActual.getElem()});
+                            cola.poner(verticeAdy);
+                        }
+                        ady = ady.getSigAdyacente();
+                    }
+                }
+
+            }
+
+        }
+
+
+        return camino;
+
+    }
+
+    private void crearCamino(Lista camino, Diccionario padres, Object elem) {
+
+        if (elem != null) {
+            camino.insertar(elem, 1);
+            crearCamino(camino, padres, padres.obtenerDato(elem));
+        }
+
     }
 
     public Grafo clone() {

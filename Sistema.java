@@ -1106,7 +1106,7 @@ public class Sistema {
             System.out.println("1. Elegir Ciudad A");
             System.out.println("2. Elegir Ciudad B");
             System.out.println("3. Obtener camino y su estado (A-B)");
-            System.out.println("4. Obtener menor camino (A-B)");
+            System.out.println("4. Obtener el camino que pasa por la minima cantidad de ciudades (A-B)");
             System.out.println("5. Volver");
             if (ciudadA == null) {
                 System.out.println("Ciudad A no seleccionada");
@@ -1129,7 +1129,7 @@ public class Sistema {
                     obtenerCaminoYEstado(ciudadA, ciudadB);
                     break;
                 case "4":
-                    // obtenerCaminoYEstado(scanner);
+                    obtenerMinimoCamino(ciudadA, ciudadB);
                     break;
                 case "5":
                     System.out.println("Volviendo al menu anterior...");
@@ -1146,6 +1146,18 @@ public class Sistema {
     private void obtenerCaminoYEstado(Ciudad ciudadA, Ciudad ciudadB) {
 
         Lista camino = mapaCiudades.caminoMinimoMaxEtiqueta(ciudadA.getNombre(), ciudadB.getNombre());
+
+        String estadoCamino = obtenerEstadoCamino(camino);
+
+        System.out.println("El camino es el siguiente:");
+        System.out.println(camino.toString());
+        System.out.println("Y esta: " + estadoCamino);
+
+    }
+
+    private void obtenerMinimoCamino(Ciudad ciudadA, Ciudad ciudadB) {
+
+        Lista camino = mapaCiudades.obtenerCaminoMasCorto(ciudadA.getNombre(), ciudadB.getNombre());
 
         String estadoCamino = obtenerEstadoCamino(camino);
 

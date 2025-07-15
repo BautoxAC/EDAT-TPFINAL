@@ -56,8 +56,8 @@ public class Diccionario {
             n.recalcularAltura();
             int balance;
             balance = calcularBalance(n);
-            System.out
-                    .println(n.getClave() + " balance: " + balance + " elemIn: " + elem + " altura: " + n.getAltura());
+            //System.out
+                    //.println(n.getClave() + " balance: " + balance + " elemIn: " + elem + " altura: " + n.getAltura());
             if (balance > 1) {
                 // desabalaceado por izq entonces balanceo por izq
                 // rotacion a der
@@ -74,7 +74,7 @@ public class Diccionario {
                 // desabalaceado por der entonces balanceo por der
                 // roto a IZQ
                 int balanceHijo = calcularBalance(n.getHijoDerecho());
-                System.out.println(balanceHijo);
+               // System.out.println(balanceHijo);
                 if (balanceHijo > 0) {
                     n.setHijoDerecho(balancearIzq(n.getHijoDerecho()));
                 }
@@ -251,7 +251,7 @@ public class Diccionario {
         if (nodoActual != null) {
             texto += nodoActual.getClave().toString() + " -> ";
             texto += "HI: ";
-            System.out.println(nodoActual.getClass() + " " + nodoActual.getAltura());
+           // System.out.println(nodoActual.getClass() + " " + nodoActual.getAltura());
             if (nodoActual.getHijoIzquierdo() != null) {
                 texto += nodoActual.getHijoIzquierdo().getClave();
             } else {
