@@ -1194,6 +1194,8 @@ public class Sistema {
 
             estadoFinal = estaEnDis ? "EN DISEÑO" : estaEnRep ? "EN REPARACIÓN" : estaInactiv ? "INACTIVO" : "ACTIVO";
 
+            i++;
+
         }
         return estadoFinal;
     }

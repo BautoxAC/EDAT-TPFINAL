@@ -266,6 +266,73 @@ public class Grafo {
     }
 
     public Lista caminoMinimoMaxEtiqueta(Object origen, Object destino) {
+        ColaPrioridad cola;
+        Lista caminoInicial;
+        Lista mejorCamino = new Lista();
+
+        NodoVert verticeOrigen = ubicarVertice(origen);
+
+        int menorMaximoEncontrado;
+
+        Object[] frente;
+        NodoVert nodoActual;
+        int maxActual;
+        Lista caminoActual;
+
+        NodoAdy ady;
+
+        Object ciudadDestino;
+        int nuevoMax;
+        Lista nuevoCamino;
+
+        if (verticeOrigen != null) {
+
+            cola = new ColaPrioridad();
+            caminoInicial = new Lista();
+
+            menorMaximoEncontrado = Integer.MAX_VALUE;
+
+            caminoInicial.insertar(verticeOrigen.getElem(), 1);
+            cola.insertar(new Object[] { verticeOrigen, 0, caminoInicial }, 0);
+
+            while (!cola.esVacia()) {
+
+                frente = (Object[]) cola.recuperarFrente();
+                cola.eliminarFrente();
+
+                nodoActual = (NodoVert) frente[0];
+                maxActual = (int) frente[1];
+                caminoActual = (Lista) frente[2];
+
+                if (nodoActual.getElem().equals(destino)) {
+                    if (maxActual < menorMaximoEncontrado) {
+                        menorMaximoEncontrado = maxActual;
+                        mejorCamino = caminoActual;
+                    }
+                } else {
+                    ady = nodoActual.getPrimerAdy();
+                    while (ady != null) {
+                        ciudadDestino = ady.getVertice().getElem();
+
+                        if (caminoActual.localizar(ciudadDestino) < 0) {
+                            nuevoMax = Math.max(maxActual, (int) ady.getEtiqueta());
+                            nuevoCamino = caminoActual.clone();
+                            nuevoCamino.insertar(ciudadDestino, nuevoCamino.longitud() + 1);
+
+                            cola.insertar(new Object[] { ady.getVertice(), nuevoMax, nuevoCamino }, nuevoMax);
+                        }
+
+                        ady = ady.getSigAdyacente();
+                    }
+                }
+            }
+
+        }
+
+        return mejorCamino;
+    }
+
+    public Lista backupMinimoMaxEtiqueta(Object origen, Object destino) {
         ColaPrioridad cola = new ColaPrioridad();
         Lista lista = new Lista();
         Lista mejorCamino = null;
@@ -273,7 +340,7 @@ public class Grafo {
         NodoVert verticeOrigen = ubicarVertice(origen);
 
         lista.insertar(verticeOrigen.getElem(), 1);
-        cola.insertar(new Object[] {verticeOrigen, Integer.MAX_VALUE, lista}, Integer.MAX_VALUE);
+        cola.insertar(new Object[] { verticeOrigen, Integer.MAX_VALUE, lista }, Integer.MAX_VALUE);
 
         int minTotal = Integer.MAX_VALUE;
         int minActual;
@@ -289,7 +356,7 @@ public class Grafo {
         int nuevoMin;
 
         while (!cola.esVacia()) {
-            frente = (Object []) cola.recuperarFrente();
+            frente = (Object[]) cola.recuperarFrente();
             cola.eliminarFrente();
 
             nodoActual = (NodoVert) frente[0];
@@ -305,10 +372,13 @@ public class Grafo {
                 ady = nodoActual.getPrimerAdy();
                 while (ady != null) {
                     nuevoMin = Math.min(minActual, (int) ady.getEtiqueta());
-                    nuevoCamino = caminoActual.clone();
-                    nuevoCamino.insertar(ady.getVertice().getElem(), nuevoCamino.longitud()+1);
 
-                    cola.insertar(new Object[] {ady.getVertice(), nuevoMin, nuevoCamino}, nuevoMin);
+                    if (caminoActual.localizar(ady.getVertice().getElem()) < 0) {
+                        nuevoCamino = caminoActual.clone();
+                        nuevoCamino.insertar(ady.getVertice().getElem(), nuevoCamino.longitud() + 1);
+                        cola.insertar(new Object[] { ady.getVertice(), nuevoMin, nuevoCamino }, nuevoMin);
+
+                    }
 
                     ady = ady.getSigAdyacente();
                 }
@@ -333,17 +403,17 @@ public class Grafo {
         NodoVert verticeAdy;
 
         if (nodoOrigen != null) {
-            
+
             cola = new Cola();
             padres = new Diccionario();
 
             encontrado = false;
 
-            padres.insertar(new Object[]{origen,null});
+            padres.insertar(new Object[] { origen, null });
             cola.poner(nodoOrigen);
 
             while (!cola.esVacia() && !encontrado) {
-                
+
                 verticeActual = (NodoVert) cola.obtenerFrente();
                 cola.sacar();
 
@@ -355,7 +425,7 @@ public class Grafo {
                     while (ady != null) {
                         verticeAdy = ady.getVertice();
                         if (!padres.existeClave(verticeAdy.getElem())) {
-                            padres.insertar(new Object[]{verticeAdy.getElem(),verticeActual.getElem()});
+                            padres.insertar(new Object[] { verticeAdy.getElem(), verticeActual.getElem() });
                             cola.poner(verticeAdy);
                         }
                         ady = ady.getSigAdyacente();
@@ -365,7 +435,6 @@ public class Grafo {
             }
 
         }
-
 
         return camino;
 
