@@ -8,14 +8,16 @@ public class Auxiliares {
         int i = 0;
 
         if (palabra.length() > 0) {
-            while (valido && i < palabra.length()) {
 
-                if (palabra.charAt(i) == '0' && palabra.length() > 1) {
-                    valido = false;
-                } else if (!esNumero(palabra.charAt(i))) {
-                    valido = false;
+            if (palabra.charAt(i) == '0' && palabra.length() > 1) {
+                valido = false;
+            } else {
+                while (valido && i < palabra.length()) {
+                    if (!esNumero(palabra.charAt(i))) {
+                        valido = false;
+                    }
+                    i++;
                 }
-                i++;
             }
         } else {
             valido = false;
