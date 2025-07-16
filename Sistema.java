@@ -20,23 +20,12 @@ public class Sistema {
 
     private Grafo mapaCiudades;
     private Diccionario ciudades;
-    private FileWriter logger;
     private Map<ParNomen, Tuberia> hashMapCiudadTuberia = new HashMap<>();
 
     public Sistema() {
 
         mapaCiudades = new Grafo();
         ciudades = new Diccionario();
-
-        try {
-            // escribe lineas
-            FileWriter logger = new FileWriter("sistema.log", false); // true = append y no borra lo anteriormente
-                                                                      // escrito
-            /* logger.close(); */
-        } catch (IOException e) {
-            System.err.println("Error al abrir el archivo de log: " + e.getMessage());
-            escribirLog("Error al abrir el archivo de log: " + e.getMessage());
-        }
 
     }
 
@@ -79,20 +68,13 @@ public class Sistema {
                     break;
                 case "8":
                     System.out.println("Saliendo del sistema...\n");
-                    escribirLog("Saliendo del sistema... \n");
+                    escribirLog("Saliendo del sistema...");
                     break;
                 default:
                     System.out.println("Opción inválida. Intente nuevamente.");
             }
         } while (!opcion.equals("8"));
-        // Al salir, cerrar el logger
-        try {
-            if (logger != null) {
-                logger.close();
-            }
-        } catch (IOException e) {
-            escribirLog("Error al cerrar el logger: " + e.getMessage());
-        }
+
         scanner.close();
     }
 
@@ -167,6 +149,7 @@ public class Sistema {
                         parNomen = new ParNomen(ciuNombreSalida, ciuNombreEntrada);
 
                         hashMapCiudadTuberia.remove(parNomen);
+                        escribirLog("Tuberia eliminada: " + ciuNombreSalida + " - " + ciuNombreEntrada);
 
                     } else {
                         escribirLog("No existe esta ciudad: " + ciuNombreEntrada);
@@ -379,7 +362,6 @@ public class Sistema {
             } else {
 
                 log = "Error, no se pudo completar la operacion, numero no valido";
-                escribirLog(log);
 
             }
 
@@ -410,7 +392,6 @@ public class Sistema {
             } else {
 
                 log = "Error, no se pudo completar la operacion, numero no valido";
-                escribirLog(log);
 
             }
 
@@ -546,7 +527,8 @@ public class Sistema {
             System.out.println("2. Mostrar habitantes");
             System.out.println("3. Mostrar volumen del agua");
             System.out.println("4. Mostrar el rango por nombre y volumen");
-            System.out.println("5. Volver");
+            System.out.println("5. Mostrar las ciudades ordenadas por consumo");
+            System.out.println("6. Volver");
             if (ciudadElegida != null) {
                 System.out.println("Ciudad elegida: " + ciudadElegida.getNombre());
             } else {
@@ -569,6 +551,9 @@ public class Sistema {
                     rangoNombreVolumen(scanner);
                     break;
                 case "5":
+                    ciudadesOrdenadasConsumo(scanner);
+                    break;
+                case "6":
                     System.out.println("Volviendo al menu anterior...");
                     break;
                 default:
@@ -576,18 +561,47 @@ public class Sistema {
                     break;
             }
 
-        } while (!opcion.equals("5"));
+        } while (!opcion.equals("6"));
 
+    }
+
+    private void ciudadesOrdenadasConsumo(Scanner scanner) {
+        String anio;
+        int anioInt;
+        System.out.println("Ingrese el año desde 2015 al 2024 inclusive");
+        do {
+            anio = scanner.nextLine();
+            anioInt = traducirAnio(Integer.parseInt(anio));
+        } while (anioInt == -1);
+
+        String log = "";
+        if (anioInt != -1) {
+            Lista listaConsumos = ciudades.listarDatos();
+            int largo = listaConsumos.longitud();
+            ArbolHeap heap = new ArbolHeap(largo);
+            for (int i = 0; i < largo; i++) {
+                Ciudad CiudadX = (Ciudad) listaConsumos.recuperar(i);
+                int consumo = CiudadX.getConsumoAnual(anioInt);
+                heap.insertar(consumo, new CiudadConsumo(CiudadX.getNombre(), consumo));
+            }
+            Object[] arbolOrdenado = heap.ordenarArreglo();
+            for (int i = 0; i < arbolOrdenado.length; i++) {
+                CiudadConsumo ciudad = (CiudadConsumo) arbolOrdenado[i];
+                log += "-ciudad: " + ciudad.getNombreCiudad() + " con consumo: " + ciudad.getConsumoAnual() + "\n";
+            }
+        } else {
+            log = "ERROR:  AÑO INGRESADO INCORRECTAMENTE DEBE SER ENTRE 2015 Y 2024";
+        }
+        escribirLog(log);
     }
 
     private void rangoNombreVolumen(Scanner scanner) {
         String minNomb, maxNomb;
         int minVol, maxVol;
         Lista ciudLista;
-        Cola newCiudadCola = new Cola();
         Ciudad ciudadActual;
 
-        int[] mesAnioInt= new int[2];
+        int[] mesAnioInt = new int[2];
 
         int volumenAgua;
         String log = "";
@@ -614,7 +628,8 @@ public class Sistema {
             do {
                 ciudadActual = (Ciudad) ciudLista.recuperar(1);
 
-                volumenAgua = ciudadActual.getHabitantesAnioMes(mesAnioInt[1], mesAnioInt[0]) * ciudadActual.getCantConsumo();
+                volumenAgua = ciudadActual.getHabitantesAnioMes(mesAnioInt[1], mesAnioInt[0])
+                        * ciudadActual.getCantConsumo();
                 if (volumenAgua < minVol && volumenAgua > maxVol) {
                     log += ciudadActual.getNombre();
                 }
@@ -632,19 +647,21 @@ public class Sistema {
     }
 
     private void volumenAgua(Scanner scanner, Ciudad ciudadElegida) {
-        
+
         int volumenAgua;
-        int[] mesAnioInt= new int[2];
-        
+        int[] mesAnioInt = new int[2];
+
         if (ciudadElegida != null) {
-            
+
             mesYAnio(scanner, mesAnioInt);
 
-            volumenAgua = ciudadElegida.getHabitantesAnioMes(mesAnioInt[1], mesAnioInt[0]) * ciudadElegida.getCantConsumo();
+            volumenAgua = ciudadElegida.getHabitantesAnioMes(mesAnioInt[1], mesAnioInt[0])
+                    * ciudadElegida.getCantConsumo();
             int habitantes = ciudadElegida.getHabitantesAnioMes(mesAnioInt[1], mesAnioInt[0]);
-            escribirLog("La cantidad de volumen de agua distribuida de " + Auxiliares.numeroAMes(mesAnioInt[0]) + " del "
-                    + (mesAnioInt[1] + 2015)
-                    + " ES: " + volumenAgua + " para los habitantes: " + habitantes);
+            escribirLog(
+                    "La cantidad de volumen de agua distribuida de " + Auxiliares.numeroAMes(mesAnioInt[0]) + " del "
+                            + (mesAnioInt[1] + 2015)
+                            + " ES: " + volumenAgua + " para los habitantes: " + habitantes);
         } else {
             System.out.println("No hay una ciudad seleccionada");
         }
@@ -652,21 +669,22 @@ public class Sistema {
     }
 
     private void cantHabitates(Scanner scanner, Ciudad ciudadElegida) {
-        
-        int[] mesAnioInt= new int[2];
+
+        int[] mesAnioInt = new int[2];
 
         if (ciudadElegida != null) {
             mesYAnio(scanner, mesAnioInt);
-        
-            escribirLog("La cantidad de habitantes de " + Auxiliares.numeroAMes(mesAnioInt[0]) + " del " + traducirAnio(mesAnioInt[1])
-                    + " ES: " + ciudadElegida.getHabitantesAnioMes(mesAnioInt[0],mesAnioInt[1] ));
+
+            escribirLog("La cantidad de habitantes de " + Auxiliares.numeroAMes(mesAnioInt[0]) + " del "
+                    + traducirAnio(mesAnioInt[1])
+                    + " ES: " + ciudadElegida.getHabitantesAnioMes(mesAnioInt[0], mesAnioInt[1]));
         } else {
             System.out.println("No hay una ciudad seleccionada");
         }
 
     }
 
-    private void mesYAnio(Scanner scanner, int[] mesAnioInt){
+    private void mesYAnio(Scanner scanner, int[] mesAnioInt) {
         String mes;
         int mesInt;
         String anio;
@@ -680,8 +698,8 @@ public class Sistema {
                 System.out.println("debe ingresar un mes valio");
             }
         } while (mesInt == -1);
-        
-        mesAnioInt[0]=mesInt;
+
+        mesAnioInt[0] = mesInt;
 
         System.out.println("Ingrese el año desde 2015 al 2024 inclusive");
         do {
@@ -689,20 +707,10 @@ public class Sistema {
             anioInt = traducirAnio(Integer.parseInt(anio));
         } while (anioInt == -1);
 
-        mesAnioInt[1]=anioInt;
-        
+        mesAnioInt[1] = anioInt;
+
     }
 
-
-
-
-
-
-
-
-
-
-    
     private void ingresarCiudad(Scanner scanner) {
         System.out.println("\n--- NUEVA CIUDAD ---");
 
@@ -807,7 +815,7 @@ public class Sistema {
 
                             }
 
-                            j = 0;
+                            /* j = 0; */
 
                         }
 
@@ -822,7 +830,6 @@ public class Sistema {
 
         }
 
-        // logger.registrar("Ciudad agregada: " + ciudad.getNombre());
     }
 
     private void eliminarCiudad(Scanner scanner) {
@@ -1015,7 +1022,7 @@ public class Sistema {
         } else {
             log = "ERROR: No hay una ciudad seleccionada";
         }
-        System.out.println(log);
+        escribirLog(log);
 
     }
 
@@ -1144,27 +1151,28 @@ public class Sistema {
     }
 
     private void obtenerCaminoYEstado(Ciudad ciudadA, Ciudad ciudadB) {
-
+        String log = "";
         Lista camino = mapaCiudades.caminoMinimoMaxEtiqueta(ciudadA.getNombre(), ciudadB.getNombre());
 
         String estadoCamino = obtenerEstadoCamino(camino);
 
-        System.out.println("El camino es el siguiente:");
-        System.out.println(camino.toString());
-        System.out.println("Y esta: " + estadoCamino);
+        log += "El camino es el siguiente: \n";
+        log += camino.toString() + " \n";
+        log += "Y su estado es: " + estadoCamino + "\n";
 
+        escribirLog(log);
     }
 
     private void obtenerMinimoCamino(Ciudad ciudadA, Ciudad ciudadB) {
-
+        String log = "";
         Lista camino = mapaCiudades.obtenerCaminoMasCorto(ciudadA.getNombre(), ciudadB.getNombre());
 
         String estadoCamino = obtenerEstadoCamino(camino);
 
-        System.out.println("El camino es el siguiente:");
-        System.out.println(camino.toString());
-        System.out.println("Y esta: " + estadoCamino);
-
+        log += "El camino es el siguiente:\n";
+        log += camino.toString() + " \n";
+        log += "Y esta: " + estadoCamino + " \n";
+        escribirLog(log);
     }
 
     private String obtenerEstadoCamino(Lista camino) {
@@ -1361,9 +1369,9 @@ public class Sistema {
     private void escribirLog(String texto) {
         if (!texto.equals("")) {
             try {
-                FileWriter logger = new FileWriter("sistema.log", false);
-                logger.write(texto + " \n");
+                FileWriter logger = new FileWriter("sistema.log", true);
                 System.out.println(texto);
+                logger.write(texto + " \n");
                 logger.close();
             } catch (FileNotFoundException ex) {
                 System.err.println(ex.getMessage() + "No existe el archivo." + " \n");
@@ -1371,29 +1379,6 @@ public class Sistema {
                 System.err.println("Error leyendo o escribiendo en algun archivo." + " \n");
             }
         }
-    }
-
-    private void ciudadesOrdenadasConsumo(int anio) {
-        int anioTraducido = this.traducirAnio(anio);
-        String log = "";
-        if (anio != -1) {
-            Lista listaConsumos = ciudades.listarDatos();
-            int largo = listaConsumos.longitud();
-            ArbolHeap heap = new ArbolHeap(largo);
-            for (int i = 0; i < largo; i++) {
-                Ciudad CiudadX = (Ciudad) listaConsumos.recuperar(i);
-                int consumo = CiudadX.getConsumoAnual(anioTraducido);
-                heap.insertar(consumo, new CiudadConsumo(CiudadX.getNombre(), consumo));
-            }
-            Object[] arbolOrdenado = heap.ordenarArreglo();
-            for (int i = 0; i < arbolOrdenado.length; i++) {
-                CiudadConsumo ciudad = (CiudadConsumo) arbolOrdenado[i];
-                log += "-ciudad: " + ciudad.getNombreCiudad() + " con consumo: " + ciudad.getConsumoAnual() + "\n";
-            }
-        } else {
-            log = "ERROR:  AÑO INGRESADO INCORRECTAMENTE DEBE SER ENTRE 2015 Y 2024";
-        }
-        escribirLog(log);
     }
 
     /*
