@@ -10,7 +10,6 @@ import java.util.Scanner;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import Estructuras.*;
 import Estructuras.ArbolHeap.ArbolHeap;
 import Estructuras.Especificas.Diccionario.*;
 import Estructuras.Grafos.*;
@@ -30,18 +29,16 @@ public class Sistema {
     }
 
     public void menuPrincipal() {
+
         Scanner scanner = new Scanner(System.in);
         String opcion;
         do {
             System.out.println("\n--- MENÚ PRINCIPAL ---");
             System.out.println("1. Gestionar ciudades");
             System.out.println("2. Gestionar tuberías");
-            System.out.println("3. Alta de transmisión de agua");
-            System.out.println("4. Consultas sobre ciudades");
-            System.out.println("5. Consultas sobre transporte de agua");
-            System.out.println("6. Listado de consumo anual por ciudades");
-            System.out.println("7. Mostrar sistema (debugging)");
-            System.out.println("8. Salir");
+            System.out.println("3. Consultas sobre ciudades");
+            System.out.println("4. Consultas sobre transporte de agua");
+            System.out.println("5. Salir");
             System.out.print("Opcion elegida: ");
             opcion = scanner.nextLine();
             switch (opcion) {
@@ -52,21 +49,12 @@ public class Sistema {
                     menuTuberias(scanner);
                     break;
                 case "3":
-                    // altaTransmision(scanner);
+                    mostrarCiudad(scanner);
                     break;
                 case "4":
-                    // menuConsultasCiudades(scanner);
-                    break;
-                case "5":
                     menuConsultasTransporte(scanner);
                     break;
-                case "6":
-                    // listadoConsumoAnual(scanner);
-                    break;
-                case "7":
-                    // mostrarSistema();
-                    break;
-                case "8":
+                case "5":
                     System.out.println("Saliendo del sistema...\n");
                     escribirLog("Saliendo del sistema...");
                     break;
@@ -163,6 +151,20 @@ public class Sistema {
         } while (!ciudades.existeClave(ciuNombreSalida));
     }
 
+    public String mapToString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Relaciones ParNomen => Tubería:\n");
+
+        for (Map.Entry<ParNomen, Tuberia> entry : hashMapCiudadTuberia.entrySet()) {
+            sb.append(entry.getKey().toString())
+                    .append(" => ")
+                    .append(entry.getValue().toString())
+                    .append("\n");
+        }
+
+        return sb.toString();
+    }
+
     private void ingresarTuberia(Scanner scanner) {
         System.out.println("\n--- NUEVA TUBERIA ---");
 
@@ -195,7 +197,6 @@ public class Sistema {
                                 tuberiaNomen = ciuNombreSalida + "-" + ciuNombreEntrada;
 
                                 System.out.println("Ingrese el caudal minimo de la tuberia: ");
-
                                 caudalMinimo = scanner.nextLine();
 
                             } while (!Auxiliares.esNumero(caudalMinimo));
@@ -223,7 +224,6 @@ public class Sistema {
 
                             } while (estado.equals("INCORRECTO"));
 
-                            // corregir creacion de tuberia
                             newTuberia = agregarTuberia(tuberiaNomen, Integer.parseInt(caudalMaximo),
                                     Integer.parseInt(caudalMinimo),
                                     Integer.parseInt(diametroTuberia), estado, ciuNombreSalida, ciuNombreEntrada);
@@ -480,8 +480,7 @@ public class Sistema {
             System.out.println("1. Agregar ciudad");
             System.out.println("2. Eliminar ciudad");
             System.out.println("3. Modificar ciudad");
-            System.out.println("4. Mostrar ciudad");
-            System.out.println("5. Volver");
+            System.out.println("4. Volver");
             System.out.print("Opcion elegida: ");
 
             opcion = scanner.nextLine();
@@ -497,9 +496,6 @@ public class Sistema {
                     modificarCiudad(scanner);
                     break;
                 case "4":
-                    mostrarCiudad(scanner);
-                    break;
-                case "5":
                     System.out.println("Volviendo al menu anterior...");
                     break;
                 default:
@@ -507,14 +503,9 @@ public class Sistema {
                     break;
             }
 
-        } while (!opcion.equals("5"));
+        } while (!opcion.equals("4"));
 
     }
-
-    // todobien kamel revisa tus metodos estan bien pero acordate que usamos String
-    // y ademas
-    // bauti tiene un traductor de nombre a numero, asi q usas ese te parece muybien
-    // solo vi ese arreglalo gracias
 
     private void mostrarCiudad(Scanner scanner) {
 
@@ -676,8 +667,8 @@ public class Sistema {
             mesYAnio(scanner, mesAnioInt);
 
             escribirLog("La cantidad de habitantes de " + Auxiliares.numeroAMes(mesAnioInt[0]) + " del "
-                    + traducirAnio(mesAnioInt[1])
-                    + " ES: " + ciudadElegida.getHabitantesAnioMes(mesAnioInt[0], mesAnioInt[1]));
+                    + (mesAnioInt[1]+2015)
+                    + " ES: " + ciudadElegida.getHabitantesAnioMes(mesAnioInt[1], mesAnioInt[0]));
         } else {
             System.out.println("No hay una ciudad seleccionada");
         }
@@ -766,7 +757,6 @@ public class Sistema {
                 do {
                     valido = false;
                     superficie = scanner.nextLine();
-                    // no anda con numeros bajos - ej 200
                     if (Auxiliares.esNumero(superficie) && !superficie.equals("0")) {
                         valido = true;
                     }
@@ -814,7 +804,7 @@ public class Sistema {
                                 }
 
                             }
-
+                            // cambiar esto despues de testear
                             /* j = 0; */
 
                         }
@@ -1172,6 +1162,7 @@ public class Sistema {
         log += "El camino es el siguiente:\n";
         log += camino.toString() + " \n";
         log += "Y esta: " + estadoCamino + " \n";
+
         escribirLog(log);
     }
 
@@ -1183,6 +1174,7 @@ public class Sistema {
         String estado;
         boolean estaEnDis = false;
         boolean estaEnRep = false;
+        // ahorro de 8 bits de memoria
         boolean estaInactiv = false;
         int longitud = camino.longitud();
         int i = 1;
@@ -1256,7 +1248,6 @@ public class Sistema {
         String nomenEsperada;
 
         if (palabras.length < 2) {
-
             nomenEsperada = palabras[0].substring(0, 2).toUpperCase();
 
         } else {
@@ -1380,7 +1371,6 @@ public class Sistema {
             }
         }
     }
-
     /*
      * public static void guardarArchivos(String camino) {
      * 

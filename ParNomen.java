@@ -6,12 +6,12 @@ public class ParNomen {
     }
 
     ParNomen(String salida, String entrada) {
-        nomenSalida = salida;
-        nomenEntrada = entrada;
+        this.nomenSalida = salida;
+        this.nomenEntrada = entrada;
     }
 
     public String getNomenSalida() {
-        return nomenSalida;
+        return this.nomenSalida;
     }
 
     public void setNomenSalida(String nomenSalida) {
@@ -19,7 +19,7 @@ public class ParNomen {
     }
 
     public String getNomenEntrada() {
-        return nomenEntrada;
+        return this.nomenEntrada;
     }
 
     public void setNomenEntrada(String nomenEntrada) {
@@ -57,4 +57,7 @@ public class ParNomen {
         return true;
     }
 
+    public String toString() {
+        return "(" + this.nomenSalida + " => " + this.nomenEntrada + ")";
+    }
 }
