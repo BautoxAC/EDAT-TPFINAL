@@ -285,7 +285,7 @@ public class Grafo {
         int nuevoMax;
         Lista nuevoCamino;
 
-        boolean encontrado = false;
+        boolean encontrado;
 
         if (verticeOrigen != null) {
 
@@ -296,6 +296,8 @@ public class Grafo {
 
             caminoInicial.insertar(verticeOrigen.getElem(), 1);
             cola.insertar(new Object[] { verticeOrigen, 0, caminoInicial }, 0);
+
+            encontrado = false;
 
             while (!cola.esVacia() && !encontrado) {
 
