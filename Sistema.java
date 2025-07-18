@@ -194,7 +194,7 @@ public class Sistema {
                         do {
                             do {
 
-                                tuberiaNomen = ciuNombreSalida + "-" + ciuNombreEntrada;
+                                tuberiaNomen = ((Ciudad)ciudades.obtenerDato(ciuNombreEntrada)).getNomenclatura() + "-" + ((Ciudad)ciudades.obtenerDato(ciuNombreSalida)).getNomenclatura();
 
                                 System.out.println("Ingrese el caudal minimo de la tuberia: ");
                                 caudalMinimo = scanner.nextLine();
