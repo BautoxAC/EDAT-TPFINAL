@@ -285,6 +285,8 @@ public class Grafo {
         int nuevoMax;
         Lista nuevoCamino;
 
+        boolean encontrado = false;
+
         if (verticeOrigen != null) {
 
             cola = new ColaPrioridad();
@@ -295,7 +297,7 @@ public class Grafo {
             caminoInicial.insertar(verticeOrigen.getElem(), 1);
             cola.insertar(new Object[] { verticeOrigen, 0, caminoInicial }, 0);
 
-            while (!cola.esVacia()) {
+            while (!cola.esVacia() && !encontrado) {
 
                 frente = (Object[]) cola.recuperarFrente();
                 cola.eliminarFrente();
@@ -309,6 +311,7 @@ public class Grafo {
                         menorMaximoEncontrado = maxActual;
                         mejorCamino = caminoActual;
                     }
+                    encontrado = true;
                 } else {
                     ady = nodoActual.getPrimerAdy();
                     while (ady != null) {
@@ -325,6 +328,7 @@ public class Grafo {
                         ady = ady.getSigAdyacente();
                     }
                 }
+
             }
 
         }
