@@ -134,10 +134,10 @@ public class Sistema {
 
                     if (!ciudades.existeClave(ciuNombreEntrada)) {
 
-                        parNomen = new ParNomen(ciuNombreSalida, ciuNombreEntrada);
+                        parNomen = new ParNomen(((Ciudad)ciudades.obtenerDato(ciuNombreSalida)).getNomenclatura(), ((Ciudad)ciudades.obtenerDato(ciuNombreEntrada)).getNomenclatura());
 
                         hashMapCiudadTuberia.remove(parNomen);
-                        escribirLog("Tuberia eliminada: " + ciuNombreSalida + " - " + ciuNombreEntrada);
+                        escribirLog("Tuberia eliminada: " + ((Ciudad)ciudades.obtenerDato(ciuNombreEntrada)).getNomenclatura() + " - " + ((Ciudad)ciudades.obtenerDato(ciuNombreSalida)).getNomenclatura());
 
                     } else {
                         escribirLog("No existe esta ciudad: " + ciuNombreEntrada);
