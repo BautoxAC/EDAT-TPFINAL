@@ -33,7 +33,7 @@ public class Sistema {
         Scanner scanner = new Scanner(System.in);
         String opcion;
         do {
-            System.out.println("\n MENÚ PRINCIPAL ");
+            System.out.println("---\n MENÚ PRINCIPAL ---");
             System.out.println("1. Gestionar ciudades");
             System.out.println("2. Gestionar tuberías");
             System.out.println("3. Consultas sobre ciudades");
@@ -123,38 +123,35 @@ public class Sistema {
          * );
          */
 
-        do {
-            System.out.println("Ingrese el nombre de la ciudad de salida del agua: ");
+        System.out.println("Ingrese el nombre de la ciudad de salida del agua: ");
 
-            ciuNombreSalida = scanner.nextLine();
+        ciuNombreSalida = scanner.nextLine();
 
-            if (ciudades.existeClave(ciuNombreSalida)) {
+        if (ciudades.existeClave(ciuNombreSalida)) {
 
-                do {
-                    System.out.println("Ingrese el nombre de la ciudad de llegada del agua: ");
+            System.out.println("Ingrese el nombre de la ciudad de llegada del agua: ");
 
-                    ciuNombreLlegada = scanner.nextLine();
+            ciuNombreLlegada = scanner.nextLine();
 
-                    if (ciudades.existeClave(ciuNombreLlegada)) {
-                        nomenSalida = ((Ciudad) ciudades.obtenerDato(ciuNombreSalida)).getNomenclatura();
-                        nomenLlegada = ((Ciudad) ciudades.obtenerDato(ciuNombreLlegada)).getNomenclatura();
-                        parNomen = new ParNomen(nomenSalida, nomenLlegada);
-                        
-                        hashMapCiudadTuberia.remove(parNomen);
-                        escribirLog("Tuberia eliminada: "
-                                + nomenSalida + "-"
-                                + nomenLlegada);
+            if (ciudades.existeClave(ciuNombreLlegada)) {
+                nomenSalida = ((Ciudad) ciudades.obtenerDato(ciuNombreSalida)).getNomenclatura();
+                nomenLlegada = ((Ciudad) ciudades.obtenerDato(ciuNombreLlegada)).getNomenclatura();
 
-                    } else {
-                        escribirLog("No existe esta ciudad: " + ciuNombreLlegada);
-                    }
+                parNomen = new ParNomen(nomenSalida, nomenLlegada);
+                mapaCiudades.eliminarArco(nomenSalida, nomenLlegada);
 
-                } while (!ciudades.existeClave(ciuNombreLlegada));
+                hashMapCiudadTuberia.remove(parNomen);
+                escribirLog("Tuberia eliminada: "
+                        + nomenSalida + "-"
+                        + nomenLlegada);
 
             } else {
-                escribirLog("No existe esta ciudad: " + ciuNombreSalida);
+                escribirLog("No existe esta ciudad: " + ciuNombreLlegada);
             }
-        } while (!ciudades.existeClave(ciuNombreSalida));
+
+        } else {
+            escribirLog("No existe esta ciudad: " + ciuNombreSalida);
+        }
     }
 
     public String mapToString() {
@@ -262,18 +259,23 @@ public class Sistema {
 
     private Tuberia agregarTuberia(int caudalMaximo, int caudalMinimo, int diametroTuberia,
             String estado, String tuberiaSalidaNomen, String tuberiaLlegadaNomen) {
+
         Tuberia newTuberia = new Tuberia();
         ParNomen parNomeclatura = new ParNomen();
+
         String nomen = tuberiaSalidaNomen + "-" + tuberiaLlegadaNomen;
         newTuberia = new Tuberia(nomen, caudalMaximo, caudalMinimo,
                 diametroTuberia, estado);
+
         String log = "";
+
         if (!hashMapCiudadTuberia.containsValue(newTuberia)) {
 
             parNomeclatura = new ParNomen(tuberiaSalidaNomen, tuberiaLlegadaNomen);
 
             mapaCiudades.insertarArco(tuberiaSalidaNomen, tuberiaLlegadaNomen, caudalMaximo);
             hashMapCiudadTuberia.put(parNomeclatura, newTuberia);
+
             log = "Se agrego con exito la tuberia: " + nomen;
 
         } else {
@@ -585,10 +587,10 @@ public class Sistema {
         do {
             anio = scanner.nextLine();
             anioInt = traducirAnio(Integer.parseInt(anio));
-        } while (anioInt == 1);
+        } while (anioInt == -1);
 
         String log = "";
-        if (anioInt != 1) {
+        if (anioInt != -1) {
             Lista listaConsumos = ciudades.listarDatos();
             int largo = listaConsumos.longitud();
             ArbolHeap heap = new ArbolHeap(largo);
@@ -707,10 +709,10 @@ public class Sistema {
         do {
             mes = scanner.nextLine();
             mesInt = Auxiliares.mesANumero(mes);
-            if (mesInt == 1) {
+            if (mesInt == -1) {
                 System.out.println("debe ingresar un mes valio");
             }
-        } while (mesInt == 1);
+        } while (mesInt == -1);
 
         mesAnioInt[0] = mesInt;
 
@@ -718,7 +720,7 @@ public class Sistema {
         do {
             anio = scanner.nextLine();
             anioInt = traducirAnio(Integer.parseInt(anio));
-        } while (anioInt == 1);
+        } while (anioInt == -1);
 
         mesAnioInt[1] = anioInt;
 
@@ -1009,7 +1011,7 @@ public class Sistema {
 
                 mesInt = Auxiliares.mesANumero(mes);
 
-                if (mesInt != 1) {
+                if (mesInt != -1) {
                     System.out.println("Ingrese la nueva cantidad de habitantes");
 
                     cant = scanner.nextLine();
@@ -1028,7 +1030,7 @@ public class Sistema {
                 }
 
             } else {
-                log = "Error, no se pudo completar la operacion, año no valido, debe ser entre 20152024";
+                log = "Error, no se pudo completar la operacion, año no valido, debe ser entre 2015-2024";
             }
 
         } else {
@@ -1121,7 +1123,7 @@ public class Sistema {
 
         do {
 
-            System.out.println("\n GESTIÓN DE CONSULTA DE TRANSPORTE ");
+            System.out.println("\n--- GESTIÓN DE CONSULTA DE TRANSPORTE ---");
             System.out.println("1. Elegir Ciudad A");
             System.out.println("2. Elegir Ciudad B");
             System.out.println("3. Obtener camino con el minimo caudal maximo y su estado (AB)");
@@ -1292,9 +1294,9 @@ public class Sistema {
     }
 
     private int traducirAnio(int anio) {
-        int anioRet = 1;
+        int anioRet = -1;
         if (anio >= 2015 && anio <= 2024) {
-            anioRet = anio  2015;
+            anioRet = anio - 2015;
         }
         return anioRet;
 
