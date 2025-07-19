@@ -62,7 +62,9 @@ public class Sistema {
                     System.out.println("Opción inválida. Intente nuevamente.");
             }
         } while (!opcion.equals("8"));
-
+        escribirLog(mapaCiudades.toString());
+        escribirLog(ciudades.toString());
+        escribirLog(this.mapToString());
         scanner.close();
     }
 
@@ -134,10 +136,13 @@ public class Sistema {
 
                     if (!ciudades.existeClave(ciuNombreEntrada)) {
 
-                        parNomen = new ParNomen(((Ciudad)ciudades.obtenerDato(ciuNombreSalida)).getNomenclatura(), ((Ciudad)ciudades.obtenerDato(ciuNombreEntrada)).getNomenclatura());
+                        parNomen = new ParNomen(((Ciudad) ciudades.obtenerDato(ciuNombreSalida)).getNomenclatura(),
+                                ((Ciudad) ciudades.obtenerDato(ciuNombreEntrada)).getNomenclatura());
 
                         hashMapCiudadTuberia.remove(parNomen);
-                        escribirLog("Tuberia eliminada: " + ((Ciudad)ciudades.obtenerDato(ciuNombreEntrada)).getNomenclatura() + " - " + ((Ciudad)ciudades.obtenerDato(ciuNombreSalida)).getNomenclatura());
+                        escribirLog("Tuberia eliminada: "
+                                + ((Ciudad) ciudades.obtenerDato(ciuNombreEntrada)).getNomenclatura() + " - "
+                                + ((Ciudad) ciudades.obtenerDato(ciuNombreSalida)).getNomenclatura());
 
                     } else {
                         escribirLog("No existe esta ciudad: " + ciuNombreEntrada);
@@ -194,7 +199,8 @@ public class Sistema {
                         do {
                             do {
 
-                                tuberiaNomen = ((Ciudad)ciudades.obtenerDato(ciuNombreEntrada)).getNomenclatura() + "-" + ((Ciudad)ciudades.obtenerDato(ciuNombreSalida)).getNomenclatura();
+                                tuberiaNomen = ((Ciudad) ciudades.obtenerDato(ciuNombreEntrada)).getNomenclatura() + "-"
+                                        + ((Ciudad) ciudades.obtenerDato(ciuNombreSalida)).getNomenclatura();
 
                                 System.out.println("Ingrese el caudal minimo de la tuberia: ");
                                 caudalMinimo = scanner.nextLine();
@@ -667,7 +673,7 @@ public class Sistema {
             mesYAnio(scanner, mesAnioInt);
 
             escribirLog("La cantidad de habitantes de " + Auxiliares.numeroAMes(mesAnioInt[0]) + " del "
-                    + (mesAnioInt[1]+2015)
+                    + (mesAnioInt[1] + 2015)
                     + " ES: " + ciudadElegida.getHabitantesAnioMes(mesAnioInt[1], mesAnioInt[0]));
         } else {
             System.out.println("No hay una ciudad seleccionada");
