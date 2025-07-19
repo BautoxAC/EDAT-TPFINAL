@@ -128,6 +128,29 @@ public class Grafo {
         return hecho;
     }
 
+    public boolean cambiarEtiqueta(Object origen, Object destino, int etiqueta) {
+        boolean exito = false;
+
+        NodoVert nodoOrigen = ubicarVertice(origen);
+        NodoAdy ady;
+
+        if (nodoOrigen != null) {
+
+            ady = nodoOrigen.getPrimerAdy();
+            while (ady != null && !exito) {
+
+                if (ady.getVertice().getElem().equals(destino)) {
+                    ady.setEtiqueta(etiqueta);
+                    exito = true;
+                }
+                ady = ady.getSigAdyacente();
+
+            }
+            
+        }
+        return exito;
+    }
+
     public boolean eliminarArco(Object origen, Object destino) {
         boolean eliminado = false;
         NodoVert origenVer = ubicarVertice(origen);
@@ -309,10 +332,10 @@ public class Grafo {
                 caminoActual = (Lista) frente[2];
 
                 if (nodoActual.getElem().equals(destino)) {
-                    if (maxActual < menorMaximoEncontrado) {
-                        menorMaximoEncontrado = maxActual;
+                   // if (maxActual < menorMaximoEncontrado) {
+                       // menorMaximoEncontrado = maxActual;
                         mejorCamino = caminoActual;
-                    }
+                   // }
                     encontrado = true;
                 } else {
                     ady = nodoActual.getPrimerAdy();
