@@ -570,7 +570,7 @@ public class Sistema {
             Lista listaConsumos = ciudades.listarDatos();
             int largo = listaConsumos.longitud();
             ArbolHeap heap = new ArbolHeap(largo);
-            for (int i = 0; i < largo; i++) {
+            for (int i = 1; i <= largo; i++) {
                 Ciudad CiudadX = (Ciudad) listaConsumos.recuperar(i);
                 int consumo = CiudadX.getConsumoAnual(anioInt);
                 heap.insertar(consumo, new CiudadConsumo(CiudadX.getNombre(), consumo));
