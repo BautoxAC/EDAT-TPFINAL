@@ -260,7 +260,7 @@ public class Sistema {
         String log = "";
         if (!hashMapCiudadTuberia.containsValue(newTuberia)) {
 
-            parNomeclatura = new ParNomen(ciuNombreSalida, ciuNombreEntrada);
+            parNomeclatura = new ParNomen( ((Ciudad) ciudades.obtenerDato(ciuNombreSalida)).getNomenclatura(),  ((Ciudad) ciudades.obtenerDato(ciuNombreEntrada)).getNomenclatura());
 
             hashMapCiudadTuberia.put(parNomeclatura, newTuberia);
             log = "Se agrego con exito la tuberia: " + tuberiaNomen;
@@ -461,7 +461,7 @@ public class Sistema {
 
             if (!ciudades.existeClave(ciuNombreEntrada)) {
 
-                tuberiaElegida = hashMapCiudadTuberia.get(new ParNomen(ciuNombreSalida, ciuNombreEntrada));
+                tuberiaElegida = hashMapCiudadTuberia.get(new ParNomen( ((Ciudad) ciudades.obtenerDato(ciuNombreSalida)).getNomenclatura(),  ((Ciudad) ciudades.obtenerDato(ciuNombreEntrada)).getNomenclatura()));
                 log = "tuberia seleccionada";
 
             } else {
