@@ -26,9 +26,13 @@ public class Grafo {
 
     public boolean insertarArco(Object origen, Object destino, Object etiqueta) {
         boolean hecho = false;
+
         NodoVert origenVer = ubicarVertice(origen);
+
         NodoVert destinoVer = ubicarVertice(destino);
+
         boolean encontrado = ubicarArcoDirigido(origenVer, destino);
+        
         if (origenVer != null && destinoVer != null && !encontrado && !origen.equals(destino)) {
             NodoAdy nuevo = new NodoAdy(destinoVer, origenVer.getPrimerAdy(), etiqueta);
             origenVer.setPrimerAdy(nuevo);
@@ -47,14 +51,18 @@ public class Grafo {
 
     private boolean ubicarArcoDirigido(NodoVert origenVer, Object destino) {
         boolean encontrado = false;
-        NodoAdy aux = origenVer.getPrimerAdy();
-        while (aux != null) {
-            if (aux.getVertice().getElem().equals(destino)) {
-                encontrado = true;
-            }
-            aux = aux.getSigAdyacente();
+        NodoAdy aux;
+        if (origenVer != null) {
+            aux = origenVer.getPrimerAdy();
+            while (aux != null) {
+                if (aux.getVertice().getElem().equals(destino)) {
+                    encontrado = true;
+                }
+                aux = aux.getSigAdyacente();
 
+            }
         }
+
         return encontrado;
     }
 
@@ -334,12 +342,13 @@ public class Grafo {
                 caminoActual = (Lista) frente[2];
 
                 if (nodoActual.getElem().equals(destino)) {
-                     if (maxActual < menorMaximoEncontrado) {
-                     menorMaximoEncontrado = maxActual;
-                    mejorCamino = caminoActual;
-                 }
-/*                     encontrado = true;
- */                } else {
+                    if (maxActual < menorMaximoEncontrado) {
+                        menorMaximoEncontrado = maxActual;
+                        mejorCamino = caminoActual;
+                    }
+                    /*
+                     * encontrado = true;
+                     */ } else {
                     ady = nodoActual.getPrimerAdy();
                     while (ady != null) {
                         ciudadDestino = ady.getVertice().getElem();
