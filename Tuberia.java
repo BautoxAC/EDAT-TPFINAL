@@ -50,6 +50,22 @@ public class Tuberia {
         return this.nomenclatura;
     }
 
+    public String getCiudadOrigen() {
+
+        String [] split = nomenclatura.split("-");
+        
+        return split[0];
+
+    }
+
+    public String getCiudadDestino() {
+
+        String [] split = nomenclatura.split("-");
+        
+        return split[1];
+
+    }
+
     // Modificadores
     public void setCaudalMinimo(int caudalMinimo) {
         this.caudalMinimo = caudalMinimo;

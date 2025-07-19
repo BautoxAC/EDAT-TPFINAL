@@ -365,6 +365,8 @@ public class Sistema {
                 log = "Caudal maximo actualizada con exito";
                 tuberiaElegida.setCaudalMaximo(Integer.parseInt(cant));
 
+                mapaCiudades.cambiarEtiqueta(tuberiaElegida.getCiudadOrigen(), tuberiaElegida.getCiudadDestino(), Integer.parseInt(cant));
+
             } else {
 
                 log = "Error, no se pudo completar la operacion, numero no valido";
