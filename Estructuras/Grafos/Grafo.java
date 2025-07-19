@@ -146,7 +146,7 @@ public class Grafo {
                 ady = ady.getSigAdyacente();
 
             }
-            
+
         }
         return exito;
     }
@@ -183,10 +183,12 @@ public class Grafo {
 
             while (nodoAdyacente != null) {
 
-                string += nodoAdyacente.getVertice().getElem() + "," + nodoAdyacente.getEtiqueta() + ";";
+                string += nodoAdyacente.getVertice().getElem() + "," + nodoAdyacente.getEtiqueta();
 
                 nodoAdyacente = nodoAdyacente.getSigAdyacente();
-
+                if (nodoAdyacente != null) {
+                    string += ";";
+                }
             }
 
             string += "]" + "\n";
@@ -332,10 +334,10 @@ public class Grafo {
                 caminoActual = (Lista) frente[2];
 
                 if (nodoActual.getElem().equals(destino)) {
-                   // if (maxActual < menorMaximoEncontrado) {
-                       // menorMaximoEncontrado = maxActual;
-                        mejorCamino = caminoActual;
-                   // }
+                    // if (maxActual < menorMaximoEncontrado) {
+                    // menorMaximoEncontrado = maxActual;
+                    mejorCamino = caminoActual;
+                    // }
                     encontrado = true;
                 } else {
                     ady = nodoActual.getPrimerAdy();
