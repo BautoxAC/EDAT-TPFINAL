@@ -97,13 +97,13 @@ public class ColaPrioridad {
         return frente;
     }
 
-    public boolean esVacia () {
+    public boolean esVacia() {
         return this.inicio == null;
     }
-    
-    public void vaciar () {
+
+    public void vaciar() {
         this.inicio = null;
-    } 
+    }
 
     public ColaPrioridad clone() {
         ColaPrioridad clon = new ColaPrioridad();
@@ -114,25 +114,25 @@ public class ColaPrioridad {
     private NodoCP clonarCola(NodoCP frenteActual) {
         NodoCP nodoAux = null;
         if (frenteActual != null) {
-            nodoAux = new NodoCP(frenteActual.getPrioridad(), frenteActual.getItems().clone(), clonarCola(frenteActual.getEnlace()));
+            nodoAux = new NodoCP(frenteActual.getPrioridad(), frenteActual.getItems().clone(),
+                    clonarCola(frenteActual.getEnlace()));
         }
         return nodoAux;
     }
 
-    public String toString () {
-        String texto = "["; 
+    public String toString() {
+        String texto = "[";
         NodoCP base = this.inicio;
         while (base != null) {
             texto += base.getPrioridad();
-            texto += ",("+base.getItems().toString()+")";
+            texto += ",(" + base.getItems().toString() + ")";
             base = base.getEnlace();
-            if(base != null)
-                texto+= ",";
-            
+            if (base != null)
+                texto += ",";
+
         }
         texto += "]";
         return texto;
     }
-    
 
 }

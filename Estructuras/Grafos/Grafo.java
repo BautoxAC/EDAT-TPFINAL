@@ -334,12 +334,12 @@ public class Grafo {
                 caminoActual = (Lista) frente[2];
 
                 if (nodoActual.getElem().equals(destino)) {
-                    // if (maxActual < menorMaximoEncontrado) {
-                    // menorMaximoEncontrado = maxActual;
+                     if (maxActual < menorMaximoEncontrado) {
+                     menorMaximoEncontrado = maxActual;
                     mejorCamino = caminoActual;
-                    // }
-                    encontrado = true;
-                } else {
+                 }
+/*                     encontrado = true;
+ */                } else {
                     ady = nodoActual.getPrimerAdy();
                     while (ady != null) {
                         ciudadDestino = ady.getVertice().getElem();
