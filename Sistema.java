@@ -1337,36 +1337,20 @@ public class Sistema {
             while ((linea = bufferLectura.readLine()) != null) {
 
                 String[] split = linea.split(";");
-                // no sabemos
-                /*
-                 * switch (camino) {
-                 * case "aviones":
-                 * listaAviones[filas] = new Avion(split[0], split[1], stringAEntero(split[2]),
-                 * stringAEntero(split[3]), stringAEntero(split[4]));
-                 * break;
-                 * case "rutas":
-                 * listaRutas[filas] = new Ruta(split[0], split[1], split[2],
-                 * stringAEntero(split[3]),
-                 * (split[4].equals("Si")));
-                 * break;
-                 * case "vuelos":
-                 * 
-                 * int fila = traductorDias(split[3].toLowerCase());
-                 * int columna = traductorHoras(split[4]);
-                 * 
-                 * if (split.length == 6) {
-                 * horarios[fila][columna] = new Vuelo(split[0], idAAvion(split[1]),
-                 * idARuta(split[2]), split[3], split[4], (split[5].equals("true")));
-                 * } else {
-                 * horarios[fila][columna] = new Vuelo(split[0], idAAvion(split[1]),
-                 * idARuta(split[2]), split[3], split[4]);
-                 * }
-                 * 
-                 * break;
-                 * default:
-                 * break;
-                 * }
-                 */
+                switch (camino) {
+                case "Ciudades":
+                /* listaAviones[filas] = new Avion(split[0], split[1], stringAEntero(split[2]),
+                stringAEntero(split[3]), stringAEntero(split[4])); */
+                break;
+                case "Tuberias":
+                /* listaRutas[filas] = new Ruta(split[0], split[1], split[2],
+                stringAEntero(split[3]), */
+                (split[4].equals("Si")));
+                break;
+                default:
+                break;
+                }
+                
 
                 filas++;
 

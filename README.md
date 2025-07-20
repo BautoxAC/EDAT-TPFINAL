@@ -1,5 +1,8 @@
 Hola, este es un proyecto de EDAT. Gracias por leer. 
-
+- Archivos de carga
+    - Ciudades: tiene un formato de Nombre;Nomenclatura;Superficie;CantConsumo.
+    - Tuberias: tiene un formato de NomenclaturaCiudadOrigen-CiudadDestino;CaudalMáximo;CaudalMínimo;Diámetro;Estado.
+    - habitantes: es una tabla tal que fila es año y columna es mes.
 Desarrollar la clase Transporte de Agua con un menú de opciones para realizar las siguientes tareas:
 1. Altas, bajas y modificaciones de ciudades  ✓
 2. Altas, bajas y modificaciones de tuberías (1º versión: solo una tubería por par de ciudades en el mismo sentido) ✓
