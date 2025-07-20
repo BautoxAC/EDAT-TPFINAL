@@ -27,7 +27,6 @@ public class Sistema {
         ciudades = new Diccionario();
         leerArchivos("Ciudades");
         leerArchivos("Tuberias");
-        leerArchivos("habitantes");
         escribirLog(mapaCiudades.toString());
         escribirLog(ciudades.toString());
         escribirLog(this.mapToString());
@@ -1093,7 +1092,7 @@ public class Sistema {
 
     }
 
-    private void agregarCiudad(String nombre, int[][] matriz, String nomenclatura, int superficie,
+    private Ciudad agregarCiudad(String nombre, int[][] matriz, String nomenclatura, int superficie,
             int cantMetrosCubicos) {
 
         Ciudad ciudad = new Ciudad(nombre, nomenclatura, superficie, cantMetrosCubicos);
@@ -1104,6 +1103,7 @@ public class Sistema {
 
         mapaCiudades.insertarVertice(nomenclatura);
         escribirLog("Ciudad agregada " + nombre);
+        return ciudad;
     }
 
     private void menuConsultasTransporte(Scanner scanner) {
@@ -1330,11 +1330,8 @@ public class Sistema {
         String linea = null;
 
         try {
-
             FileReader lectorArchivo = new FileReader(nombreArchivoEntrada);
             BufferedReader bufferLectura = new BufferedReader(lectorArchivo);
-
-            int filas = 0;
 
             while ((linea = bufferLectura.readLine()) != null) {
 
@@ -1348,8 +1345,29 @@ public class Sistema {
                      * - habitantes: es una tabla tal que fila es año y columna es mes.
                      */
                     case "Ciudades":
-                        this.agregarCiudad(split[0], new int[10][12], split[1], Integer.parseInt(split[2]),
+                        Ciudad nuevaCiudad = this.agregarCiudad(split[0], new int[10][12], split[1],
+                                Integer.parseInt(split[2]),
                                 Integer.parseInt(split[3]));
+                        try {
+                            String nombreArchivoEntradaHab = obtenerRutaArchivos()
+                                    + "\\ArchivosCargas\\habitantes\\habitantes_" + split[0] + ".txt";
+                            String lineaHab = null;
+                            FileReader lectorArchivoHab = new FileReader(nombreArchivoEntradaHab);
+                            BufferedReader bufferLecturaHab = new BufferedReader(lectorArchivoHab);
+                            int i = 0;
+                            while ((lineaHab = bufferLecturaHab.readLine()) != null) {
+                                String[] splitHab = lineaHab.split(";");
+                                for (int index = 0; index < splitHab.length; index++) {
+                                    nuevaCiudad.setHabitantesAnioMes(i, index, Integer.parseInt(splitHab[i]));
+                                }
+                                i++;
+                            }
+                            bufferLecturaHab.close();
+                        } catch (FileNotFoundException ex) {
+                            System.err.println(ex.getMessage() + "No existe el archivo de habitantes. ");
+                        } catch (IOException ex) {
+                            System.err.println("Error leyendo o escribiendo en algun archivo de habitantes.");
+                        }
 
                         break;
                     case "Tuberias":
@@ -1360,8 +1378,6 @@ public class Sistema {
                     default:
                         break;
                 }
-
-                filas++;
 
             }
             bufferLectura.close();
