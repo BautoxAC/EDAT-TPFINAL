@@ -32,7 +32,7 @@ public class Grafo {
         NodoVert destinoVer = ubicarVertice(destino);
 
         boolean encontrado = ubicarArcoDirigido(origenVer, destino);
-        
+
         if (origenVer != null && destinoVer != null && !encontrado && !origen.equals(destino)) {
             NodoAdy nuevo = new NodoAdy(destinoVer, origenVer.getPrimerAdy(), etiqueta);
             origenVer.setPrimerAdy(nuevo);
@@ -89,17 +89,14 @@ public class Grafo {
             this.inicio = actual.getSigVertice();
         } else {
             NodoVert ant = actual;
-            NodoAdy actualEnlace = null;
             actual = actual.getSigVertice();
+
             while (actual != null && !eliminado) {
                 if (actual.getElem().equals(elem)) {
-                    actualEnlace = actual.getPrimerAdy();
                     ant.setSigVertice(actual.getSigVertice());
                     eliminado = true;
-                    while (actualEnlace != null) {
-                        eliminarArcoAdyacentes(actualEnlace.getVertice(), actual.getElem());
-                        actualEnlace = actualEnlace.getSigAdyacente();
-                    }
+
+                    eliminarArcosAdyacentes(actual.getElem());
                 } else {
                     ant = actual;
                     actual = actual.getSigVertice();
@@ -111,28 +108,55 @@ public class Grafo {
         return eliminado;
     }
 
-    private boolean eliminarArcoAdyacentes(NodoVert n, Object elem) {
+    private boolean eliminarArcosAdyacentes(Object elem) {
         boolean hecho = false;
-        if (n != null) {
+        boolean encontrado = false;
+        NodoVert actual = this.inicio;
+        NodoAdy adyActual;
+        NodoAdy adyAnt;
+        while (actual != null) {
+            adyActual = actual.getPrimerAdy();
+            if (adyActual != null) {
+                if (adyActual.getVertice().getElem().equals(elem)) {
+                    actual.setPrimerAdy(adyActual.getSigAdyacente());
+                } else {
+                    adyAnt = adyActual;
+                    adyActual = adyActual.getSigAdyacente();
 
-            NodoAdy nodoRevisar = n.getPrimerAdy();
-            if (nodoRevisar.getVertice().getElem().equals(elem)) {
-                n.setPrimerAdy(nodoRevisar.getSigAdyacente());
-                hecho = true;
-            } else {
-                NodoAdy ant = nodoRevisar;
-                nodoRevisar = nodoRevisar.getSigAdyacente();
-                while (nodoRevisar != null && !hecho) {
-                    if (nodoRevisar.getVertice().getElem().equals(elem)) {
-                        ant.setSigAdyacente(nodoRevisar.getSigAdyacente());
-                        hecho = true;
-                    } else {
-                        ant = nodoRevisar;
-                        nodoRevisar = nodoRevisar.getSigAdyacente();
+                    while (adyActual != null && !encontrado) {
+                        if (adyActual.getVertice().getElem().equals(elem)) {
+                            adyAnt.setSigAdyacente(adyActual.getSigAdyacente());
+                            encontrado = true;
+                        } else {
+                            adyAnt = adyActual;
+                            adyActual = adyActual.getSigAdyacente();
+                        }
                     }
+
                 }
             }
+            encontrado = false;
+            actual = actual.getSigVertice();
         }
+        /*
+         * if (nodoRevisar.getVertice().getElem().equals(elem)) {
+         * n.setPrimerAdy(nodoRevisar.getSigAdyacente());
+         * hecho = true;
+         * } else {
+         * NodoAdy ant = nodoRevisar;
+         * nodoRevisar = nodoRevisar.getSigAdyacente();
+         * while (nodoRevisar != null && !hecho) {
+         * if (nodoRevisar.getVertice().getElem().equals(elem)) {
+         * ant.setSigAdyacente(nodoRevisar.getSigAdyacente());
+         * hecho = true;
+         * } else {
+         * ant = nodoRevisar;
+         * nodoRevisar = nodoRevisar.getSigAdyacente();
+         * }
+         * }
+         * }
+         */
+
         return hecho;
     }
 

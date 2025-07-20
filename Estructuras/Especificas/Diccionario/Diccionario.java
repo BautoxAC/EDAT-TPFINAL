@@ -151,7 +151,7 @@ public class Diccionario {
                 }
                 if (n.getHijoIzquierdo() != null && n.getHijoDerecho() != null) {
                     Object[] parMayor = buscarMayor(n.getHijoIzquierdo());
-                    n.setHijoIzquierdo(eliminarRec(n.getHijoIzquierdo(), (Comparable) parMayor[1], exito));
+                    n.setHijoIzquierdo(eliminarRec(n.getHijoIzquierdo(), (Comparable) parMayor[0], exito));
                     n.setClave(parMayor[0]);
                     n.setDato(parMayor[1]);
                 }

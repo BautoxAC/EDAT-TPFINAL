@@ -22,9 +22,15 @@ public class Sistema {
     private Map<ParNomen, Tuberia> hashMapCiudadTuberia = new HashMap<>();
 
     public Sistema() {
-
+        vaciarLog();
         mapaCiudades = new Grafo();
         ciudades = new Diccionario();
+        leerArchivos("Ciudades");
+        leerArchivos("Tuberias");
+        leerArchivos("habitantes");
+        escribirLog(mapaCiudades.toString());
+        escribirLog(ciudades.toString());
+        escribirLog(this.mapToString());
 
     }
 
@@ -260,9 +266,8 @@ public class Sistema {
 
         String log = "";
 
-        if (!hashMapCiudadTuberia.containsValue(newTuberia)) {
-
-            parNomeclatura = new ParNomen(tuberiaSalidaNomen, tuberiaLlegadaNomen);
+        parNomeclatura = new ParNomen(tuberiaSalidaNomen, tuberiaLlegadaNomen);
+        if (!hashMapCiudadTuberia.containsKey(parNomeclatura)) {
 
             mapaCiudades.insertarArco(tuberiaSalidaNomen, tuberiaLlegadaNomen, caudalMaximo);
             hashMapCiudadTuberia.put(parNomeclatura, newTuberia);
@@ -818,8 +823,7 @@ public class Sistema {
                                 }
 
                             }
-                            // cambiar esto despues de testear
-                            /* j = 0; */
+                            j = 0;
 
                         }
 
@@ -846,12 +850,12 @@ public class Sistema {
         System.out.println("Ingrese el nombre de la ciudad");
 
         nombre = scanner.nextLine();
-
+        String ciudadNomen = ((Ciudad) ciudades.obtenerDato(nombre)).getNomenclatura();
         ciudadEliminada = ciudades.eliminar(nombre);
 
         if (ciudadEliminada) {
             log = "Ciudad " + nombre + " fue eliminada con exito";
-            mapaCiudades.eliminarVertice(nombre);
+            mapaCiudades.eliminarVertice(ciudadNomen);
         } else {
             log = "Error, la ciudad " + nombre + " no existe";
         }
@@ -1092,16 +1096,13 @@ public class Sistema {
     private void agregarCiudad(String nombre, int[][] matriz, String nomenclatura, int superficie,
             int cantMetrosCubicos) {
 
-        // Ciudad ciudad = new Ciudad(nombre, matriz, nomenclatura, superficie,
-        // cantMetrosCubicos);
-
         Ciudad ciudad = new Ciudad(nombre, nomenclatura, superficie, cantMetrosCubicos);
         ciudad.setHabitantesMatriz(matriz);
         Object[] par = { nombre, ciudad };
 
         ciudades.insertar(par);
 
-        mapaCiudades.insertarVertice(nombre);
+        mapaCiudades.insertarVertice(nomenclatura);
         escribirLog("Ciudad agregada " + nombre);
     }
 
@@ -1317,14 +1318,15 @@ public class Sistema {
 
     // METODOS DE CARGA
 
-    public static String obtenerRutaArchivos() {
+    public String obtenerRutaArchivos() {
         Path rutaCarpeta = Paths.get("");
-        return rutaCarpeta + "";
+
+        return rutaCarpeta.toAbsolutePath() + "";
     }
 
-    public static void leerArchivos(String camino) {
+    public void leerArchivos(String camino) {
 
-        String nombreArchivoEntrada = obtenerRutaArchivos() + camino + ".txt";
+        String nombreArchivoEntrada = obtenerRutaArchivos() + "\\ArchivosCargas\\" + camino + ".txt";
         String linea = null;
 
         try {
@@ -1338,19 +1340,26 @@ public class Sistema {
 
                 String[] split = linea.split(";");
                 switch (camino) {
-                case "Ciudades":
-                /* listaAviones[filas] = new Avion(split[0], split[1], stringAEntero(split[2]),
-                stringAEntero(split[3]), stringAEntero(split[4])); */
-                break;
-                case "Tuberias":
-                /* listaRutas[filas] = new Ruta(split[0], split[1], split[2],
-                stringAEntero(split[3]), */
-                (split[4].equals("Si")));
-                break;
-                default:
-                break;
+                    /*
+                     * - Ciudades: tiene un formato de Nombre;Nomenclatura;Superficie;CantConsumo.
+                     * - Tuberias: tiene un formato de
+                     * NomenclaturaCiudadOrigen-CiudadDestino;CaudalMáximo;CaudalMínimo;Diámetro;
+                     * Estado.
+                     * - habitantes: es una tabla tal que fila es año y columna es mes.
+                     */
+                    case "Ciudades":
+                        this.agregarCiudad(split[0], new int[10][12], split[1], Integer.parseInt(split[2]),
+                                Integer.parseInt(split[3]));
+
+                        break;
+                    case "Tuberias":
+                        String[] splitNomen = split[0].split("-");
+                        this.agregarTuberia(Integer.parseInt(split[1]), Integer.parseInt(split[2]),
+                                Integer.parseInt(split[3]), split[4], splitNomen[0], splitNomen[1]);
+                        break;
+                    default:
+                        break;
                 }
-                
 
                 filas++;
 
@@ -1376,6 +1385,18 @@ public class Sistema {
             } catch (IOException ex) {
                 System.err.println("Error leyendo o escribiendo en algun archivo." + " \n");
             }
+        }
+    }
+
+    private void vaciarLog() {
+        try {
+            FileWriter logger = new FileWriter("sistema.log", false);
+            logger.write("");
+            logger.close();
+        } catch (FileNotFoundException ex) {
+            System.err.println(ex.getMessage() + "No existe el archivo." + " \n");
+        } catch (IOException ex) {
+            System.err.println("Error leyendo o escribiendo en algun archivo." + " \n");
         }
     }
     /*
