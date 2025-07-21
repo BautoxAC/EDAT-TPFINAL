@@ -614,6 +614,7 @@ public class Sistema {
 
         int volumenAgua;
         String log = "";
+        boolean encontrado;
 
         mesYAnio(scanner, mesAnioInt);
 
@@ -635,17 +636,18 @@ public class Sistema {
             log = "[";
             do {
                 ciudadActual = (Ciudad) ciudLista.recuperar(1);
+                encontrado = false;
 
                 volumenAgua = ciudadActual.getHabitantesAnioMes(mesAnioInt[1], mesAnioInt[0])
                         * ciudadActual.getCantConsumo();
                 if (volumenAgua < maxVol && volumenAgua > minVol) {
                     log += ciudadActual.getNombre();
+                    encontrado = true;
                 }
-                System.out.println(ciudadActual.getNombre());
                 ciudLista.eliminar(1);
-                if (!ciudLista.esVacia()) {
-                    log += ", ";
-                }
+                if (!ciudLista.esVacia() && encontrado) {
+                        log += ", ";
+                    }
             } while (!ciudLista.esVacia());
             log += "]";
         } else {
