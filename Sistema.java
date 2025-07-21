@@ -638,9 +638,10 @@ public class Sistema {
 
                 volumenAgua = ciudadActual.getHabitantesAnioMes(mesAnioInt[1], mesAnioInt[0])
                         * ciudadActual.getCantConsumo();
-                if (volumenAgua < minVol && volumenAgua > maxVol) {
+                if (volumenAgua < maxVol && volumenAgua > minVol) {
                     log += ciudadActual.getNombre();
                 }
+                System.out.println(ciudadActual.getNombre());
                 ciudLista.eliminar(1);
                 if (!ciudLista.esVacia()) {
                     log += ", ";

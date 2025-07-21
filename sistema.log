@@ -1,0 +1,65 @@
+Ciudad agregada Neuquen 
+Ciudad agregada Cipolletti 
+Ciudad agregada General Roca 
+Ciudad agregada Plottier 
+Ciudad agregada Centenario 
+Ciudad agregada Villa Regina 
+Ciudad agregada Cutral Co 
+Ciudad agregada Zapala 
+Ciudad agregada Allen 
+Ciudad agregada Senillosa 
+Se agrego con exito la tuberia: CI3002-NE3001 
+Se agrego con exito la tuberia: GR3003-CI3002 
+Se agrego con exito la tuberia: SE3010-CC3007 
+Se agrego con exito la tuberia: PL3004-AL3009 
+Se agrego con exito la tuberia: AL3009-CC3007 
+Se agrego con exito la tuberia: NE3001-GR3003 
+Se agrego con exito la tuberia: GR3003-PL3004 
+Se agrego con exito la tuberia: CC3007-CI3002 
+Se agrego con exito la tuberia: NE3001-ZA3008 
+Se agrego con exito la tuberia: AL3009-CE3005 
+Se agrego con exito la tuberia: PL3004-CI3002 
+Se agrego con exito la tuberia: CI3002-PL3004 
+Se agrego con exito la tuberia: VR3006-GR3003 
+Se agrego con exito la tuberia: CE3005-CI3002 
+Se agrego con exito la tuberia: PL3004-GR3003 
+Vertice: SE3010 [CC3007,215]
+Vertice: AL3009 [CE3005,518;CC3007,370]
+Vertice: ZA3008 []
+Vertice: CC3007 [CI3002,379]
+Vertice: VR3006 [GR3003,384]
+Vertice: CE3005 [CI3002,517]
+Vertice: PL3004 [GR3003,415;CI3002,380;AL3009,360]
+Vertice: GR3003 [PL3004,481;CI3002,562]
+Vertice: CI3002 [PL3004,322;NE3001,459]
+Vertice: NE3001 [ZA3008,368;GR3003,486]
+ 
+General Roca -> HI: Cipolletti HD: Plottier
+Cipolletti -> HI: Centenario HD: Cutral Co
+Centenario -> HI: Allen HD: N/A
+Allen -> HI: N/A HD: N/A
+Cutral Co -> HI: N/A HD: N/A
+Plottier -> HI: Neuquen HD: Villa Regina
+Neuquen -> HI: N/A HD: N/A
+Villa Regina -> HI: Senillosa HD: Zapala
+Senillosa -> HI: N/A HD: N/A
+Zapala -> HI: N/A HD: N/A
+ 
+Relaciones ParNomen => Tubería:
+(VR3006 => GR3003) => Tubería [Nomenclatura: VR3006-GR3003, Caudal Mín: 194 m³/h, Caudal Máx: 384 m³/h, Diámetro: 414 mm, Estado: EN REPARACION]
+(GR3003 => PL3004) => Tubería [Nomenclatura: GR3003-PL3004, Caudal Mín: 295 m³/h, Caudal Máx: 481 m³/h, Diámetro: 304 mm, Estado: ACTIVA]
+(PL3004 => GR3003) => Tubería [Nomenclatura: PL3004-GR3003, Caudal Mín: 218 m³/h, Caudal Máx: 415 m³/h, Diámetro: 476 mm, Estado: EN REPARACION]
+(GR3003 => CI3002) => Tubería [Nomenclatura: GR3003-CI3002, Caudal Mín: 273 m³/h, Caudal Máx: 562 m³/h, Diámetro: 758 mm, Estado: ACTIVA]
+(CI3002 => NE3001) => Tubería [Nomenclatura: CI3002-NE3001, Caudal Mín: 289 m³/h, Caudal Máx: 459 m³/h, Diámetro: 450 mm, Estado: ACTIVA]
+(PL3004 => AL3009) => Tubería [Nomenclatura: PL3004-AL3009, Caudal Mín: 254 m³/h, Caudal Máx: 360 m³/h, Diámetro: 774 mm, Estado: ACTIVA]
+(CC3007 => CI3002) => Tubería [Nomenclatura: CC3007-CI3002, Caudal Mín: 191 m³/h, Caudal Máx: 379 m³/h, Diámetro: 818 mm, Estado: INACTIVA]
+(PL3004 => CI3002) => Tubería [Nomenclatura: PL3004-CI3002, Caudal Mín: 111 m³/h, Caudal Máx: 380 m³/h, Diámetro: 433 mm, Estado: INACTIVA]
+(NE3001 => ZA3008) => Tubería [Nomenclatura: NE3001-ZA3008, Caudal Mín: 237 m³/h, Caudal Máx: 368 m³/h, Diámetro: 587 mm, Estado: ACTIVA]
+(SE3010 => CC3007) => Tubería [Nomenclatura: SE3010-CC3007, Caudal Mín: 108 m³/h, Caudal Máx: 215 m³/h, Diámetro: 295 mm, Estado: ACTIVA]
+(AL3009 => CC3007) => Tubería [Nomenclatura: AL3009-CC3007, Caudal Mín: 156 m³/h, Caudal Máx: 370 m³/h, Diámetro: 803 mm, Estado: INACTIVA]
+(CE3005 => CI3002) => Tubería [Nomenclatura: CE3005-CI3002, Caudal Mín: 255 m³/h, Caudal Máx: 517 m³/h, Diámetro: 375 mm, Estado: EN REPARACION]
+(AL3009 => CE3005) => Tubería [Nomenclatura: AL3009-CE3005, Caudal Mín: 260 m³/h, Caudal Máx: 518 m³/h, Diámetro: 570 mm, Estado: EN REPARACION]
+(NE3001 => GR3003) => Tubería [Nomenclatura: NE3001-GR3003, Caudal Mín: 278 m³/h, Caudal Máx: 486 m³/h, Diámetro: 548 mm, Estado: INACTIVA]
+(CI3002 => PL3004) => Tubería [Nomenclatura: CI3002-PL3004, Caudal Mín: 125 m³/h, Caudal Máx: 322 m³/h, Diámetro: 484 mm, Estado: INACTIVA]
+ 
+[General Roca, Cipolletti, Centenario, Allen, Cutral Co, Plottier, Neuquen, Villa Regina, Senillosa] 
