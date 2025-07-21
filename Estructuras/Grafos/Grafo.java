@@ -85,79 +85,57 @@ public class Grafo {
     public boolean eliminarVertice(Object elem) {
         NodoVert actual = this.inicio;
         boolean eliminado = false;
-        if (actual != null && actual.getElem().equals(elem)) {
-            this.inicio = actual.getSigVertice();
-        } else {
-            NodoVert ant = actual;
-            actual = actual.getSigVertice();
-
-            while (actual != null && !eliminado) {
-                if (actual.getElem().equals(elem)) {
-                    ant.setSigVertice(actual.getSigVertice());
-                    eliminado = true;
-
-                    eliminarArcosAdyacentes(actual.getElem());
-                } else {
-                    ant = actual;
-                    actual = actual.getSigVertice();
+        if (actual != null) {
+            if (actual.getElem().equals(elem)) {
+                this.inicio = actual.getSigVertice();
+            } else {
+                this.eliminarArcoAdyacente(elem, actual);
+                NodoVert ant = actual;
+                actual = actual.getSigVertice();
+                while (actual != null && !eliminado) {
+                    if (actual.getElem().equals(elem)) {
+                        ant.setSigVertice(actual.getSigVertice());
+                        eliminado = true;
+                    } else {
+                        this.eliminarArcoAdyacente(elem, actual);
+                        ant = actual;
+                        actual = actual.getSigVertice();
+                    }
                 }
-            }
 
+            }
         }
 
         return eliminado;
     }
 
-    private boolean eliminarArcosAdyacentes(Object elem) {
-        boolean hecho = false;
+    private boolean eliminarArcoAdyacente(Object elem, NodoVert n) {
+        NodoAdy actual;
+        NodoAdy ant;
         boolean encontrado = false;
-        NodoVert actual = this.inicio;
-        NodoAdy adyActual;
-        NodoAdy adyAnt;
-        while (actual != null) {
-            adyActual = actual.getPrimerAdy();
-            if (adyActual != null) {
-                if (adyActual.getVertice().getElem().equals(elem)) {
-                    actual.setPrimerAdy(adyActual.getSigAdyacente());
+        if (n != null) {
+            actual = n.getPrimerAdy();
+            if (actual != null) {
+                if (actual.getVertice().getElem().equals(elem)) {
+                    n.setPrimerAdy(actual.getSigAdyacente());
+                    encontrado = true;
                 } else {
-                    adyAnt = adyActual;
-                    adyActual = adyActual.getSigAdyacente();
-
-                    while (adyActual != null && !encontrado) {
-                        if (adyActual.getVertice().getElem().equals(elem)) {
-                            adyAnt.setSigAdyacente(adyActual.getSigAdyacente());
+                    ant = actual;
+                    actual = actual.getSigAdyacente();
+                    while (actual != null && !encontrado) {
+                        if (actual.getVertice().getElem().equals(elem)) {
+                            ant.setSigAdyacente(actual.getSigAdyacente());
                             encontrado = true;
                         } else {
-                            adyAnt = adyActual;
-                            adyActual = adyActual.getSigAdyacente();
+                            ant = actual;
+                            actual = actual.getSigAdyacente();
                         }
                     }
-
                 }
             }
-            encontrado = false;
-            actual = actual.getSigVertice();
-        }
-        /*
-         * if (nodoRevisar.getVertice().getElem().equals(elem)) {
-         * n.setPrimerAdy(nodoRevisar.getSigAdyacente());
-         * hecho = true;
-         * } else {
-         * NodoAdy ant = nodoRevisar;
-         * nodoRevisar = nodoRevisar.getSigAdyacente();
-         * while (nodoRevisar != null && !hecho) {
-         * if (nodoRevisar.getVertice().getElem().equals(elem)) {
-         * ant.setSigAdyacente(nodoRevisar.getSigAdyacente());
-         * hecho = true;
-         * } else {
-         * ant = nodoRevisar;
-         * nodoRevisar = nodoRevisar.getSigAdyacente();
-         * }
-         * }
-         * }
-         */
 
-        return hecho;
+        }
+        return encontrado;
     }
 
     public boolean cambiarEtiqueta(Object origen, Object destino, int etiqueta) {
@@ -187,7 +165,7 @@ public class Grafo {
         boolean eliminado = false;
         NodoVert origenVer = ubicarVertice(origen);
         if (origenVer != null) {
-            eliminado = eliminarArcoAdyacentes(origenVer, destino);
+            eliminado = this.eliminarArcoAdyacente(destino, origenVer);
         }
         return eliminado;
     }

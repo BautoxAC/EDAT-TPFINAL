@@ -115,17 +115,6 @@ public class Sistema {
         ParNomen parNomen;
         String nomenSalida;
         String nomenLlegada;
-        /*
-         * System.out.println("Ingrese la nomeclatura de la truberia a eliminar");
-         * 
-         * String nomenBuscada;
-         * nomenBuscada = scanner.nextLine();
-         * 
-         * 
-         * hashMapCiudadTuberia.entrySet().removeIf(entry >
-         * entry.getValue().getNomenclatura().equals(nomenBuscada)
-         * );
-         */
 
         System.out.println("Ingrese el nombre de la ciudad de salida del agua: ");
 
