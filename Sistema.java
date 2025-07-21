@@ -1358,7 +1358,7 @@ public class Sistema {
                             while ((lineaHab = bufferLecturaHab.readLine()) != null) {
                                 String[] splitHab = lineaHab.split(";");
                                 for (int index = 0; index < splitHab.length; index++) {
-                                    nuevaCiudad.setHabitantesAnioMes(i, index, Integer.parseInt(splitHab[i]));
+                                    nuevaCiudad.setHabitantesAnioMes(i, index, Integer.parseInt(splitHab[index]));
                                 }
                                 i++;
                             }
@@ -1415,112 +1415,4 @@ public class Sistema {
             System.err.println("Error leyendo o escribiendo en algun archivo." + " \n");
         }
     }
-    /*
-     * public static void guardarArchivos(String camino) {
-     * 
-     * String nombreArchivoEntrada = obtenerRutaArchivos() + camino + ".txt";
-     * String nombreArchivoSalida = nombreArchivoEntrada;
-     * 
-     * String linea = null;
-     * 
-     * try {
-     * 
-     * FileReader lectorArchivo = new FileReader(nombreArchivoEntrada);
-     * FileWriter escritorArchivo = new FileWriter(nombreArchivoSalida);
-     * 
-     * BufferedReader bufferLectura = new BufferedReader(lectorArchivo);
-     * BufferedWriter bufferEscritura = new BufferedWriter(escritorArchivo);
-     * 
-     * int fila = 0;
-     * int columna = 0;
-     * String guardar = "";
-     * boolean bucle = true;
-     * 
-     * while (bucle) {
-     * 
-     * linea = bufferLectura.readLine();
-     * 
-     * switch (camino) {
-     * case "aviones":
-     * if (fila < listaAviones.length && listaAviones[fila] != null) {
-     * Avion avion = listaAviones[fila];
-     * guardar += (avion.getId() + ";" + avion.getModelo() + ";" +
-     * avion.getCantVuelos() + ";" + avion.getCantAsientos()
-     * + ";"
-     * + avion.getKmRecorridos() + "\n");
-     * } else {
-     * bucle = false;
-     * }
-     * break;
-     * case "vuelos":
-     * if (fila < horarios.length) {
-     * Vuelo vuelo = horarios[fila][columna];
-     * if (vuelo != null) {
-     * guardar += (vuelo.getId() + ";" + vuelo.getAvion().getId() + ";" +
-     * vuelo.getRuta().getId() + ";" + vuelo.getDia()
-     * + ";"
-     * + vuelo.getHora() + ";" + vuelo.getRealizado() + "\n");
-     * }
-     * } else {
-     * bucle = false;
-     * }
-     * break;
-     * default:
-     * break;
-     * }
-     * 
-     * if (camino.equals("vuelos")) {
-     * if (columna >= 14) {
-     * fila++;
-     * columna = 0;
-     * } else {
-     * columna++;
-     * }
-     * } else {
-     * fila++;
-     * }
-     * 
-     * }
-     * bufferEscritura.write(guardar);
-     * bufferLectura.close();
-     * bufferEscritura.close();
-     * } catch (FileNotFoundException ex) {
-     * System.err.println(ex.getMessage() + "No existe el archivo.");
-     * } catch (IOException ex) {
-     * System.err.println("Error leyendo o escribiendo en algun archivo.");
-     * }
-     * 
-     * }
-     * 
-     * public static void crearArchivo(String camino) {
-     * 
-     * String nombreArchivoEntrada = obtenerRutaArchivos() + camino + ".txt";
-     * String nombreArchivoSalida = nombreArchivoEntrada;
-     * 
-     * try {
-     * 
-     * FileWriter escritorArchivo = new FileWriter(nombreArchivoSalida);
-     * BufferedWriter bufferEscritura = new BufferedWriter(escritorArchivo);
-     * 
-     * int i = 0;
-     * String guardar = "";
-     * 
-     * for (i = 0; i < vuelosOrdenados.length; i++) {
-     * Vuelo vuelo = vuelosOrdenados[i];
-     * guardar += (vuelo.getId() + ";" + vuelo.getAvion().getId() + ";" +
-     * vuelo.getRuta().getId() + ";" + vuelo.getDia()
-     * + ";"
-     * + vuelo.getHora() + ";" + vuelo.getAvion().getKmRecorridos() + "\n");
-     * }
-     * 
-     * bufferEscritura.write(guardar);
-     * bufferEscritura.close();
-     * } catch (FileNotFoundException ex) {
-     * System.err.println(ex.getMessage() + "No existe el archivo.");
-     * } catch (IOException ex) {
-     * System.err.println("Error leyendo o escribiendo en algun archivo.");
-     * }
-     * 
-     * }
-     */
 }

@@ -60,7 +60,7 @@ public class Ciudad {
     public int getConsumoAnual(int anio) {
         int consumoAnual = 0;
         for (int i = 0; i < cantHabitantes[anio].length; i++) {
-            consumoAnual += cantHabitantes[anio][i] * this.cantConsumo;
+            consumoAnual += (cantHabitantes[anio][i] * this.cantConsumo);
         }
         return consumoAnual;
     }
