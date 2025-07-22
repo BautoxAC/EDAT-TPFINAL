@@ -836,6 +836,9 @@ public class Sistema {
         boolean ciudadEliminada;
         String nombre;
         String log;
+        Tuberia tuberiaActual;
+        String[] tuberiaNomen= new String[2];
+        ParNomen parNomenActual;
 
         System.out.println("Ingrese el nombre de la ciudad");
 
@@ -846,6 +849,19 @@ public class Sistema {
         if (ciudadEliminada) {
             log = "Ciudad " + nombre + " fue eliminada con exito";
             mapaCiudades.eliminarVertice(ciudadNomen);
+
+            
+            //Por cada parNopme que cumpla con la condicion se liminara su correspondiente tuberia.
+            for (Map.Entry<ParNomen, Tuberia> entry : hashMapCiudadTuberia.entrySet()) {
+                tuberiaActual=entry.getValue();
+                
+                tuberiaNomen= tuberiaActual.getNomenclatura().split("-");
+                
+                if (tuberiaNomen[1].equals(ciudadNomen) || tuberiaNomen[2].equals(ciudadNomen)) {
+                    hashMapCiudadTuberia.remove(entry.getKey());
+                }
+            }
+
         } else {
             log = "Error, la ciudad " + nombre + " no existe";
         }
