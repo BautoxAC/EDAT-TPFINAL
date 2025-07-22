@@ -839,8 +839,6 @@ public class Sistema {
         String log;
         Tuberia tuberiaActual;
         String[] tuberiaNomen = new String[2];
-        tuberiaNomen[0] = "A";
-        tuberiaNomen[1] = "B";
         Pila clavesAEliminar = new Pila();
 
 
