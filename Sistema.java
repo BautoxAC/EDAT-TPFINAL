@@ -275,8 +275,7 @@ public class Sistema {
     private void modificarTuberia(Scanner scanner) {
 
         String opcion;
-        Ciudad ciudadElegida = null;
-        Tuberia tuberiaElegida = new Tuberia();
+        Tuberia tuberiaElegida = null;
 
         do {
 
@@ -287,8 +286,8 @@ public class Sistema {
             System.out.println("4. Modificar diametro de la tuberia");
             System.out.println("5. Modificar el estado");
             System.out.println("6. Salir");
-            if (ciudadElegida != null) {
-                System.out.println("Tuberia elegida: " + ciudadElegida.getNombre());
+            if (tuberiaElegida != null) {
+                System.out.println("Tuberia elegida: " + tuberiaElegida.getNomenclatura());
             } else {
                 System.out.println("No hay una tuberia seleccionada");
             }
@@ -453,12 +452,12 @@ public class Sistema {
         System.out.println("Ingrese el nombre de la ciudad de salida del agua: ");
         ciuNombreSalida = scanner.nextLine();
 
-        if (!ciudades.existeClave(ciuNombreSalida)) {
+        if (ciudades.existeClave(ciuNombreSalida)) {
             System.out.println("Ingrese el nombre de la ciudad de llegada del agua: ");
 
             ciuNombreLlegada = scanner.nextLine();
 
-            if (!ciudades.existeClave(ciuNombreLlegada)) {
+            if (ciudades.existeClave(ciuNombreLlegada)) {
 
                 tuberiaElegida = hashMapCiudadTuberia
                         .get(new ParNomen(((Ciudad) ciudades.obtenerDato(ciuNombreSalida)).getNomenclatura(),
@@ -637,8 +636,8 @@ public class Sistema {
                 }
                 ciudLista.eliminar(1);
                 if (!ciudLista.esVacia() && encontrado) {
-                        log += ", ";
-                    }
+                    log += ", ";
+                }
             } while (!ciudLista.esVacia());
             log += "]";
         } else {
@@ -839,22 +838,24 @@ public class Sistema {
         String nombre;
         String log;
         Tuberia tuberiaActual;
-        String[] tuberiaNomen= new String[2];
+        String[] tuberiaNomen = new String[2];
         tuberiaNomen[0] = "A";
         tuberiaNomen[1] = "B";
-        ParNomen parNomenActual;
         Pila clavesAEliminar = new Pila();
 
 
         System.out.println("Ingrese el nombre de la ciudad");
 
         nombre = scanner.nextLine();
-        String ciudadNomen = ((Ciudad) ciudades.obtenerDato(nombre)).getNomenclatura();
-        ciudadEliminada = ciudades.eliminar(nombre);
+        Ciudad ciudadAEliminar = (Ciudad) ciudades.obtenerDato(nombre);
+        if (ciudadAEliminar !=null) {
 
-        if (ciudadEliminada) {
-            log = "Ciudad " + nombre + " fue eliminada con exito";
-            mapaCiudades.eliminarVertice(ciudadNomen);
+            String ciudadNomen = ciudadAEliminar.getNomenclatura();
+            ciudadEliminada = ciudades.eliminar(nombre);
+
+            if (ciudadEliminada) {
+                log = "Ciudad " + nombre + " fue eliminada con exito";
+                mapaCiudades.eliminarVertice(ciudadNomen);
 
 
             //Por cada parNopme que cumpla con la condicion se eliminara su correspondiente tuberia.
@@ -874,8 +875,11 @@ public class Sistema {
                 log = "Tuberia " + clavesAEliminar.obtenerTope() + " fue eliminada con exito";
             }
 
+            } else {
+                log = "Error, la ciudad " + nombre + " no existe";
+            }
         } else {
-            log = "Error, la ciudad " + nombre + " no existe";
+            log = "No existe la ciudad a eliminar";
         }
         escribirLog(log);
 
@@ -1180,31 +1184,40 @@ public class Sistema {
 
     private void obtenerCaminoYEstado(Ciudad ciudadA, Ciudad ciudadB) {
         String log = "";
-        Lista camino = mapaCiudades.caminoMinimoMaxEtiqueta(ciudadA.getNomenclatura(), ciudadB.getNomenclatura());
-        String estadoCamino;
-        if (!camino.esVacia()) {
-            estadoCamino = obtenerEstadoCamino(camino);
+        if (ciudadA != null && ciudadB != null) {
+            Lista camino = mapaCiudades.caminoMinimoMaxEtiqueta(ciudadA.getNomenclatura(), ciudadB.getNomenclatura());
+            String estadoCamino;
+            if (!camino.esVacia()) {
+                estadoCamino = obtenerEstadoCamino(camino);
 
-            log += "El camino es el siguiente: \n";
-            log += camino.toString() + " \n";
-            log += "Y su estado es: " + estadoCamino + "\n";
+                log += "El camino es el siguiente: \n";
+                log += camino.toString() + " \n";
+                log += "Y su estado es: " + estadoCamino + "\n";
+            } else {
+                log += "No existe camino entre ellos";
+            }
         } else {
-            log += "No existe camino entre ellos";
+            log += "No hay ciudades seleccionadas";
         }
+
         escribirLog(log);
     }
 
     private void obtenerMinimoCamino(Ciudad ciudadA, Ciudad ciudadB) {
         String log = "";
-        Lista camino = mapaCiudades.obtenerCaminoMasCorto(ciudadA.getNomenclatura(), ciudadB.getNomenclatura());
-        String estadoCamino;
-        if (!camino.esVacia()) {
-            estadoCamino = obtenerEstadoCamino(camino);
-            log += "El camino es el siguiente:\n";
-            log += camino.toString() + " \n";
-            log += "Y esta: " + estadoCamino + " \n";
+        if (ciudadA != null && ciudadB != null) {
+            Lista camino = mapaCiudades.obtenerCaminoMasCorto(ciudadA.getNomenclatura(), ciudadB.getNomenclatura());
+            String estadoCamino;
+            if (!camino.esVacia()) {
+                estadoCamino = obtenerEstadoCamino(camino);
+                log += "El camino es el siguiente:\n";
+                log += camino.toString() + " \n";
+                log += "Y esta: " + estadoCamino + " \n";
+            } else {
+                log += "No existe camino entre ellos";
+            }
         } else {
-            log += "No existe camino entre ellos";
+            log += "No hay ciudades seleccionadas";
         }
 
         escribirLog(log);
