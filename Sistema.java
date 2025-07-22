@@ -3,7 +3,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.nio.file.Path;
@@ -838,7 +840,11 @@ public class Sistema {
         String log;
         Tuberia tuberiaActual;
         String[] tuberiaNomen= new String[2];
+        tuberiaNomen[0] = "A";
+        tuberiaNomen[1] = "B";
         ParNomen parNomenActual;
+        Pila clavesAEliminar = new Pila();
+
 
         System.out.println("Ingrese el nombre de la ciudad");
 
@@ -850,16 +856,22 @@ public class Sistema {
             log = "Ciudad " + nombre + " fue eliminada con exito";
             mapaCiudades.eliminarVertice(ciudadNomen);
 
-            
-            //Por cada parNopme que cumpla con la condicion se liminara su correspondiente tuberia.
+
+            //Por cada parNopme que cumpla con la condicion se eliminara su correspondiente tuberia.
             for (Map.Entry<ParNomen, Tuberia> entry : hashMapCiudadTuberia.entrySet()) {
                 tuberiaActual=entry.getValue();
-                
+
                 tuberiaNomen= tuberiaActual.getNomenclatura().split("-");
                 
-                if (tuberiaNomen[1].equals(ciudadNomen) || tuberiaNomen[2].equals(ciudadNomen)) {
-                    hashMapCiudadTuberia.remove(entry.getKey());
+                if (tuberiaNomen[0].equals(ciudadNomen) || tuberiaNomen[1].equals(ciudadNomen)) {
+                    clavesAEliminar.apilar(ciudadNomen);
                 }
+            }
+            
+            while(!clavesAEliminar.esVacia()) {
+                hashMapCiudadTuberia.remove(clavesAEliminar.obtenerTope());
+                
+                log = "Tuberia " + clavesAEliminar.obtenerTope() + " fue eliminada con exito";
             }
 
         } else {
