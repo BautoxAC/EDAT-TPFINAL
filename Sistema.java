@@ -841,27 +841,33 @@ public class Sistema {
         System.out.println("Ingrese el nombre de la ciudad");
 
         nombre = scanner.nextLine();
-        String ciudadNomen = ((Ciudad) ciudades.obtenerDato(nombre)).getNomenclatura();
-        ciudadEliminada = ciudades.eliminar(nombre);
+        Ciudad ciudadAEliminar = (Ciudad) ciudades.obtenerDato(nombre);
+        if (ciudadAEliminar !=null) {
 
-        if (ciudadEliminada) {
-            log = "Ciudad " + nombre + " fue eliminada con exito";
-            mapaCiudades.eliminarVertice(ciudadNomen);
+            String ciudadNomen = ciudadAEliminar.getNomenclatura();
+            ciudadEliminada = ciudades.eliminar(nombre);
 
-            // Por cada parNopme que cumpla con la condicion se liminara su correspondiente
-            // tuberia.
-            for (Map.Entry<ParNomen, Tuberia> entry : hashMapCiudadTuberia.entrySet()) {
-                tuberiaActual = entry.getValue();
+            if (ciudadEliminada) {
+                log = "Ciudad " + nombre + " fue eliminada con exito";
+                mapaCiudades.eliminarVertice(ciudadNomen);
 
-                tuberiaNomen = tuberiaActual.getNomenclatura().split("-");
+                // Por cada parNopme que cumpla con la condicion se liminara su correspondiente
+                // tuberia.
+                for (Map.Entry<ParNomen, Tuberia> entry : hashMapCiudadTuberia.entrySet()) {
+                    tuberiaActual = entry.getValue();
 
-                if (tuberiaNomen[1].equals(ciudadNomen) || tuberiaNomen[2].equals(ciudadNomen)) {
-                    hashMapCiudadTuberia.remove(entry.getKey());
+                    tuberiaNomen = tuberiaActual.getNomenclatura().split("-");
+
+                    if (tuberiaNomen[1].equals(ciudadNomen) || tuberiaNomen[2].equals(ciudadNomen)) {
+                        hashMapCiudadTuberia.remove(entry.getKey());
+                    }
                 }
-            }
 
+            } else {
+                log = "Error, la ciudad " + nombre + " no existe";
+            }
         } else {
-            log = "Error, la ciudad " + nombre + " no existe";
+            log = "No existe la ciudad a eliminar";
         }
         escribirLog(log);
 
