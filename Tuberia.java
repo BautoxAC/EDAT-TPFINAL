@@ -52,7 +52,7 @@ public class Tuberia {
 
     public String getCiudadOrigen() {
 
-        String [] split = nomenclatura.split("-");
+        String [] split = this.nomenclatura.split("-");
         
         return split[0];
 
@@ -60,7 +60,7 @@ public class Tuberia {
 
     public String getCiudadDestino() {
 
-        String [] split = nomenclatura.split("-");
+        String [] split = this.nomenclatura.split("-");
         
         return split[1];
 

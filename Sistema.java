@@ -273,8 +273,7 @@ public class Sistema {
     private void modificarTuberia(Scanner scanner) {
 
         String opcion;
-        Ciudad ciudadElegida = null;
-        Tuberia tuberiaElegida = new Tuberia();
+        Tuberia tuberiaElegida = null;
 
         do {
 
@@ -285,8 +284,8 @@ public class Sistema {
             System.out.println("4. Modificar diametro de la tuberia");
             System.out.println("5. Modificar el estado");
             System.out.println("6. Salir");
-            if (ciudadElegida != null) {
-                System.out.println("Tuberia elegida: " + ciudadElegida.getNombre());
+            if (tuberiaElegida != null) {
+                System.out.println("Tuberia elegida: " + tuberiaElegida.getNomenclatura());
             } else {
                 System.out.println("No hay una tuberia seleccionada");
             }
@@ -451,12 +450,12 @@ public class Sistema {
         System.out.println("Ingrese el nombre de la ciudad de salida del agua: ");
         ciuNombreSalida = scanner.nextLine();
 
-        if (!ciudades.existeClave(ciuNombreSalida)) {
+        if (ciudades.existeClave(ciuNombreSalida)) {
             System.out.println("Ingrese el nombre de la ciudad de llegada del agua: ");
 
             ciuNombreLlegada = scanner.nextLine();
 
-            if (!ciudades.existeClave(ciuNombreLlegada)) {
+            if (ciudades.existeClave(ciuNombreLlegada)) {
 
                 tuberiaElegida = hashMapCiudadTuberia
                         .get(new ParNomen(((Ciudad) ciudades.obtenerDato(ciuNombreSalida)).getNomenclatura(),
@@ -635,8 +634,8 @@ public class Sistema {
                 }
                 ciudLista.eliminar(1);
                 if (!ciudLista.esVacia() && encontrado) {
-                        log += ", ";
-                    }
+                    log += ", ";
+                }
             } while (!ciudLista.esVacia());
             log += "]";
         } else {
@@ -837,8 +836,7 @@ public class Sistema {
         String nombre;
         String log;
         Tuberia tuberiaActual;
-        String[] tuberiaNomen= new String[2];
-        ParNomen parNomenActual;
+        String[] tuberiaNomen = new String[2];
 
         System.out.println("Ingrese el nombre de la ciudad");
 
@@ -850,13 +848,13 @@ public class Sistema {
             log = "Ciudad " + nombre + " fue eliminada con exito";
             mapaCiudades.eliminarVertice(ciudadNomen);
 
-            
-            //Por cada parNopme que cumpla con la condicion se liminara su correspondiente tuberia.
+            // Por cada parNopme que cumpla con la condicion se liminara su correspondiente
+            // tuberia.
             for (Map.Entry<ParNomen, Tuberia> entry : hashMapCiudadTuberia.entrySet()) {
-                tuberiaActual=entry.getValue();
-                
-                tuberiaNomen= tuberiaActual.getNomenclatura().split("-");
-                
+                tuberiaActual = entry.getValue();
+
+                tuberiaNomen = tuberiaActual.getNomenclatura().split("-");
+
                 if (tuberiaNomen[1].equals(ciudadNomen) || tuberiaNomen[2].equals(ciudadNomen)) {
                     hashMapCiudadTuberia.remove(entry.getKey());
                 }
@@ -1168,31 +1166,40 @@ public class Sistema {
 
     private void obtenerCaminoYEstado(Ciudad ciudadA, Ciudad ciudadB) {
         String log = "";
-        Lista camino = mapaCiudades.caminoMinimoMaxEtiqueta(ciudadA.getNomenclatura(), ciudadB.getNomenclatura());
-        String estadoCamino;
-        if (!camino.esVacia()) {
-            estadoCamino = obtenerEstadoCamino(camino);
+        if (ciudadA != null && ciudadB != null) {
+            Lista camino = mapaCiudades.caminoMinimoMaxEtiqueta(ciudadA.getNomenclatura(), ciudadB.getNomenclatura());
+            String estadoCamino;
+            if (!camino.esVacia()) {
+                estadoCamino = obtenerEstadoCamino(camino);
 
-            log += "El camino es el siguiente: \n";
-            log += camino.toString() + " \n";
-            log += "Y su estado es: " + estadoCamino + "\n";
+                log += "El camino es el siguiente: \n";
+                log += camino.toString() + " \n";
+                log += "Y su estado es: " + estadoCamino + "\n";
+            } else {
+                log += "No existe camino entre ellos";
+            }
         } else {
-            log += "No existe camino entre ellos";
+            log += "No hay ciudades seleccionadas";
         }
+
         escribirLog(log);
     }
 
     private void obtenerMinimoCamino(Ciudad ciudadA, Ciudad ciudadB) {
         String log = "";
-        Lista camino = mapaCiudades.obtenerCaminoMasCorto(ciudadA.getNomenclatura(), ciudadB.getNomenclatura());
-        String estadoCamino;
-        if (!camino.esVacia()) {
-            estadoCamino = obtenerEstadoCamino(camino);
-            log += "El camino es el siguiente:\n";
-            log += camino.toString() + " \n";
-            log += "Y esta: " + estadoCamino + " \n";
+        if (ciudadA != null && ciudadB != null) {
+            Lista camino = mapaCiudades.obtenerCaminoMasCorto(ciudadA.getNomenclatura(), ciudadB.getNomenclatura());
+            String estadoCamino;
+            if (!camino.esVacia()) {
+                estadoCamino = obtenerEstadoCamino(camino);
+                log += "El camino es el siguiente:\n";
+                log += camino.toString() + " \n";
+                log += "Y esta: " + estadoCamino + " \n";
+            } else {
+                log += "No existe camino entre ellos";
+            }
         } else {
-            log += "No existe camino entre ellos";
+            log += "No hay ciudades seleccionadas";
         }
 
         escribirLog(log);
