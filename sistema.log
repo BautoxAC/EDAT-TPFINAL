@@ -45,20 +45,20 @@ Villa Regina -> HI: Senillosa HD: Zapala
 Senillosa -> HI: N/A HD: N/A
 Zapala -> HI: N/A HD: N/A
  
-Relaciones ParNomen => Tubería:
-(VR3006 => GR3003) => Tubería [Nomenclatura: VR3006-GR3003, Caudal Mín: 194 m³/h, Caudal Máx: 384 m³/h, Diámetro: 414 mm, Estado: EN REPARACION]
-(GR3003 => PL3004) => Tubería [Nomenclatura: GR3003-PL3004, Caudal Mín: 295 m³/h, Caudal Máx: 481 m³/h, Diámetro: 304 mm, Estado: ACTIVA]
-(PL3004 => GR3003) => Tubería [Nomenclatura: PL3004-GR3003, Caudal Mín: 218 m³/h, Caudal Máx: 415 m³/h, Diámetro: 476 mm, Estado: EN REPARACION]
-(GR3003 => CI3002) => Tubería [Nomenclatura: GR3003-CI3002, Caudal Mín: 273 m³/h, Caudal Máx: 562 m³/h, Diámetro: 758 mm, Estado: ACTIVA]
-(CI3002 => NE3001) => Tubería [Nomenclatura: CI3002-NE3001, Caudal Mín: 289 m³/h, Caudal Máx: 459 m³/h, Diámetro: 450 mm, Estado: ACTIVA]
-(PL3004 => AL3009) => Tubería [Nomenclatura: PL3004-AL3009, Caudal Mín: 254 m³/h, Caudal Máx: 360 m³/h, Diámetro: 774 mm, Estado: ACTIVA]
-(CC3007 => CI3002) => Tubería [Nomenclatura: CC3007-CI3002, Caudal Mín: 191 m³/h, Caudal Máx: 379 m³/h, Diámetro: 818 mm, Estado: INACTIVA]
-(PL3004 => CI3002) => Tubería [Nomenclatura: PL3004-CI3002, Caudal Mín: 111 m³/h, Caudal Máx: 380 m³/h, Diámetro: 433 mm, Estado: INACTIVA]
-(NE3001 => ZA3008) => Tubería [Nomenclatura: NE3001-ZA3008, Caudal Mín: 237 m³/h, Caudal Máx: 368 m³/h, Diámetro: 587 mm, Estado: ACTIVA]
-(SE3010 => CC3007) => Tubería [Nomenclatura: SE3010-CC3007, Caudal Mín: 108 m³/h, Caudal Máx: 215 m³/h, Diámetro: 295 mm, Estado: ACTIVA]
-(AL3009 => CC3007) => Tubería [Nomenclatura: AL3009-CC3007, Caudal Mín: 156 m³/h, Caudal Máx: 370 m³/h, Diámetro: 803 mm, Estado: INACTIVA]
-(CE3005 => CI3002) => Tubería [Nomenclatura: CE3005-CI3002, Caudal Mín: 255 m³/h, Caudal Máx: 517 m³/h, Diámetro: 375 mm, Estado: EN REPARACION]
-(AL3009 => CE3005) => Tubería [Nomenclatura: AL3009-CE3005, Caudal Mín: 260 m³/h, Caudal Máx: 518 m³/h, Diámetro: 570 mm, Estado: EN REPARACION]
-(NE3001 => GR3003) => Tubería [Nomenclatura: NE3001-GR3003, Caudal Mín: 278 m³/h, Caudal Máx: 486 m³/h, Diámetro: 548 mm, Estado: INACTIVA]
-(CI3002 => PL3004) => Tubería [Nomenclatura: CI3002-PL3004, Caudal Mín: 125 m³/h, Caudal Máx: 322 m³/h, Diámetro: 484 mm, Estado: INACTIVA]
+Relaciones ParNomen => TuberÃ­a:
+(VR3006 => GR3003) => TuberÃ­a [Nomenclatura: VR3006-GR3003, Caudal MÃ­n: 194 mÂ³/h, Caudal MÃ¡x: 384 mÂ³/h, DiÃ¡metro: 414 mm, Estado: EN REPARACION]
+(GR3003 => PL3004) => TuberÃ­a [Nomenclatura: GR3003-PL3004, Caudal MÃ­n: 295 mÂ³/h, Caudal MÃ¡x: 481 mÂ³/h, DiÃ¡metro: 304 mm, Estado: ACTIVA]
+(PL3004 => GR3003) => TuberÃ­a [Nomenclatura: PL3004-GR3003, Caudal MÃ­n: 218 mÂ³/h, Caudal MÃ¡x: 415 mÂ³/h, DiÃ¡metro: 476 mm, Estado: EN REPARACION]
+(GR3003 => CI3002) => TuberÃ­a [Nomenclatura: GR3003-CI3002, Caudal MÃ­n: 273 mÂ³/h, Caudal MÃ¡x: 562 mÂ³/h, DiÃ¡metro: 758 mm, Estado: ACTIVA]
+(CI3002 => NE3001) => TuberÃ­a [Nomenclatura: CI3002-NE3001, Caudal MÃ­n: 289 mÂ³/h, Caudal MÃ¡x: 459 mÂ³/h, DiÃ¡metro: 450 mm, Estado: ACTIVA]
+(PL3004 => AL3009) => TuberÃ­a [Nomenclatura: PL3004-AL3009, Caudal MÃ­n: 254 mÂ³/h, Caudal MÃ¡x: 360 mÂ³/h, DiÃ¡metro: 774 mm, Estado: ACTIVA]
+(CC3007 => CI3002) => TuberÃ­a [Nomenclatura: CC3007-CI3002, Caudal MÃ­n: 191 mÂ³/h, Caudal MÃ¡x: 379 mÂ³/h, DiÃ¡metro: 818 mm, Estado: INACTIVA]
+(PL3004 => CI3002) => TuberÃ­a [Nomenclatura: PL3004-CI3002, Caudal MÃ­n: 111 mÂ³/h, Caudal MÃ¡x: 380 mÂ³/h, DiÃ¡metro: 433 mm, Estado: INACTIVA]
+(NE3001 => ZA3008) => TuberÃ­a [Nomenclatura: NE3001-ZA3008, Caudal MÃ­n: 237 mÂ³/h, Caudal MÃ¡x: 368 mÂ³/h, DiÃ¡metro: 587 mm, Estado: ACTIVA]
+(SE3010 => CC3007) => TuberÃ­a [Nomenclatura: SE3010-CC3007, Caudal MÃ­n: 108 mÂ³/h, Caudal MÃ¡x: 215 mÂ³/h, DiÃ¡metro: 295 mm, Estado: ACTIVA]
+(AL3009 => CC3007) => TuberÃ­a [Nomenclatura: AL3009-CC3007, Caudal MÃ­n: 156 mÂ³/h, Caudal MÃ¡x: 370 mÂ³/h, DiÃ¡metro: 803 mm, Estado: INACTIVA]
+(CE3005 => CI3002) => TuberÃ­a [Nomenclatura: CE3005-CI3002, Caudal MÃ­n: 255 mÂ³/h, Caudal MÃ¡x: 517 mÂ³/h, DiÃ¡metro: 375 mm, Estado: EN REPARACION]
+(AL3009 => CE3005) => TuberÃ­a [Nomenclatura: AL3009-CE3005, Caudal MÃ­n: 260 mÂ³/h, Caudal MÃ¡x: 518 mÂ³/h, DiÃ¡metro: 570 mm, Estado: EN REPARACION]
+(NE3001 => GR3003) => TuberÃ­a [Nomenclatura: NE3001-GR3003, Caudal MÃ­n: 278 mÂ³/h, Caudal MÃ¡x: 486 mÂ³/h, DiÃ¡metro: 548 mm, Estado: INACTIVA]
+(CI3002 => PL3004) => TuberÃ­a [Nomenclatura: CI3002-PL3004, Caudal MÃ­n: 125 mÂ³/h, Caudal MÃ¡x: 322 mÂ³/h, DiÃ¡metro: 484 mm, Estado: INACTIVA]
  

@@ -836,7 +836,7 @@ public class Sistema {
 
         boolean ciudadEliminada;
         String nombre;
-        String log;
+        String log  ="";
         Tuberia tuberiaActual;
         String[] tuberiaNomen = new String[2];
         Pila clavesAEliminar = new Pila();
@@ -852,25 +852,26 @@ public class Sistema {
             ciudadEliminada = ciudades.eliminar(nombre);
 
             if (ciudadEliminada) {
-                log = "Ciudad " + nombre + " fue eliminada con exito";
+                log += "Ciudad " + nombre + " fue eliminada con exito \n";
                 mapaCiudades.eliminarVertice(ciudadNomen);
 
 
             //Por cada parNopme que cumpla con la condicion se eliminara su correspondiente tuberia.
             for (Map.Entry<ParNomen, Tuberia> entry : hashMapCiudadTuberia.entrySet()) {
                 tuberiaActual=entry.getValue();
-
                 tuberiaNomen= tuberiaActual.getNomenclatura().split("-");
                 
                 if (tuberiaNomen[0].equals(ciudadNomen) || tuberiaNomen[1].equals(ciudadNomen)) {
-                    clavesAEliminar.apilar(ciudadNomen);
+                    clavesAEliminar.apilar(new ParNomen(tuberiaNomen[0], tuberiaNomen[1]));
                 }
             }
             
             while(!clavesAEliminar.esVacia()) {
-                hashMapCiudadTuberia.remove(clavesAEliminar.obtenerTope());
+                hashMapCiudadTuberia.remove((ParNomen)clavesAEliminar.obtenerTope());
                 
-                log = "Tuberia " + clavesAEliminar.obtenerTope() + " fue eliminada con exito";
+                log += "Tuberia " + clavesAEliminar.obtenerTope() + " fue eliminada con exito \n";
+
+                clavesAEliminar.desapilar();
             }
 
             } else {
