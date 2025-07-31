@@ -305,7 +305,7 @@ public class Diccionario {
     public Lista listarRango(Object elemMinimo, Object elemMaximo) {
         Lista listaRango = new Lista();
         int comparacion = ((Comparable) elemMinimo).compareTo((Comparable) elemMaximo);
-        if (comparacion < 0) {
+        if (comparacion <= 0) {
             listarRangoRec(listaRango, this.raiz, (Comparable) elemMinimo, (Comparable) elemMaximo);
         }
         return listaRango;

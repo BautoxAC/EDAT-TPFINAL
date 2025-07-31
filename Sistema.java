@@ -595,13 +595,13 @@ public class Sistema {
     }
 
     private void rangoNombreVolumen(Scanner scanner) {
-        String minNomb, maxNomb;
+        String minNomb, maxNomb, aux;
         int minVol, maxVol;
         Lista ciudLista;
         Ciudad ciudadActual;
 
         int[] mesAnioInt = new int[2];
-
+        int comparacionString;
         int volumenAgua;
         String log = "";
         boolean encontrado;
@@ -613,6 +613,12 @@ public class Sistema {
 
         System.out.println("Ingrese maxNomb");
         maxNomb = scanner.nextLine();
+        comparacionString = minNomb.compareTo(maxNomb);
+        if (comparacionString > 0) {
+            aux = maxNomb;
+            maxNomb = minNomb;
+            minNomb = aux;
+        }
         // revisar numero y orden
         System.out.println("Ingrese minVol");
         minVol = Integer.parseInt(scanner.nextLine());
@@ -621,7 +627,6 @@ public class Sistema {
         maxVol = Integer.parseInt(scanner.nextLine());
 
         ciudLista = ciudades.listarRango(minNomb, maxNomb);
-
         if (!ciudLista.esVacia()) {
             log = "[";
             do {
@@ -641,7 +646,7 @@ public class Sistema {
             } while (!ciudLista.esVacia());
             log += "]";
         } else {
-            log = "no se encotro ninguna ciudad entre " + minNomb + " y " + maxNomb;
+            log = "no se encontro ninguna ciudad entre " + minNomb + " y " + maxNomb;
         }
         escribirLog(log);
 
@@ -705,7 +710,10 @@ public class Sistema {
         System.out.println("Ingrese el año desde 2015 al 2024 inclusive");
         do {
             anio = scanner.nextLine();
-            anioInt = traducirAnio(Integer.parseInt(anio));
+            anioInt = -1;
+            if (Auxiliares.esNumero(anio)) {
+                anioInt = traducirAnio(Integer.parseInt(anio));
+            }
         } while (anioInt == -1);
 
         mesAnioInt[1] = anioInt;
@@ -836,17 +844,16 @@ public class Sistema {
 
         boolean ciudadEliminada;
         String nombre;
-        String log  ="";
+        String log = "";
         Tuberia tuberiaActual;
         String[] tuberiaNomen = new String[2];
         Pila clavesAEliminar = new Pila();
-
 
         System.out.println("Ingrese el nombre de la ciudad");
 
         nombre = scanner.nextLine();
         Ciudad ciudadAEliminar = (Ciudad) ciudades.obtenerDato(nombre);
-        if (ciudadAEliminar !=null) {
+        if (ciudadAEliminar != null) {
 
             String ciudadNomen = ciudadAEliminar.getNomenclatura();
             ciudadEliminada = ciudades.eliminar(nombre);
@@ -855,24 +862,24 @@ public class Sistema {
                 log += "Ciudad " + nombre + " fue eliminada con exito \n";
                 mapaCiudades.eliminarVertice(ciudadNomen);
 
+                // Por cada parNopme que cumpla con la condicion se eliminara su correspondiente
+                // tuberia.
+                for (Map.Entry<ParNomen, Tuberia> entry : hashMapCiudadTuberia.entrySet()) {
+                    tuberiaActual = entry.getValue();
+                    tuberiaNomen = tuberiaActual.getNomenclatura().split("-");
 
-            //Por cada parNopme que cumpla con la condicion se eliminara su correspondiente tuberia.
-            for (Map.Entry<ParNomen, Tuberia> entry : hashMapCiudadTuberia.entrySet()) {
-                tuberiaActual=entry.getValue();
-                tuberiaNomen= tuberiaActual.getNomenclatura().split("-");
-                
-                if (tuberiaNomen[0].equals(ciudadNomen) || tuberiaNomen[1].equals(ciudadNomen)) {
-                    clavesAEliminar.apilar(new ParNomen(tuberiaNomen[0], tuberiaNomen[1]));
+                    if (tuberiaNomen[0].equals(ciudadNomen) || tuberiaNomen[1].equals(ciudadNomen)) {
+                        clavesAEliminar.apilar(new ParNomen(tuberiaNomen[0], tuberiaNomen[1]));
+                    }
                 }
-            }
-            
-            while(!clavesAEliminar.esVacia()) {
-                hashMapCiudadTuberia.remove((ParNomen)clavesAEliminar.obtenerTope());
-                
-                log += "Tuberia " + clavesAEliminar.obtenerTope() + " fue eliminada con exito \n";
 
-                clavesAEliminar.desapilar();
-            }
+                while (!clavesAEliminar.esVacia()) {
+                    hashMapCiudadTuberia.remove((ParNomen) clavesAEliminar.obtenerTope());
+
+                    log += "Tuberia " + clavesAEliminar.obtenerTope() + " fue eliminada con exito \n";
+
+                    clavesAEliminar.desapilar();
+                }
 
             } else {
                 log = "Error, la ciudad " + nombre + " no existe";

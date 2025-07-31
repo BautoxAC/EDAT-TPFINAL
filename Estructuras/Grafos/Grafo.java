@@ -374,63 +374,6 @@ public class Grafo {
         return mejorCamino;
     }
 
-    public Lista backupMinimoMaxEtiqueta(Object origen, Object destino) {
-        ColaPrioridad cola = new ColaPrioridad();
-        Lista lista = new Lista();
-        Lista mejorCamino = null;
-
-        NodoVert verticeOrigen = ubicarVertice(origen);
-
-        lista.insertar(verticeOrigen.getElem(), 1);
-        cola.insertar(new Object[] { verticeOrigen, Integer.MAX_VALUE, lista }, Integer.MAX_VALUE);
-
-        int minTotal = Integer.MAX_VALUE;
-        int minActual;
-
-        NodoAdy ady;
-
-        Object[] frente;
-
-        NodoVert nodoActual;
-        Lista caminoActual;
-        Lista nuevoCamino;
-
-        int nuevoMin;
-
-        while (!cola.esVacia()) {
-            frente = (Object[]) cola.recuperarFrente();
-            cola.eliminarFrente();
-
-            nodoActual = (NodoVert) frente[0];
-            minActual = (int) frente[1];
-            caminoActual = (Lista) frente[2];
-
-            if (nodoActual.getElem().equals(destino)) {
-                if (minActual < minTotal) {
-                    minTotal = minActual;
-                    mejorCamino = caminoActual;
-                }
-            } else {
-                ady = nodoActual.getPrimerAdy();
-                while (ady != null) {
-                    nuevoMin = Math.min(minActual, (int) ady.getEtiqueta());
-
-                    if (caminoActual.localizar(ady.getVertice().getElem()) < 0) {
-                        nuevoCamino = caminoActual.clone();
-                        nuevoCamino.insertar(ady.getVertice().getElem(), nuevoCamino.longitud() + 1);
-                        cola.insertar(new Object[] { ady.getVertice(), nuevoMin, nuevoCamino }, nuevoMin);
-
-                    }
-
-                    ady = ady.getSigAdyacente();
-                }
-
-            }
-
-        }
-        return mejorCamino;
-    }
-
     public Lista obtenerCaminoMasCorto(Object origen, Object destino) {
 
         Lista camino = new Lista();
