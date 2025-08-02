@@ -52,35 +52,8 @@ public class Diccionario {
                 }
             }
         }
-        if (exito[0]) {
-            n.recalcularAltura();
-            int balance;
-            balance = calcularBalance(n);
-            //System.out
-                    //.println(n.getClave() + " balance: " + balance + " elemIn: " + elem + " altura: " + n.getAltura());
-            if (balance > 1) {
-                // desabalaceado por izq entonces balanceo por izq
-                // rotacion a der
+        n = balanceador(n, n, exito);
 
-                int balanceHijo = calcularBalance(n.getHijoIzquierdo());
-                if (balanceHijo < 0) {
-                    n.setHijoIzquierdo(balancearDer(n.getHijoIzquierdo()));
-
-                }
-                n = balancearIzq(n);
-
-            }
-            if (balance < -1) {
-                // desabalaceado por der entonces balanceo por der
-                // roto a IZQ
-                int balanceHijo = calcularBalance(n.getHijoDerecho());
-               // System.out.println(balanceHijo);
-                if (balanceHijo > 0) {
-                    n.setHijoDerecho(balancearIzq(n.getHijoDerecho()));
-                }
-                n = balancearDer(n);
-            }
-        }
         return n;
     }
 
@@ -165,18 +138,23 @@ public class Diccionario {
             }
 
         }
-        if (exito[0] && eliminado != null) {
-            eliminado.recalcularAltura();
-            int balance = calcularBalance(eliminado);
+        eliminado = balanceador(n, eliminado, exito);
+        return eliminado;
+    }
+
+    public NodoAVLDicc balanceador(NodoAVLDicc n, NodoAVLDicc balanceNodo, boolean[] exito) {
+        if (exito[0] && balanceNodo != null) {
+            balanceNodo.recalcularAltura();
+            int balance = calcularBalance(balanceNodo);
 
             if (balance > 1) {
                 // desabalaceado por izq entonces balanceo por izq
                 // rotacion a der
-                int balanceHijo = calcularBalance(eliminado.getHijoIzquierdo());
+                int balanceHijo = calcularBalance(balanceNodo.getHijoIzquierdo());
                 if (balanceHijo < 0) {
-                    eliminado.setHijoIzquierdo(balancearDer(eliminado.getHijoIzquierdo()));
+                    balanceNodo.setHijoIzquierdo(balancearDer(balanceNodo.getHijoIzquierdo()));
                 }
-                eliminado = balancearIzq(eliminado);
+                balanceNodo = balancearIzq(balanceNodo);
 
             }
             if (balance < -1) {
@@ -184,12 +162,12 @@ public class Diccionario {
 
                 int balanceHijo = calcularBalance(n.getHijoDerecho());
                 if (balanceHijo > 0) {
-                    eliminado.setHijoDerecho(balancearIzq(n.getHijoDerecho()));
+                    balanceNodo.setHijoDerecho(balancearIzq(n.getHijoDerecho()));
                 }
-                eliminado = balancearDer(eliminado);
+                balanceNodo = balancearDer(balanceNodo);
             }
         }
-        return eliminado;
+        return balanceNodo;
     }
 
     public Object[] buscarMayor(NodoAVLDicc n) {
@@ -249,9 +227,8 @@ public class Diccionario {
         String texto = "";
 
         if (nodoActual != null) {
-            texto += nodoActual.getClave().toString() + " -> ";
+            texto += nodoActual.getClave().toString() + " altura: " + nodoActual.getAltura() + " -> ";
             texto += "HI: ";
-           // System.out.println(nodoActual.getClass() + " " + nodoActual.getAltura());
             if (nodoActual.getHijoIzquierdo() != null) {
                 texto += nodoActual.getHijoIzquierdo().getClave();
             } else {
@@ -316,11 +293,11 @@ public class Diccionario {
             Comparable compararElem = (Comparable) n.getClave();
             int comparacionMin = compararElem.compareTo(min);
             int comparacionMax = compararElem.compareTo(max);
-            if (comparacionMin >= 0 && comparacionMax <= 0) {
-                l.insertar(n.getDato(), l.longitud() + 1);
-            }
             if (comparacionMin > 0) {
                 listarRangoRec(l, n.getHijoIzquierdo(), min, max);
+            }
+            if (comparacionMin >= 0 && comparacionMax <= 0) {
+                l.insertar(n.getDato(), l.longitud() + 1);
             }
             if (comparacionMax < 0) {
                 listarRangoRec(l, n.getHijoDerecho(), min, max);
