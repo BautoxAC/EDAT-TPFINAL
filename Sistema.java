@@ -34,7 +34,7 @@ public class Sistema {
 
     }
 
-    public void menuPrincipal() {
+    public void menuPrincipal() { // O(1)
 
         Scanner scanner = new Scanner(System.in);
         String opcion;
@@ -74,7 +74,7 @@ public class Sistema {
         scanner.close();
     }
 
-    private void menuTuberias(Scanner scanner) {
+    private void menuTuberias(Scanner scanner) { // O(1)
         String opcion;
 
         do {
