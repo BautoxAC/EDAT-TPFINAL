@@ -312,7 +312,8 @@ public class Grafo {
         NodoVert verticeOrigen = ubicarVertice(origen);
         NodoVert verticeDestino = ubicarVertice(destino);
 
-        // metodo recursivo que usa DFS (recorrido en profunidad) para encontrar el camino de etiqueta maxima mas chica.
+        // metodo recursivo que usa DFS (recorrido en profunidad) para encontrar el
+        // camino de etiqueta maxima mas chica.
 
         if (verticeOrigen != null && verticeDestino != null) {
             dfsMinimoMaxEtiqueta(verticeOrigen, destino, caminoActual, mejorCamino, visitados, 0, menorMax);
@@ -334,7 +335,11 @@ public class Grafo {
         if (actual.getElem().equals(destino)) {
             if (maxPesoActual < menorMax[0]) {
                 menorMax[0] = maxPesoActual;
-                mejorCamino = caminoActual.clone();
+                // mejorCamino = caminoActual.clone(); // No usamos clone por la referencia recursiva.
+                mejorCamino.vaciar();
+                for (int i = 1; i <= caminoActual.longitud(); i++) {
+                    mejorCamino.insertar(caminoActual.recuperar(i), i);
+                }
             }
         } else {
             ady = actual.getPrimerAdy();
@@ -383,7 +388,7 @@ public class Grafo {
             caminoInicial.insertar(origen, 1);
 
             cola.poner(new Object[] { verticeOrigen, caminoInicial });
-            visitados.insertar(origen,1);
+            visitados.insertar(origen, 1);
 
             while (!cola.esVacia() && !encontrado) {
                 par = (Object[]) cola.obtenerFrente();
@@ -402,7 +407,7 @@ public class Grafo {
                             nuevoCamino = camino.clone();
                             nuevoCamino.insertar(vecino, nuevoCamino.longitud() + 1);
                             cola.poner(new Object[] { ady.getVertice(), nuevoCamino });
-                            visitados.insertar(vecino,visitados.longitud()+1);
+                            visitados.insertar(vecino, visitados.longitud() + 1);
                         }
                         ady = ady.getSigAdyacente();
                     }
