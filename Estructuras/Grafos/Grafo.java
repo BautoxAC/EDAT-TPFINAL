@@ -312,7 +312,7 @@ public class Grafo {
         NodoVert verticeOrigen = ubicarVertice(origen);
         NodoVert verticeDestino = ubicarVertice(destino);
 
-        // metodo recursivo que usa DFS para encontrar el camino de etiqueta maxima mas chica.
+        // metodo recursivo que usa DFS (recorrido en profunidad) para encontrar el camino de etiqueta maxima mas chica.
 
         if (verticeOrigen != null && verticeDestino != null) {
             dfsMinimoMaxEtiqueta(verticeOrigen, destino, caminoActual, mejorCamino, visitados, 0, menorMax);
