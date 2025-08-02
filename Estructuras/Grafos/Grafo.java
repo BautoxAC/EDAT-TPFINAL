@@ -2,7 +2,10 @@ package Estructuras.Grafos;
 
 import Estructuras.lineales.*;
 
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.PriorityQueue;
+import java.util.Queue;
 
 import Estructuras.Especificas.ColaPrioridad.*;
 import Estructuras.Especificas.Diccionario.*;
@@ -301,138 +304,236 @@ public class Grafo {
     }
 
     public Lista caminoMinimoMaxEtiqueta(Object origen, Object destino) {
-        ColaPrioridad cola;
-        Lista caminoInicial;
+        Lista caminoActual = new Lista();
         Lista mejorCamino = new Lista();
+        Lista visitados = new Lista();
+        int[] menorMax = { Integer.MAX_VALUE };
 
-        NodoVert verticeOrigen = ubicarVertice(origen);
+        NodoVert nv = ubicarVertice(origen);
+        NodoVert nd = ubicarVertice(destino);
 
-        int menorMaximoEncontrado;
-
-        Object[] frente;
-        NodoVert nodoActual;
-        int maxActual;
-        Lista caminoActual;
-
-        NodoAdy ady;
-
-        Object ciudadDestino;
-        int nuevoMax;
-        Lista nuevoCamino;
-
-        boolean encontrado;
-
-        if (verticeOrigen != null) {
-
-            cola = new ColaPrioridad();
-            caminoInicial = new Lista();
-
-            menorMaximoEncontrado = Integer.MAX_VALUE;
-
-            caminoInicial.insertar(verticeOrigen.getElem(), 1);
-            cola.insertar(new Object[] { verticeOrigen, 0, caminoInicial }, 0);
-
-            encontrado = false;
-
-            while (!cola.esVacia() && !encontrado) {
-
-                frente = (Object[]) cola.recuperarFrente();
-                cola.eliminarFrente();
-
-                nodoActual = (NodoVert) frente[0];
-                maxActual = (int) frente[1];
-                caminoActual = (Lista) frente[2];
-
-                if (nodoActual.getElem().equals(destino)) {
-                    if (maxActual < menorMaximoEncontrado) {
-                        menorMaximoEncontrado = maxActual;
-                        mejorCamino = caminoActual;
-                    }
-                    /*
-                     * encontrado = true;
-                     */ } else {
-                    ady = nodoActual.getPrimerAdy();
-                    while (ady != null) {
-                        ciudadDestino = ady.getVertice().getElem();
-
-                        if (caminoActual.localizar(ciudadDestino) < 0) {
-                            nuevoMax = Math.max(maxActual, (int) ady.getEtiqueta());
-                            nuevoCamino = caminoActual.clone();
-                            nuevoCamino.insertar(ciudadDestino, nuevoCamino.longitud() + 1);
-
-                            cola.insertar(new Object[] { ady.getVertice(), nuevoMax, nuevoCamino }, nuevoMax);
-                        }
-
-                        ady = ady.getSigAdyacente();
-                    }
-                }
-
-            }
-
+        if (nv != null && nd != null) {
+            dfsMinimoMaxEtiqueta(nv, destino, caminoActual, mejorCamino, visitados, 0, menorMax);
         }
 
         return mejorCamino;
     }
 
+    private void dfsMinimoMaxEtiqueta(NodoVert actual, Object destino, Lista caminoActual, Lista mejorCamino,
+            Lista visitados, int maxPesoActual, int[] menorMax) {
+        visitados.insertar(actual.getElem(), visitados.longitud() + 1);
+        caminoActual.insertar(actual.getElem(), caminoActual.longitud() + 1);
+
+        if (actual.getElem().equals(destino)) {
+            if (maxPesoActual < menorMax[0]) {
+                menorMax[0] = maxPesoActual;
+                mejorCamino.vaciar();
+                for (int i = 1; i <= caminoActual.longitud(); i++) {
+                    mejorCamino.insertar(caminoActual.recuperar(i), i);
+                }
+            }
+        } else {
+            NodoAdy ady = actual.getPrimerAdy();
+            while (ady != null) {
+                Object vecino = ady.getVertice().getElem();
+                if (visitados.localizar(vecino) < 0) {
+                    int nuevoMax = Math.max(maxPesoActual, (int) ady.getEtiqueta());
+                    dfsMinimoMaxEtiqueta(ady.getVertice(), destino, caminoActual, mejorCamino, visitados, nuevoMax,
+                            menorMax);
+                }
+                ady = ady.getSigAdyacente();
+            }
+        }
+
+        visitados.eliminar(visitados.localizar(actual.getElem()));
+        caminoActual.eliminar(caminoActual.longitud());
+    }
+
     public Lista obtenerCaminoMasCorto(Object origen, Object destino) {
+        NodoVert verticeOrigen = ubicarVertice(origen);
+        NodoVert verticeDestino = ubicarVertice(destino);
+        Lista resultado = new Lista();
+        boolean encontrado = false;
 
-        Lista camino = new Lista();
-        Cola cola;
-        Diccionario padres;
+        if (verticeOrigen != null && verticeDestino != null) {
+            Cola cola = new Cola();
+            Lista visitados = new Lista();
+            Lista caminoInicial = new Lista();
 
-        NodoVert nodoOrigen = ubicarVertice(origen);
+            caminoInicial.insertar(origen, 1);
 
-        NodoVert verticeActual;
-        NodoAdy ady;
-        boolean encontrado;
-        NodoVert verticeAdy;
-
-        if (nodoOrigen != null) {
-
-            cola = new Cola();
-            padres = new Diccionario();
-
-            encontrado = false;
-
-            padres.insertar(new Object[] { origen, null });
-            cola.poner(nodoOrigen);
+            cola.poner(new Object[] { verticeOrigen, caminoInicial });
+            visitados.insertar(origen,1);
 
             while (!cola.esVacia() && !encontrado) {
-
-                verticeActual = (NodoVert) cola.obtenerFrente();
+                Object[] par = (Object[]) cola.obtenerFrente();
                 cola.sacar();
+                NodoVert actual = (NodoVert) par[0];
+                Lista camino = (Lista) par[1];
 
-                if (verticeActual.getElem().equals(destino)) {
+                if (actual.getElem().equals(destino)) {
+                    resultado = camino;
                     encontrado = true;
-                    crearCamino(camino, padres, destino);
                 } else {
-                    ady = verticeActual.getPrimerAdy();
+                    NodoAdy ady = actual.getPrimerAdy();
                     while (ady != null) {
-                        verticeAdy = ady.getVertice();
-                        if (!padres.existeClave(verticeAdy.getElem())) {
-                            padres.insertar(new Object[] { verticeAdy.getElem(), verticeActual.getElem() });
-                            cola.poner(verticeAdy);
+                        Object vecino = ady.getVertice().getElem();
+                        if (visitados.localizar(vecino) < 0) {
+                            Lista nuevoCamino = camino.clone();
+                            nuevoCamino.insertar(vecino, nuevoCamino.longitud() + 1);
+                            cola.poner(new Object[] { ady.getVertice(), nuevoCamino });
+                            visitados.insertar(vecino,visitados.longitud()+1);
                         }
                         ady = ady.getSigAdyacente();
                     }
+
                 }
 
             }
-
         }
 
-        return camino;
-
+        return resultado;
     }
+    /*
+     * public Lista caminoMinimoMaxEtiqueta(Object origen, Object destino) {
+     * ColaPrioridad cola;
+     * Lista caminoInicial;
+     * Lista mejorCamino = new Lista();
+     * 
+     * NodoVert verticeOrigen = ubicarVertice(origen);
+     * 
+     * int menorMaximoEncontrado;
+     * 
+     * Object[] frente;
+     * NodoVert nodoActual;
+     * int maxActual;
+     * Lista caminoActual;
+     * 
+     * NodoAdy ady;
+     * 
+     * Object ciudadDestino;
+     * int nuevoMax;
+     * Lista nuevoCamino;
+     * 
+     * boolean encontrado;
+     * 
+     * if (verticeOrigen != null) {
+     * 
+     * cola = new ColaPrioridad();
+     * caminoInicial = new Lista();
+     * 
+     * menorMaximoEncontrado = Integer.MAX_VALUE;
+     * 
+     * caminoInicial.insertar(verticeOrigen.getElem(), 1);
+     * cola.insertar(new Object[] { verticeOrigen, 0, caminoInicial }, 0);
+     * 
+     * encontrado = false;
+     * 
+     * while (!cola.esVacia() && !encontrado) {
+     * 
+     * frente = (Object[]) cola.recuperarFrente();
+     * cola.eliminarFrente();
+     * 
+     * nodoActual = (NodoVert) frente[0];
+     * maxActual = (int) frente[1];
+     * caminoActual = (Lista) frente[2];
+     * 
+     * if (nodoActual.getElem().equals(destino)) {
+     * if (maxActual < menorMaximoEncontrado) {
+     * menorMaximoEncontrado = maxActual;
+     * mejorCamino = caminoActual;
+     * }
+     * /*
+     * encontrado = true;
+     */ /*
+         * } else {
+         * ady = nodoActual.getPrimerAdy();
+         * while (ady != null) {
+         * ciudadDestino = ady.getVertice().getElem();
+         * 
+         * if (caminoActual.localizar(ciudadDestino) < 0) {
+         * nuevoMax = Math.max(maxActual, (int) ady.getEtiqueta());
+         * nuevoCamino = caminoActual.clone();
+         * nuevoCamino.insertar(ciudadDestino, nuevoCamino.longitud() + 1);
+         * 
+         * cola.insertar(new Object[] { ady.getVertice(), nuevoMax, nuevoCamino },
+         * nuevoMax);
+         * }
+         * 
+         * ady = ady.getSigAdyacente();
+         * }
+         * }
+         * 
+         * }
+         * 
+         * }
+         * 
+         * return mejorCamino;
+         * }
+         */
 
-    private void crearCamino(Lista camino, Diccionario padres, Object elem) {
-
-        if (elem != null) {
-            camino.insertar(elem, 1);
-            crearCamino(camino, padres, padres.obtenerDato(elem));
-        }
-
-    }
+    /*
+     * public Lista obtenerCaminoMasCorto(Object origen, Object destino) {
+     * 
+     * Lista camino = new Lista();
+     * Cola cola;
+     * Diccionario padres;
+     * 
+     * NodoVert nodoOrigen = ubicarVertice(origen);
+     * 
+     * NodoVert verticeActual;
+     * NodoAdy ady;
+     * boolean encontrado;
+     * NodoVert verticeAdy;
+     * 
+     * if (nodoOrigen != null) {
+     * 
+     * cola = new Cola();
+     * padres = new Diccionario();
+     * 
+     * encontrado = false;
+     * 
+     * padres.insertar(new Object[] { origen, null });
+     * cola.poner(nodoOrigen);
+     * 
+     * while (!cola.esVacia() && !encontrado) {
+     * 
+     * verticeActual = (NodoVert) cola.obtenerFrente();
+     * cola.sacar();
+     * 
+     * if (verticeActual.getElem().equals(destino)) {
+     * encontrado = true;
+     * crearCamino(camino, padres, destino);
+     * } else {
+     * ady = verticeActual.getPrimerAdy();
+     * while (ady != null) {
+     * verticeAdy = ady.getVertice();
+     * if (!padres.existeClave(verticeAdy.getElem())) {
+     * padres.insertar(new Object[] { verticeAdy.getElem(), verticeActual.getElem()
+     * });
+     * cola.poner(verticeAdy);
+     * }
+     * ady = ady.getSigAdyacente();
+     * }
+     * }
+     * 
+     * }
+     * 
+     * }
+     * 
+     * return camino;
+     * 
+     * }
+     * 
+     * private void crearCamino(Lista camino, Diccionario padres, Object elem) {
+     * 
+     * if (elem != null) {
+     * camino.insertar(elem, 1);
+     * crearCamino(camino, padres, padres.obtenerDato(elem));
+     * }
+     * 
+     * }
+     */
 
     public Grafo clone() {
 
