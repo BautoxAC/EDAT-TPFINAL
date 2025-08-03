@@ -62,55 +62,14 @@ Relaciones ParNomen => Tubería:
 (NE3001 => GR3003) => Tubería [Nomenclatura: NE3001-GR3003, Caudal Mín: 278 m³/h, Caudal Máx: 486 m³/h, Diámetro: 548 mm, Estado: INACTIVA]
 (CI3002 => PL3004) => Tubería [Nomenclatura: CI3002-PL3004, Caudal Mín: 125 m³/h, Caudal Máx: 322 m³/h, Diámetro: 484 mm, Estado: INACTIVA]
  
-Ciudad Cipolletti fue seleccionada 
-Ciudad Neuquen fue seleccionada 
-El camino es el siguiente: 
-[CI3002,NE3001] 
-Y su estado es: ACTIVO
- 
-El camino es el siguiente:
-[CI3002,NE3001] 
-Y esta: ACTIVO 
- 
-El camino es el siguiente: 
-[CI3002,NE3001] 
-Y su estado es: ACTIVO
- 
-El camino es el siguiente:
-[CI3002,NE3001] 
-Y esta: ACTIVO 
- 
-El camino es el siguiente: 
-[CI3002,NE3001] 
-Y su estado es: ACTIVO
- 
-El camino es el siguiente:
-[CI3002,NE3001] 
-Y esta: ACTIVO 
- 
-Ciudad Neuquen fue seleccionada 
-Ciudad Cipolletti fue seleccionada 
-El camino es el siguiente: 
-[NE3001,GR3003,PL3004,AL3009,CE3005,CI3002] 
-Y su estado es: ACTIVO
- 
-El camino es el siguiente:
-[NE3001,GR3003,CI3002] 
-Y esta: ACTIVO 
- 
-El camino es el siguiente: 
-[NE3001,GR3003,PL3004,AL3009,CE3005,CI3002] 
-Y su estado es: ACTIVO
- 
-El camino es el siguiente: 
-[NE3001,GR3003,PL3004,AL3009,CE3005,CI3002] 
-Y su estado es: ACTIVO
- 
-El camino es el siguiente:
-[NE3001,GR3003,CI3002] 
-Y esta: ACTIVO 
- 
+Ciudad agregada Hola 
+ERROR: No hay una ciudad seleccionada 
+Error, la ciudad hola no existe 
+Ciudad Hola fue seleccionada 
+Error, no se pudo completar la operacion, año no valido, debe ser entre 2015-2024 
+Cantidad actualizada con exito 
 Saliendo del sistema... 
+Vertice: HO3000 []
 Vertice: SE3010 [CC3007,215]
 Vertice: AL3009 [CE3005,518;CC3007,370]
 Vertice: ZA3008 []
@@ -128,7 +87,8 @@ Centenario altura: 1 -> HI: Allen HD: N/A
 Allen altura: 0 -> HI: N/A HD: N/A
 Cutral Co altura: 0 -> HI: N/A HD: N/A
 Plottier altura: 2 -> HI: Neuquen HD: Villa Regina
-Neuquen altura: 0 -> HI: N/A HD: N/A
+Neuquen altura: 1 -> HI: Hola HD: N/A
+Hola altura: 0 -> HI: N/A HD: N/A
 Villa Regina altura: 1 -> HI: Senillosa HD: Zapala
 Senillosa altura: 0 -> HI: N/A HD: N/A
 Zapala altura: 0 -> HI: N/A HD: N/A

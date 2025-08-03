@@ -244,7 +244,7 @@ public class Sistema {
     }
 
     private Tuberia agregarTuberia(int caudalMaximo, int caudalMinimo, int diametroTuberia,
-            String estado, String tuberiaSalidaNomen, String tuberiaLlegadaNomen) { // O(C + a) en el peor de los casos, O(1) en el mejor
+            String estado, String tuberiaSalidaNomen, String tuberiaLlegadaNomen) {
 
         Tuberia newTuberia = new Tuberia();
         ParNomen parNomeclatura = new ParNomen();
