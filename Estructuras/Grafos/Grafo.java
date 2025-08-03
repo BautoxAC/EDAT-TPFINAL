@@ -307,34 +307,34 @@ public class Grafo {
         Lista caminoActual = new Lista();
         Lista mejorCamino = new Lista();
         Lista visitados = new Lista();
-        int[] menorMax = { Integer.MAX_VALUE };
+        int[] minMax = { Integer.MAX_VALUE };
 
         NodoVert verticeOrigen = ubicarVertice(origen);
         NodoVert verticeDestino = ubicarVertice(destino);
 
         // metodo recursivo que usa DFS (recorrido en profunidad) para encontrar el
-        // camino de etiqueta maxima mas chica.
+        // camino con la tuberia que tenga menor caudal maximo.
 
         if (verticeOrigen != null && verticeDestino != null) {
-            dfsMinimoMaxEtiqueta(verticeOrigen, destino, caminoActual, mejorCamino, visitados, 0, menorMax);
+            dfsMinimoMaxEtiqueta(verticeOrigen, destino, caminoActual, mejorCamino, visitados, Integer.MAX_VALUE, minMax);
         }
 
         return mejorCamino;
     }
 
     private void dfsMinimoMaxEtiqueta(NodoVert actual, Object destino, Lista caminoActual, Lista mejorCamino,
-            Lista visitados, int maxPesoActual, int[] menorMax) {
+            Lista visitados, int minCaudalActual, int[] minMax) {
 
         NodoAdy ady;
         Object vecino;
-        int nuevoMax;
+        int nuevoMin;
 
         visitados.insertar(actual.getElem(), visitados.longitud() + 1);
         caminoActual.insertar(actual.getElem(), caminoActual.longitud() + 1);
 
         if (actual.getElem().equals(destino)) {
-            if (maxPesoActual < menorMax[0]) {
-                menorMax[0] = maxPesoActual;
+            if (minCaudalActual < minMax[0]) {
+                minMax[0] = minCaudalActual;
                 // mejorCamino = caminoActual.clone(); // No usamos clone por la referencia recursiva.
                 mejorCamino.vaciar();
                 for (int i = 1; i <= caminoActual.longitud(); i++) {
@@ -346,9 +346,9 @@ public class Grafo {
             while (ady != null) {
                 vecino = ady.getVertice().getElem();
                 if (visitados.localizar(vecino) < 0) {
-                    nuevoMax = Math.max(maxPesoActual, (int) ady.getEtiqueta());
-                    dfsMinimoMaxEtiqueta(ady.getVertice(), destino, caminoActual, mejorCamino, visitados, nuevoMax,
-                            menorMax);
+                    nuevoMin = Math.min(minCaudalActual, (int) ady.getEtiqueta());
+                    dfsMinimoMaxEtiqueta(ady.getVertice(), destino, caminoActual, mejorCamino, visitados, nuevoMin,
+                            minMax);
                 }
                 ady = ady.getSigAdyacente();
             }
