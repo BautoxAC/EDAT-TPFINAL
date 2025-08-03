@@ -110,7 +110,7 @@ public class Sistema {
 
     }
 
-    private void eliminarTuberia(Scanner scanner) { // O(C + a) donde C = ciudades y a = arcos del vertice de origen, en el peor de los casos, en el mejor O(a)
+    private void eliminarTuberia(Scanner scanner) {
 
         String ciuNombreSalida;
         String ciuNombreLlegada;
@@ -163,7 +163,7 @@ public class Sistema {
         return sb.toString();
     }
 
-    private void ingresarTuberia(Scanner scanner) { // O(C + log C) en el peor de los casos, O(log C) en el mejor
+    private void ingresarTuberia(Scanner scanner) { 
         System.out.println("\n NUEVA TUBERIA ");
 
         String ciuNombreSalida;
@@ -323,7 +323,7 @@ public class Sistema {
 
     }
 
-    private void modificarCaudalMinimo(Scanner scanner, Tuberia tuberiaElegida) { // O(1)
+    private void modificarCaudalMinimo(Scanner scanner, Tuberia tuberiaElegida) {
 
         String log;
         String cant;
@@ -347,7 +347,7 @@ public class Sistema {
 
     }
 
-    private void modificarCaudalMaximo(Scanner scanner, Tuberia tuberiaElegida) { // O(a) en el peor, O(1) en el mejor
+    private void modificarCaudalMaximo(Scanner scanner, Tuberia tuberiaElegida) {
 
         String log;
         String cant;
@@ -378,7 +378,7 @@ public class Sistema {
         escribirLog(log);
     }
 
-    private void modificarDiametroTuberia(Scanner scanner, Tuberia tuberiaElegida) { // O(1)
+    private void modificarDiametroTuberia(Scanner scanner, Tuberia tuberiaElegida) {
 
         String log;
         String cant;
@@ -409,7 +409,7 @@ public class Sistema {
 
     }
 
-    private void modificarEstado(Scanner scanner, Tuberia tuberiaElegida) { // O(1)
+    private void modificarEstado(Scanner scanner, Tuberia tuberiaElegida) {
 
         String log;
         String estado;
@@ -443,7 +443,7 @@ public class Sistema {
 
     }
 
-    private Tuberia elegirTuberia(Scanner scanner) { // O(log C) en el peor, O(1) en el mejor
+    private Tuberia elegirTuberia(Scanner scanner) {
         System.out.println("\n ELEGIR TUBERIA ");
         String ciuNombreSalida;
         String ciuNombreLlegada;
@@ -564,7 +564,7 @@ public class Sistema {
 
     }
 
-    private void ciudadesOrdenadasConsumo(Scanner scanner) { // O(C log C) por heap
+    private void ciudadesOrdenadasConsumo(Scanner scanner) {
         String anio;
         int anioInt;
         System.out.println("Ingrese el año desde 2015 al 2024 inclusive");
@@ -594,7 +594,7 @@ public class Sistema {
         escribirLog(log);
     }
 
-    private void rangoNombreVolumen(Scanner scanner) { // O(c) donde depende de las ciudades en rango, mas el orden de arbol avl
+    private void rangoNombreVolumen(Scanner scanner) {
         String minNomb, maxNomb, aux;
         int minVol, maxVol;
         Lista ciudLista;
@@ -652,7 +652,7 @@ public class Sistema {
 
     }
 
-    private void volumenAgua(Scanner scanner, Ciudad ciudadElegida) { // O(1)
+    private void volumenAgua(Scanner scanner, Ciudad ciudadElegida) {
 
         int volumenAgua;
         int[] mesAnioInt = new int[2];
@@ -674,7 +674,7 @@ public class Sistema {
 
     }
 
-    private void cantHabitates(Scanner scanner, Ciudad ciudadElegida) { // O(1)
+    private void cantHabitates(Scanner scanner, Ciudad ciudadElegida) {
 
         int[] mesAnioInt = new int[2];
 
@@ -720,7 +720,7 @@ public class Sistema {
 
     }
 
-    private void ingresarCiudad(Scanner scanner) { // O(C + log C) en el peor de los casos, O(log C) en el mejor
+    private void ingresarCiudad(Scanner scanner) {
         System.out.println("\n NUEVA CIUDAD ");
 
         String nombre;
@@ -839,7 +839,7 @@ public class Sistema {
 
     }
 
-    private void eliminarCiudad(Scanner scanner) { // O(C + T) en el peor,	O(log C + a) en el mejor
+    private void eliminarCiudad(Scanner scanner) {
         System.out.println("\n ELIMINAR CIUDAD ");
 
         boolean ciudadEliminada;
@@ -942,7 +942,7 @@ public class Sistema {
 
     }
 
-    private Ciudad elegirCiudad(Scanner scanner) { // O(log C) en el peor, O(1) en el mejor
+    private Ciudad elegirCiudad(Scanner scanner) {
         System.out.println("\n ELEGIR CIUDAD ");
 
         Ciudad ciudadElegida = null;
@@ -964,7 +964,7 @@ public class Sistema {
 
     }
 
-    private void modificarCantHabitantesAnio(Scanner scanner, Ciudad ciudad) { // O(1)
+    private void modificarCantHabitantesAnio(Scanner scanner, Ciudad ciudad) {
 
         String log;
         String cant;
@@ -1008,7 +1008,7 @@ public class Sistema {
         }
     }
 
-    private void modificarCantHabitantesMes(Scanner scanner, Ciudad ciudad) { // O(1)
+    private void modificarCantHabitantesMes(Scanner scanner, Ciudad ciudad) {
 
         String log;
         String cant;
@@ -1062,7 +1062,7 @@ public class Sistema {
 
     }
 
-    private void modificarSuperficie(Scanner scanner, Ciudad ciudad) { // O(1)
+    private void modificarSuperficie(Scanner scanner, Ciudad ciudad) {
 
         String log;
         String cant;
@@ -1091,7 +1091,7 @@ public class Sistema {
         escribirLog(log);
     }
 
-    private void modificarCantConsumo(Scanner scanner, Ciudad ciudad) { // O(1)
+    private void modificarCantConsumo(Scanner scanner, Ciudad ciudad) {
 
         String log;
         String cant;
@@ -1122,7 +1122,7 @@ public class Sistema {
     }
 
     private Ciudad agregarCiudad(String nombre, int[][] matriz, String nomenclatura, int superficie,
-            int cantMetrosCubicos) { // O(C + log C) en el peor caso, O(log C)
+            int cantMetrosCubicos) {
 
         Ciudad ciudad = new Ciudad(nombre, nomenclatura, superficie, cantMetrosCubicos);
         ciudad.setHabitantesMatriz(matriz);
@@ -1188,7 +1188,7 @@ public class Sistema {
 
     }
 
-    private void obtenerCaminoYEstado(Ciudad ciudadA, Ciudad ciudadB) { // O(C + T)
+    private void obtenerCaminoYEstado(Ciudad ciudadA, Ciudad ciudadB) {
         String log = "";
         if (ciudadA != null && ciudadB != null) {
             Lista camino = mapaCiudades.caminoMinimoMaxEtiqueta(ciudadA.getNomenclatura(), ciudadB.getNomenclatura());
@@ -1209,7 +1209,7 @@ public class Sistema {
         escribirLog(log);
     }
 
-    private void obtenerMinimoCamino(Ciudad ciudadA, Ciudad ciudadB) { // O(C + T)
+    private void obtenerMinimoCamino(Ciudad ciudadA, Ciudad ciudadB) {
         String log = "";
         if (ciudadA != null && ciudadB != null) {
             Lista camino = mapaCiudades.obtenerCaminoMasCorto(ciudadA.getNomenclatura(), ciudadB.getNomenclatura());
@@ -1229,7 +1229,7 @@ public class Sistema {
         escribirLog(log);
     }
 
-    private String obtenerEstadoCamino(Lista camino) { // O(L) donde L es la longitud del camino
+    private String obtenerEstadoCamino(Lista camino) {
 
         String estadoFinal = "ACTIVO";
         Object ciudadOrigen;
@@ -1262,7 +1262,7 @@ public class Sistema {
         return estadoFinal;
     }
 
-    private boolean esNomenclaturaValida(String nomenclatura) { // O(1)
+    private boolean esNomenclaturaValida(String nomenclatura) {
 
         boolean valido = true;
         int i = 0;
@@ -1304,7 +1304,7 @@ public class Sistema {
 
     }
 
-    private boolean verificarNombreNomenclatura(String nombre, String nomenclatura) { // O(1)
+    private boolean verificarNombreNomenclatura(String nombre, String nomenclatura) {
 
         String[] palabras = nombre.trim().split("\\s+");
         String nomenEsperada;
@@ -1362,7 +1362,7 @@ public class Sistema {
         return rutaCarpeta.toAbsolutePath() + "";
     }
 
-    public void leerArchivos(String camino) { // O(n) donde n es la cantidad de lineas del archivo
+    public void leerArchivos(String camino) {
 
         String nombreArchivoEntrada = obtenerRutaArchivos() + "\\ArchivosCargas\\" + camino + ".txt";
         String linea = null;
