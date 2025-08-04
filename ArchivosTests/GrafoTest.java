@@ -26,7 +26,7 @@ public class GrafoTest {
     @Test
     void testInsertarVerticeDuplicado() {
         grafo.insertarVertice("A");
-        assertFalse(grafo.insertarVertice("A")); // No debería permitir duplicados
+        assertFalse(grafo.insertarVertice("A"));
     }
 
     @Test
@@ -48,7 +48,7 @@ public class GrafoTest {
         grafo.insertarVertice("B");
         
         grafo.insertarArco("A", "B", 10);
-        assertFalse(grafo.insertarArco("A", "B", 20)); // No debería permitir duplicados
+        assertFalse(grafo.insertarArco("A", "B", 20));
     }
 
     @Test
@@ -65,7 +65,7 @@ public class GrafoTest {
         grafo.insertarArco("A", "B", 10);
         
         assertTrue(grafo.existeArco("A", "B"));
-        assertFalse(grafo.existeArco("B", "A")); // Grafo dirigido
+        assertFalse(grafo.existeArco("B", "A")); // Verificacion teniendo en cuenta que es un grafo dirigido
     }
 
     @Test
@@ -138,7 +138,7 @@ public class GrafoTest {
         grafo.insertarArco("A", "C", 20);
         
         Lista camino = grafo.caminoMinimoMaxEtiqueta("A", "C");
-        assertEquals(3, camino.longitud()); // Debería ser A->B->C (max 10) en lugar de A->C (20)
+        assertEquals(3, camino.longitud()); // Tiene que ser A->B->C (max 10) en lugar de A->C (20)
     }
 
     @Test
@@ -151,7 +151,7 @@ public class GrafoTest {
         grafo.insertarArco("A", "C", 30);
         
         Lista camino = grafo.obtenerCaminoMasCorto("A", "C");
-        assertEquals(2, camino.longitud()); // Debería ser A->C directamente
+        assertEquals(2, camino.longitud()); // Tiene que ser A->C directamente
     }
 
     @Test
@@ -159,13 +159,10 @@ public class GrafoTest {
         grafo.insertarVertice("A");
         grafo.insertarVertice("B");
         grafo.insertarArco("A", "B", 10);
-        System.out.println(grafo.toString());
 
         Grafo clon = grafo.clone();
         assertTrue(clon.existeVertice("A"));
         assertTrue(clon.existeVertice("B"));
-        System.out.println(clon.toString());
-        System.out.println("HOLA");
         assertTrue(clon.existeArco("A", "B"));
     }
 

@@ -30,7 +30,7 @@ public class DiccionarioTest {
         Object[] par2 = {"clave1", "valor2"};
         
         assertTrue(diccionario.insertar(par1));
-        assertFalse(diccionario.insertar(par2)); // No debería permitir duplicados
+        assertFalse(diccionario.insertar(par2));
     }
 
     @Test
