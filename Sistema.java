@@ -695,7 +695,7 @@ public class Sistema {
         int mesInt;
         String anio;
         int anioInt;
-        // Modularizable
+
         System.out.println("Ingrese el mes");
         do {
             mes = scanner.nextLine();
@@ -1152,12 +1152,12 @@ public class Sistema {
             if (ciudadA == null) {
                 System.out.println("Ciudad A no seleccionada");
             } else {
-                System.out.println("Ciudad A seleccionada" + ciudadA.getNombre());
+                System.out.println("Ciudad A seleccionada " + ciudadA.getNombre());
             }
             if (ciudadB == null) {
                 System.out.println("Ciudad B no seleccionada");
             } else {
-                System.out.println("Ciudad B seleccionada" + ciudadB.getNombre());
+                System.out.println("Ciudad B seleccionada " + ciudadB.getNombre());
             }
             System.out.print("Opcion elegida: ");
 
