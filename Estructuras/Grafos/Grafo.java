@@ -23,6 +23,7 @@ public class Grafo {
         if (!encontrado) {
             NodoVert nuevo = new NodoVert(elem, this.inicio, null);
             this.inicio = nuevo;
+            hecho = true;
         }
         return hecho;
     }
@@ -39,6 +40,7 @@ public class Grafo {
         if (origenVer != null && destinoVer != null && !encontrado && !origen.equals(destino)) {
             NodoAdy nuevo = new NodoAdy(destinoVer, origenVer.getPrimerAdy(), etiqueta);
             origenVer.setPrimerAdy(nuevo);
+            hecho = true;
         }
         return hecho;
     }
@@ -57,7 +59,7 @@ public class Grafo {
         NodoAdy aux;
         if (origenVer != null) {
             aux = origenVer.getPrimerAdy();
-            while (aux != null) {
+            while (aux != null && !encontrado) {
                 if (aux.getVertice().getElem().equals(destino)) {
                     encontrado = true;
                 }
@@ -91,6 +93,7 @@ public class Grafo {
         if (actual != null) {
             if (actual.getElem().equals(elem)) {
                 this.inicio = actual.getSigVertice();
+                eliminado = true;
             } else {
                 this.eliminarArcoAdyacente(elem, actual);
                 NodoVert ant = actual;
@@ -437,7 +440,7 @@ public class Grafo {
         if (nodoActual != null) {
 
             nodoVertice = new NodoVert(nodoActual.getElem(), clonarVert(nodoActual.getSigVertice()), null);
-            nodoVertice.setPrimerAdy(clonarAdy(nodoActual.getPrimerAdy(), nodoVertice));
+            nodoVertice.setPrimerAdy(clonarAdy(nodoActual.getPrimerAdy()));
 
         }
 
@@ -445,13 +448,13 @@ public class Grafo {
 
     }
 
-    private NodoAdy clonarAdy(NodoAdy nodoActual, NodoVert nodoVertice) {
+    private NodoAdy clonarAdy(NodoAdy nodoActual) {
 
         NodoAdy nodo = null;
 
         if (nodoActual != null) {
 
-            nodo = new NodoAdy(nodoVertice, clonarAdy(nodoActual.getSigAdyacente(), nodoVertice),
+            nodo = new NodoAdy(nodoActual.getVertice(), clonarAdy(nodoActual.getSigAdyacente()),
                     nodoActual.getEtiqueta());
 
         }
