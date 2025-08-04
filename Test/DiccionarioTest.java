@@ -110,4 +110,36 @@ public class DiccionarioTest {
         Lista datos = diccionario.listarDatos();
         assertEquals(2, datos.longitud());
     }
+
+    @Test
+    void testEjemploDesIzqHijoDesDer() {
+        Object[][] pares = {{30,"dato1"},{15,"dato1"},{40,"dato1"},{10,"dato1"},{25,"dato1"},{35,"dato1"},{50,"dato1"},{5,"dato1"},{17,"dato1"},{27,"dato1"},{37,"dato1"},{18,"dato1"}};
+        
+        for (int i = 0; i < pares.length; i++) {
+            diccionario.insertar(pares[i]);
+        }
+        
+        assertTrue(diccionario.eliminar(30));
+
+        Lista claves = diccionario.listarClaves();
+
+        assertEquals("[27,15,10,5,18,17,25,40,35,37,50]", claves.toString());
+    }
+
+    @Test
+    void testEjemploDesDerHijoDesIzq() {
+        Object[][] pares = {{30,"dato1"},{15,"dato1"},{40,"dato1"},{10,"dato1"},{25,"dato1"},{35,"dato1"},{50,"dato1"},{5,"dato1"},{17,"dato1"},{27,"dato1"},{37,"dato1"},{26,"dato1"}};
+        
+        for (int i = 0; i < pares.length; i++) {
+            diccionario.insertar(pares[i]);
+        }
+        
+        assertTrue(diccionario.eliminar(17));
+
+        Lista claves = diccionario.listarClaves();
+
+        assertEquals("[30,15,10,5,26,25,27,40,35,37,50]", claves.toString());
+
+    }
+
 }
