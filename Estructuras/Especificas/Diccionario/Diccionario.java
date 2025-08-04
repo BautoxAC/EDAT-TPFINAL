@@ -160,9 +160,9 @@ public class Diccionario {
             if (balance < -1) {
                 // desabalaceado por der entonces balanceo por der
 
-                int balanceHijo = calcularBalance(n.getHijoDerecho());
+                int balanceHijo = calcularBalance(balanceNodo.getHijoDerecho());
                 if (balanceHijo > 0) {
-                    balanceNodo.setHijoDerecho(balancearIzq(n.getHijoDerecho()));
+                    balanceNodo.setHijoDerecho(balancearIzq(balanceNodo.getHijoDerecho()));
                 }
                 balanceNodo = balancearDer(balanceNodo);
             }
