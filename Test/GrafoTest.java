@@ -142,6 +142,21 @@ public class GrafoTest {
     }
 
     @Test
+    void testCaminoMinimoMaxEtiqueta2() {
+        grafo.insertarVertice("A");
+        grafo.insertarVertice("B");
+        grafo.insertarVertice("C");
+        grafo.insertarVertice("D");
+        grafo.insertarArco("A", "B", 10);
+        grafo.insertarArco("B", "C", 10);
+        grafo.insertarArco("A", "D", 20);
+        grafo.insertarArco("D", "C", 1);
+        Lista camino = grafo.caminoMinimoMaxEtiqueta("A", "C");
+        System.out.println(camino.toString());
+        assertEquals(camino.toString(),"[A,D,C]");
+    }
+
+    @Test
     void testObtenerCaminoMasCorto() {
         grafo.insertarVertice("A");
         grafo.insertarVertice("B");
@@ -177,4 +192,7 @@ public class GrafoTest {
         Lista adyacentes = grafo.obtenerAdyacentes("A");
         assertEquals(2, adyacentes.longitud());
     }
+
+   
+
 }
