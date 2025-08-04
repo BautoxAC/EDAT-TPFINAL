@@ -142,7 +142,7 @@ public class GrafoTest {
     }
 
     @Test
-    void testCaminoMinimoMaxEtiqueta2() {
+    void testCaminoMinimoMaxEtiqueta1() {
         grafo.insertarVertice("A");
         grafo.insertarVertice("B");
         grafo.insertarVertice("C");
@@ -151,9 +151,52 @@ public class GrafoTest {
         grafo.insertarArco("B", "C", 10);
         grafo.insertarArco("A", "D", 20);
         grafo.insertarArco("D", "C", 1);
+
         Lista camino = grafo.caminoMinimoMaxEtiqueta("A", "C");
-        System.out.println(camino.toString());
+
         assertEquals(camino.toString(),"[A,D,C]");
+    }
+
+    @Test
+    void testCaminoMinimoMaxEtiqueta2() {
+        grafo.insertarVertice("A");
+        grafo.insertarVertice("B");
+        grafo.insertarVertice("D");
+        grafo.insertarVertice("E");
+        grafo.insertarVertice("F");
+        grafo.insertarVertice("G");
+        grafo.insertarVertice("H");
+        grafo.insertarArco("A", "D", 40);
+        grafo.insertarArco("A", "E", 100);
+        grafo.insertarArco("A", "F", 20);
+        grafo.insertarArco("A", "B", 60);
+        grafo.insertarArco("E", "H", 10);
+        grafo.insertarArco("H", "G", 40);
+        grafo.insertarArco("F", "G", 70);
+
+        Lista camino = grafo.caminoMinimoMaxEtiqueta("A", "G");
+
+        assertEquals(camino.toString(),"[A,E,H,G]");
+    }
+
+    @Test
+    void testCaminoMinimoMaxEtiqueta3() {
+        grafo.insertarVertice("A");
+        grafo.insertarVertice("B");
+        grafo.insertarVertice("C");
+        grafo.insertarVertice("D");
+        grafo.insertarVertice("E");
+        grafo.insertarArco("A", "D", 1);
+        grafo.insertarArco("A", "C", 1);
+        grafo.insertarArco("A", "B", 60);
+        
+        grafo.insertarArco("D", "E", 70);
+        grafo.insertarArco("B", "E", 1);
+        grafo.insertarArco("C", "E", 40);
+
+        Lista camino = grafo.caminoMinimoMaxEtiqueta("A", "E");
+        System.out.println(camino.toString());
+        assertEquals(camino.longitud(),3);
     }
 
     @Test
@@ -166,7 +209,50 @@ public class GrafoTest {
         grafo.insertarArco("A", "C", 30);
         
         Lista camino = grafo.obtenerCaminoMasCorto("A", "C");
+
         assertEquals(2, camino.longitud()); // Tiene que ser A->C directamente
+    }
+
+    @Test
+    void testObtenerCaminoMasCorto1() {
+        grafo.insertarVertice("A");
+        grafo.insertarVertice("B");
+        grafo.insertarVertice("D");
+        grafo.insertarVertice("E");
+        grafo.insertarVertice("F");
+        grafo.insertarVertice("G");
+        grafo.insertarVertice("H");
+        grafo.insertarArco("A", "D", 40);
+        grafo.insertarArco("A", "E", 100);
+        grafo.insertarArco("A", "F", 20);
+        grafo.insertarArco("A", "B", 60);
+        grafo.insertarArco("E", "H", 10);
+        grafo.insertarArco("H", "G", 40);
+        grafo.insertarArco("F", "G", 70);
+
+        Lista camino = grafo.obtenerCaminoMasCorto("A", "G");
+
+        assertEquals(camino.toString(),"[A,F,G]");
+    }
+
+    @Test
+    void testObtenerCaminoMasCorto2() {
+        grafo.insertarVertice("A");
+        grafo.insertarVertice("B");
+        grafo.insertarVertice("D");
+        grafo.insertarVertice("E");
+        grafo.insertarVertice("F");
+        grafo.insertarVertice("G");
+        grafo.insertarArco("A", "D", 40);
+        grafo.insertarArco("A", "E", 100);
+        grafo.insertarArco("A", "F", 20);
+        grafo.insertarArco("A", "B", 60);
+        grafo.insertarArco("E", "G", 40);
+        grafo.insertarArco("F", "G", 70);
+
+        Lista camino = grafo.obtenerCaminoMasCorto("A", "G");
+
+        assertEquals(camino.longitud(),3);
     }
 
     @Test
